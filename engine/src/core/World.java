@@ -447,8 +447,8 @@ public class World extends SoSObject {
     // Update at every frame
     @Override
     public void onUpdate() {
-        RuntimeMonitoring runtimeMonitoring = new RuntimeMonitoring();
-        String className = "core.World";
+//        RuntimeMonitoring runtimeMonitoring = new RuntimeMonitoring();
+//        String className = "core.World";
         // end condition ==> current frame count is equal or bigger than the max frame count.
         if (frameCount >= maxFrame) {
             canUpdate(false);
@@ -481,7 +481,7 @@ public class World extends SoSObject {
             }
         }
         stimuli.removeAll(mustRemove);
-        runtimeMonitoring.classLoader(this, className, 0.5);
+//        runtimeMonitoring.classLoader(this, className, 0.5);
     }
 
 
