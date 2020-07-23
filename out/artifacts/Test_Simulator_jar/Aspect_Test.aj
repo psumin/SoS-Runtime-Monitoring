@@ -13,7 +13,11 @@ public aspect Aspect_Test {
     float around() : mexec() {
         float returnValue = proceed();
         System.out.println("By Aspect, return value of method getRescuedRate(): " + returnValue);
-        return returnValue;
+        if(returnValue < 0.3)
+            System.out.println("Verification Result: Fail!!!");
+        else
+            System.out.println("Verification Result: Success!!");
+        return 0;
     }
 
 }
