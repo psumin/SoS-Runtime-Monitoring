@@ -1802,10 +1802,10 @@ public class World extends SoSObject {
     public boolean isFinished() {
         return !_canUpdate;
     }
-    public float getTreatmentRate() {
+    public double getTreatmentRate() {
         return savedPatientCount / (float)maxPatient;               // hospital 에서 치료 받은 환자 수 기준
     }
-    public float getRescuedRate() {
+    public double getRescuedRate() {
         return rescuedPatientCount / (float)maxPatient;         // bridgehead에 도착한 환자 수 기준
     }
 
