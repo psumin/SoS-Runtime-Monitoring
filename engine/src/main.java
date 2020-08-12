@@ -14,7 +14,7 @@ public class main {
         long thetaEndTime;                                              // 한 사이클 종료 시간
         boolean ruuning = true;
 
-/*
+
         //verification
         SPRT verifier;
         //ComfortZoneChecker comfortZoneChecker = new ComfortZoneChecker();
@@ -48,24 +48,24 @@ public class main {
 //        property.setPrevState("MoveToPatient");
 //        property.setThresholdValue(51);
         // Until
-        property.setPrevState("Free");
+//        property.setPrevState("Free");
 
         MCIPropertyChecker existenceChecker = new MCIPropertyChecker();
-        MCIAbsenceChecker absenceChecker = new MCIAbsenceChecker();
-        MCIUniversalityChecker universalityChecker = new MCIUniversalityChecker();
-        MCITransientSPChecker transientSPChecker = new MCITransientSPChecker();
-        MCISteadySPChecker steadySPChecker = new MCISteadySPChecker();
-        MCIMinimumDurationChecker minimumDurationChecker = new MCIMinimumDurationChecker();
-        MCIMaximumDurationChecker maximumDurationChecker = new MCIMaximumDurationChecker();
-        MCIBoundedExistenceChecker boundedExistenceChecker = new MCIBoundedExistenceChecker();
-        MCIPrecedenceChecker precedenceChecker = new MCIPrecedenceChecker();
-        MCIResponseChecker responseChecker = new MCIResponseChecker();
-        MCIRecurrenceChecker recurrenceChecker = new MCIRecurrenceChecker();
-        MCIUntilChecker untilChecker = new MCIUntilChecker();
+//        MCIAbsenceChecker absenceChecker = new MCIAbsenceChecker();
+//        MCIUniversalityChecker universalityChecker = new MCIUniversalityChecker();
+//        MCITransientSPChecker transientSPChecker = new MCITransientSPChecker();
+//        MCISteadySPChecker steadySPChecker = new MCISteadySPChecker();
+//        MCIMinimumDurationChecker minimumDurationChecker = new MCIMinimumDurationChecker();
+//        MCIMaximumDurationChecker maximumDurationChecker = new MCIMaximumDurationChecker();
+//        MCIBoundedExistenceChecker boundedExistenceChecker = new MCIBoundedExistenceChecker();
+//        MCIPrecedenceChecker precedenceChecker = new MCIPrecedenceChecker();
+//        MCIResponseChecker responseChecker = new MCIResponseChecker();
+//        MCIRecurrenceChecker recurrenceChecker = new MCIRecurrenceChecker();
+//        MCIUntilChecker untilChecker = new MCIUntilChecker();
 
 //        verifier = new SPRT(comfortZoneChecker);
 
-//        verifier = new SPRT(existenceChecker);
+        verifier = new SPRT(existenceChecker);
 //        verifier = new SPRT(absenceChecker);
 //        verifier = new SPRT(universalityChecker);
 //        verifier = new SPRT(transientSPChecker);
@@ -76,20 +76,20 @@ public class main {
 //        verifier = new SPRT(precedenceChecker);
 //        verifier = new SPRT(responseChecker);
 //        verifier = new SPRT(recurrenceChecker);
-        verifier = new SPRT(untilChecker);
+//        verifier = new SPRT(untilChecker);
         Pair<Pair<Integer, Boolean>, String> verificationResult;
 
-*/
+
 
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
         simulationEngine.setRunning();
 //        System.out.println("Get Running: "+ simulationEngine.getRunning());
         programStartTime = System.nanoTime();           // 첫번째 시뮬레이션까지 포함할려면 여기에 정의
         simulationEngine.run();
-        simulationEngine.setSuper_counter();
+//        simulationEngine.setSuper_counter();
 
-        double satisfactionProb = 0;
-        Boolean satisfaction = true;
+//        double satisfactionProb = 0;
+//        Boolean satisfaction = true;
 
 /*
 
