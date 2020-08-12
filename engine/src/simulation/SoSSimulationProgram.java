@@ -4,6 +4,7 @@ package simulation;
 import core.World;
 import log.Log;
 import misc.Time;
+import verifier.RuntimeVerification;
 
 import java.awt.*;
 import java.awt.Color;
@@ -156,7 +157,7 @@ public class SoSSimulationProgram implements KeyListener {
 //    XSSFSheet inputScenarioSheet;
 //    CellStyle headerStyle;
 
-    public Log run(){
+    public Log statisticalVerificationRun(){
 //        Scanner scan = new Scanner();
 //        RuntimeMonitoring runtimeMonitoring = new RuntimeMonitoring();
 //        String className = "core.World";
@@ -227,9 +228,6 @@ public class SoSSimulationProgram implements KeyListener {
 
             }
 
-
-
-
         }
 
 //        programEndTime = System.nanoTime();
@@ -238,6 +236,69 @@ public class SoSSimulationProgram implements KeyListener {
 
         return log;
     }
+
+
+
+
+
+
+
+
+
+    public Log runtimeVerificationRun(){
+//        Scanner scan = new Scanner();
+//        RuntimeMonitoring runtimeMonitoring = new RuntimeMonitoring();
+//        String className = "core.World";
+        long beginLoopTime;
+        long endLoopTime;
+        long currentUpdateTime = System.nanoTime();
+        long lastUpdateTime;
+        long deltaLoop;
+
+        Log log = new Log();
+
+        init();                                                         // World 초기화
+
+//        programStartTime = System.nanoTime();
+        while(running) {
+                beginLoopTime = System.nanoTime();
+                render();
+
+                lastUpdateTime = currentUpdateTime;
+                currentUpdateTime = System.nanoTime();
+                if (!pause) {
+                    update((int) ((currentUpdateTime - lastUpdateTime) / (1000 * 1000)), log);
+//                    APSECT+ASFafasfasd+ASdfaesdzx+RuntimeVerification(property, propertychecker);
+                } else {                                                // 키보드 입력을 통한 pause 는 첫 번째 시뮬레이션에서만!
+                    frame.setVisible(true);                            // pause 상태에서는 GUI 를 숨긴다.
+                    if (isExpert) {                                     // Expert 모드와 Beginner 모드가 존재함
+                        expertMode();                                   // String 으로 stimulus 입력 가능
+                    } else {
+                        beginnerMode();                                 // 메뉴에 따라서 stimulus 입력 가능
+                    }
+                }
+
+                endLoopTime = System.nanoTime();
+                deltaLoop = endLoopTime - beginLoopTime;
+
+                if (deltaLoop > desiredDeltaLoop) {
+                    //Do nothing. We are already late.
+                } else {
+                    try {
+                        Thread.sleep((desiredDeltaLoop - deltaLoop) / (1000 * 1000));
+                    } catch (InterruptedException e) {
+                        //Do nothing
+                    }
+                }
+        }
+        return log;
+    }
+
+
+
+
+
+
 
     // Rendering
     private void render() {
@@ -523,7 +584,7 @@ public class SoSSimulationProgram implements KeyListener {
         simulation.SoSSimulationProgram simulationEngine = new simulation.SoSSimulationProgram();
         for (int i = 0; i < 5; i++) {
             simulationEngine.running = true;
-            simulationEngine.run();
+            simulationEngine.statisticalVerificationRun();
             simulationEngine.super_counter++;
         }
 //        new Thread(simulationEngine).start();
