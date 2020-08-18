@@ -157,7 +157,7 @@ public class SoSSimulationProgram implements KeyListener {
 //    XSSFSheet inputScenarioSheet;
 //    CellStyle headerStyle;
 
-    public Log statisticalVerificationRun(){
+    public Log run(){
 //        Scanner scan = new Scanner();
 //        RuntimeMonitoring runtimeMonitoring = new RuntimeMonitoring();
 //        String className = "core.World";
@@ -581,7 +581,7 @@ public class SoSSimulationProgram implements KeyListener {
         simulation.SoSSimulationProgram simulationEngine = new simulation.SoSSimulationProgram();
         for (int i = 0; i < 5; i++) {
             simulationEngine.running = true;
-            simulationEngine.statisticalVerificationRun();
+            simulationEngine.run();
             simulationEngine.super_counter++;
         }
 //        new Thread(simulationEngine).start();

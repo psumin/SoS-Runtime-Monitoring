@@ -3,7 +3,6 @@ import log.Log;
 import property.*;
 import simulation.SoSSimulationProgram;
 import verifier.RuntimeVerification;
-import verifier.SPRT;
 
 /* Runtime Verification
     RuntimeVerification verifier;
@@ -98,10 +97,11 @@ public class main {
         simulationEngine.setRunning();
 //        System.out.println("Get Running: "+ simulationEngine.getRunning());
         programStartTime = System.nanoTime();           // 첫번째 시뮬레이션까지 포함할려면 여기에 정의
-//        simulationEngine.statisticalVerificationRun();                       // 통계적 검증을 위한 statisticalVerificationRun
-        simulationEngine.runtimeVerificationRun(verifier, property);                         // 런타임 검증을 위한 statisticalVerificationRun
+//        simulationEngine.run();                       // 통계적 검증을 위한 run
+        simulationEngine.runtimeVerificationRun(verifier, property);                         // 런타임 검증을 위한 run
         simulationEngine.setSuper_counter();
-
+        programEndTime = System.nanoTime();
+        System.out.println("=== Total Program running time: " + (programEndTime - programStartTime) / (float)1000_000_000 + " sec");
 //        double satisfactionProb = 0;
 //        Boolean satisfaction = true;
 
