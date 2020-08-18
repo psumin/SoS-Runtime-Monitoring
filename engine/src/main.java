@@ -5,6 +5,13 @@ import simulation.SoSSimulationProgram;
 import verifier.RuntimeVerification;
 import verifier.SPRT;
 
+/* Runtime Verification
+    RuntimeVerification verifier;
+
+    verifier = new RuntimeVerification(existenceChecker);
+
+    simulationEngine.runtimeVerificationRun();
+ */
 
 public class main {
 
@@ -18,7 +25,8 @@ public class main {
 
 
         //verification method
-        SPRT verifier;
+//        SPRT verifier;
+        RuntimeVerification verifier;
 //        RuntimeVerification verifier;
 
         //Verification Properties
@@ -37,7 +45,7 @@ public class main {
 //        property.setThresholdValue(10); // FF가 10명 이상 활동하고 있어야 한다.
 //        property.setDuration(65); // 최소 65 Frame 이상
         // MaximumDuration
-//        property.setThresholdValue(0); // Rescurate
+//        property.setThresholdValue(0); // Rescuerate
 //        property.setDuration(60); // 최대 60 Frame 이하
         // Bounded Existence
 //        property.setDuration(15); // Bounded Frame 20
@@ -67,8 +75,9 @@ public class main {
 //        MCIRecurrenceChecker recurrenceChecker = new MCIRecurrenceChecker();
 //        MCIUntilChecker untilChecker = new MCIUntilChecker();
 
-//        verifier = new SPRT(comfortZoneChecker);
-        verifier = new SPRT(existenceChecker);
+
+        //verifier = new SPRT(existenceChecker);
+        verifier = new RuntimeVerification(existenceChecker);
 //        verifier = new SPRT(absenceChecker);
 //        verifier = new SPRT(universalityChecker);
 //        verifier = new SPRT(transientSPChecker);
@@ -80,7 +89,7 @@ public class main {
 //        verifier = new SPRT(responseChecker);
 //        verifier = new SPRT(recurrenceChecker);
 //        verifier = new SPRT(untilChecker);
-        Pair<Pair<Integer, Boolean>, String> verificationResult;
+//        Pair<Pair<Integer, Boolean>, String> verificationResult;
 
 
 
@@ -89,7 +98,7 @@ public class main {
 //        System.out.println("Get Running: "+ simulationEngine.getRunning());
         programStartTime = System.nanoTime();           // 첫번째 시뮬레이션까지 포함할려면 여기에 정의
 //        simulationEngine.statisticalVerificationRun();                       // 통계적 검증을 위한 statisticalVerificationRun
-        simulationEngine.runtimeVerificationRun();                         // 런타임 검증을 위한 statisticalVerificationRun
+        simulationEngine.runtimeVerificationRun(verifier, property);                         // 런타임 검증을 위한 statisticalVerificationRun
         simulationEngine.setSuper_counter();
 
 //        double satisfactionProb = 0;
@@ -104,7 +113,7 @@ public class main {
 //            double theta = i * 0.01;
 //
 //            thetaStartTime = System.nanoTime();
-            verificationResult = verifier.verifyWithSimulationGUI(simulationEngine, property, 2000, 0.01);    //or T = 3
+//            verificationResult = verifier.verifyWithSimulationGUI(simulationEngine, property, 2000, 0.01);    //or T = 3
 //            thetaEndTime = System.nanoTime();
 //            System.out.println(i /(float)100 + " theta verification running time: " + (thetaEndTime - thetaStartTime) / (float)1000_000_000 + " sec");          // 한 theta 실행 시간
 //
