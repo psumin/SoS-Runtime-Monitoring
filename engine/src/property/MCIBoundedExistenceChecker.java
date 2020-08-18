@@ -16,7 +16,7 @@ public class MCIBoundedExistenceChecker extends BoundedExistenceChecker {
     protected boolean evaluateState(Snapshot snapshot, Property verificationProperty) {
         int ambNum = 0;
         String tmp = "";
-        
+
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
         while(st.hasMoreTokens()) {
             if(st.nextToken().equals("CurrentAmb:")) {

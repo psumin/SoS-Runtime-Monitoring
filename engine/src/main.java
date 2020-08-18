@@ -27,7 +27,7 @@ public class main {
         //verification method
 //        SPRT verifier;
         RuntimeVerification verifier;
-//        RuntimeVerification verifier;
+
 
         //Verification Properties
 
@@ -48,8 +48,8 @@ public class main {
 //        property.setThresholdValue(0); // Rescuerate
 //        property.setDuration(60); // 최대 60 Frame 이하
         // Bounded Existence
-//        property.setDuration(15); // Bounded Frame 20
-//        property.setState("Free"); // State가 Free인게 아님을 확인하기 위해
+        property.setDuration(15); // Bounded Frame 20
+        property.setState("Free"); // State가 Free인게 아님을 확인하기 위해
         // Precedence
 //        property.setPrevState("MoveToPatient");
 //        property.setState("FirstAid");
@@ -62,22 +62,22 @@ public class main {
         // Until
 //        property.setPrevState("Free");
 
-        MCIPropertyChecker existenceChecker = new MCIPropertyChecker();
+//        MCIPropertyChecker existenceChecker = new MCIPropertyChecker();
 //        MCIAbsenceChecker absenceChecker = new MCIAbsenceChecker();
 //        MCIUniversalityChecker universalityChecker = new MCIUniversalityChecker();
 //        MCITransientSPChecker transientSPChecker = new MCITransientSPChecker();
 //        MCISteadySPChecker steadySPChecker = new MCISteadySPChecker();
 //        MCIMinimumDurationChecker minimumDurationChecker = new MCIMinimumDurationChecker();
 //        MCIMaximumDurationChecker maximumDurationChecker = new MCIMaximumDurationChecker();
-//        MCIBoundedExistenceChecker boundedExistenceChecker = new MCIBoundedExistenceChecker();
+        MCIBoundedExistenceChecker boundedExistenceChecker = new MCIBoundedExistenceChecker();
 //        MCIPrecedenceChecker precedenceChecker = new MCIPrecedenceChecker();
 //        MCIResponseChecker responseChecker = new MCIResponseChecker();
 //        MCIRecurrenceChecker recurrenceChecker = new MCIRecurrenceChecker();
 //        MCIUntilChecker untilChecker = new MCIUntilChecker();
 
 
-        //verifier = new SPRT(existenceChecker);
-        verifier = new RuntimeVerification(existenceChecker);
+//        verifier = new SPRT(existenceChecker);
+//        verifier = new RuntimeVerification(existenceChecker);
 //        verifier = new SPRT(absenceChecker);
 //        verifier = new SPRT(universalityChecker);
 //        verifier = new SPRT(transientSPChecker);
@@ -85,11 +85,12 @@ public class main {
 //        verifier = new SPRT(minimumDurationChecker);
 //        verifier = new SPRT(maximumDurationChecker);
 //        verifier = new SPRT(boundedExistenceChecker);
+        verifier = new RuntimeVerification(boundedExistenceChecker);
 //        verifier = new SPRT(precedenceChecker);
 //        verifier = new SPRT(responseChecker);
 //        verifier = new SPRT(recurrenceChecker);
 //        verifier = new SPRT(untilChecker);
-//        Pair<Pair<Integer, Boolean>, String> verificationResult;
+        Pair<Pair<Integer, Boolean>, String> verificationResult;
 
 
 
