@@ -1,10 +1,11 @@
 package simulation;
 
-//import core.RuntimeMonitoring;
 import core.World;
 import log.Log;
 import misc.Time;
+import property.MCIProperty;
 import verifier.RuntimeVerification;
+
 
 import java.awt.*;
 import java.awt.Color;
@@ -12,7 +13,6 @@ import java.awt.event.*;
 // Add parts of key
 
 import java.awt.image.BufferStrategy;
-import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import javax.swing.*;
 
@@ -35,7 +35,7 @@ public class SoSSimulationProgram implements KeyListener {
     String filePath;
     int super_counter = 1;
     final int MAX_SIMULATION_COUNT = 1;                          // 시뮬레이션 반복 횟수
-    final int MAX_FRAME_COUNT = 100;                                // 각 시뮬레이션마다 최대 frame의 수
+    final int MAX_FRAME_COUNT = 300;                                // 각 시뮬레이션마다 최대 frame의 수
 
     final int SIMULATION_WIDTH = 910;                               // 시뮬레이션 GUI의 너비
     final int SIMULATION_HEIGHT = 910;                              // 시뮬레이션 GUI의 높이
@@ -168,15 +168,13 @@ public class SoSSimulationProgram implements KeyListener {
         long deltaLoop;
 
         Log log = new Log();
-        if(isFirstSimulation) {
-            long nano = System.currentTimeMillis();
+//        if(isFirstSimulation) {
+//            long nano = System.currentTimeMillis();
 //            String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
 //            filePath = "log/new_log/bad1/" + date + ".xlsx";
 //            statisticsSheet = workbook.createSheet("statistics");
 //            inputScenarioSheet = workbook.createSheet("inputScenarios");
-        }
-
-
+//        }
 
 //        headerStyle = workbook.createCellStyle();
 //        headerStyle.setAlignment(HorizontalAlignment.CENTER);
@@ -200,8 +198,6 @@ public class SoSSimulationProgram implements KeyListener {
                 currentUpdateTime = System.nanoTime();
                 if (!pause) {
                     update((int) ((currentUpdateTime - lastUpdateTime) / (1000 * 1000)), log);
-//                    runtimeMonitoring.classLoader(className, 0.5);
-
                 } else {                                                // 키보드 입력을 통한 pause 는 첫 번째 시뮬레이션에서만!
                     frame.setVisible(true);                            // pause 상태에서는 GUI 를 숨긴다.
                     if (isExpert) {                                     // Expert 모드와 Beginner 모드가 존재함
@@ -245,16 +241,17 @@ public class SoSSimulationProgram implements KeyListener {
 
 
 
-    public Log runtimeVerificationRun(){
+
+    public Log runtimeVerificationRun(RuntimeVerification verifier, MCIProperty property){
 //        Scanner scan = new Scanner();
 //        RuntimeMonitoring runtimeMonitoring = new RuntimeMonitoring();
 //        String className = "core.World";
+
         long beginLoopTime;
         long endLoopTime;
         long currentUpdateTime = System.nanoTime();
         long lastUpdateTime;
         long deltaLoop;
-
         Log log = new Log();
 
         init();                                                         // World 초기화
@@ -268,7 +265,7 @@ public class SoSSimulationProgram implements KeyListener {
                 currentUpdateTime = System.nanoTime();
                 if (!pause) {
                     update((int) ((currentUpdateTime - lastUpdateTime) / (1000 * 1000)), log);
-//                    APSECT+ASFafasfasd+ASdfaesdzx+RuntimeVerification(property, propertychecker);
+                    verifier.RuntimeVerificationResult(log, property);
                 } else {                                                // 키보드 입력을 통한 pause 는 첫 번째 시뮬레이션에서만!
                     frame.setVisible(true);                            // pause 상태에서는 GUI 를 숨긴다.
                     if (isExpert) {                                     // Expert 모드와 Beginner 모드가 존재함
