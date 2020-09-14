@@ -60,7 +60,7 @@ public class MCIResponseChecker extends ResponseChecker {
         System.out.println("Tick list of Transfer Activity: " + latterList);
 
         for(int i = 0; i < 50; i++) {
-            if(prevList.get(i) > latterList.get(i) && latterList.get(i) != -1) { return false; }
+            if(prevList.get(i) > latterList.get(i) && latterList.get(i) != -1) { return false; }   // -1이 아닌 상황에서 숫자 비교해서 결과 나옴.
         }
         return true;
     }
