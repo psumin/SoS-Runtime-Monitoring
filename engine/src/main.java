@@ -32,26 +32,26 @@ public class main {
 
         // Existence --> work!
         MCIProperty property = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence", 0.02);
-        // Absence
+        // Absence --> implemented
 //        property.setThresholdValue(0); // RescueRate - TreatmentRate can not be minus
-        // Universality
-//        property.setThresholdValue(1.0); // RescueRate should be 100%??
+        // Universality --> implemented
+//        property.setThresholdValue(1.0); // RescueRate should be 100%?? condition is rescuerate <= threshold && rescuerate > 0
         // TransientStateProbability --> work!
 //        property.setStateProbabilityValues(0.6, 60, 81);
         // SteadyStateProbability --> work!
 //        property.setStateProbabilityValues(0.15, 0, 81);
-        // MinimumDuration
-//        property.setThresholdValue(10); // FF가 10명 이상 활동하고 있어야 한다. More than 10 FF active
+        // MinimumDuration --> implemented
+//        property.setThresholdValue(1); // FF가 10명 이상 활동하고 있어야 한다. More than 10 FF active -seems like value of 5 and above always results in false?
 //        property.setDuration(65); // 최소 65 Frame 이상   at least 65 frame
-        // MaximumDuration
-//        property.setThresholdValue(0); // Rescuerate
+        // MaximumDuration --> implemented
+//        property.setThresholdValue(0); // rescueRate == verificationProperty.getThresholdValue() == 0? is this correct?
 //        property.setDuration(60); // 최대 60 Frame 이하
         // Bounded Existence --> work!
 //        property.setDuration(20); // Bounded Frame 20
 //        property.setState("Free"); // Ambulance's State가 Free인게 아님을 확인하기 위해
-        // Precedence
-//        property.setPrevState("MoveToPatient");
-//        property.setState("FirstAid");
+        // Precedence --> Implemented, precedence checker always returns false in MCIPrecedenceChecker?
+        property.setPrevState("MoveToPatient");
+        property.setState("FirstAid");
         // Response --> work!  ==> 근데 MCIResponseChecker 좀 바꿔야 할듯. 항상 true로 나오는 것 같음. 숫자 비교를 통해서 treatment의 값이 transfer 보다 작으면  true 인듯?
 //        property.setPrevState("FirstAid");
 //        property.setState("TransferToBridgehead");
@@ -61,7 +61,7 @@ public class main {
         // Until--> work!  ==> 좀 바꿔줘야할듯?    -1 이 무슨 state 인 상태인걸까???
 //        property.setPrevState("Free");
 
-        MCIPropertyChecker existenceChecker = new MCIPropertyChecker();
+//        MCIPropertyChecker existenceChecker = new MCIPropertyChecker();
 //        MCIAbsenceChecker absenceChecker = new MCIAbsenceChecker();
 //        MCIUniversalityChecker universalityChecker = new MCIUniversalityChecker();
 //        MCITransientSPChecker transientSPChecker = new MCITransientSPChecker();
@@ -69,25 +69,30 @@ public class main {
 //        MCIMinimumDurationChecker minimumDurationChecker = new MCIMinimumDurationChecker();
 //        MCIMaximumDurationChecker maximumDurationChecker = new MCIMaximumDurationChecker();
 //        MCIBoundedExistenceChecker boundedExistenceChecker = new MCIBoundedExistenceChecker();
-//        MCIPrecedenceChecker precedenceChecker = new MCIPrecedenceChecker();
+        MCIPrecedenceChecker precedenceChecker = new MCIPrecedenceChecker();
 //        MCIResponseChecker responseChecker = new MCIResponseChecker();
 //        MCIRecurrenceChecker recurrenceChecker = new MCIRecurrenceChecker();
 //        MCIUntilChecker untilChecker = new MCIUntilChecker();
 
 
 //        verifier = new SPRT(existenceChecker);
-        verifier = new RuntimeVerification(existenceChecker);
+//        verifier = new RuntimeVerification(existenceChecker);
 //        verifier = new SPRT(absenceChecker);
+//        verifier = new RuntimeVerification(absenceChecker);
 //        verifier = new SPRT(universalityChecker);
+//        verifier = new RuntimeVerification(universalityChecker);
 //        verifier = new SPRT(transientSPChecker);
 //        verifier = new RuntimeVerification(transientSPChecker);
 //        verifier = new SPRT(steadySPChecker);
 //        verifier = new RuntimeVerification(steadySPChecker);
 //        verifier = new SPRT(minimumDurationChecker);
+//        verifier = new RuntimeVerification(minimumDurationChecker);
 //        verifier = new SPRT(maximumDurationChecker);
+//        verifier = new RuntimeVerification(maximumDurationChecker);
 //        verifier = new SPRT(boundedExistenceChecker);
 //        verifier = new RuntimeVerification(boundedExistenceChecker);
 //        verifier = new SPRT(precedenceChecker);
+        verifier = new RuntimeVerification(precedenceChecker);
 //        verifier = new SPRT(responseChecker);
 //        verifier = new RuntimeVerification(responseChecker);
 //        verifier = new SPRT(recurrenceChecker);

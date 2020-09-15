@@ -26,6 +26,8 @@ public class MCIAbsenceChecker extends AbsenceChecker {
         }
         
         if(rescueRate - treatRate >= verificationProperty.getThresholdValue()){
+            //rescuerate - treatrate >= 0; return false
+            //rescuerate should be bigger than treatrate?
             return false;
         }
         else{
