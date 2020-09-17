@@ -20,8 +20,8 @@ public class Ambulance extends CS{
         super(world, name);
         router = world.router;
 
-        transferImage = new ImageObject("C:/Users/User/IdeaProjects/SoS-simulation-engine/src/engine/resources/transfer2.png");
-        defaultImage = new ImageObject("C:/Users/User/IdeaProjects/SoS-simulation-engine/src/engine/resources/ambulance1.png");
+        transferImage = new ImageObject("engine/resources/transfer2.png");
+        defaultImage = new ImageObject("engine/resources/ambulance1.png");
 //        transferImage = new ImageObject("src/engine/resources/transfer2.png");
 //        defaultImage = new ImageObject("src/engine/resources/ambulance1.png");
 
