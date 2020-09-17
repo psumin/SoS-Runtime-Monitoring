@@ -29,79 +29,112 @@ public class main {
 
 
         //Verification Properties
+        // Existence
+        MCIProperty property = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+        property.setRescueRate(0.02);
+        MCIPropertyChecker mciPropertyChecker = new MCIPropertyChecker();
 
-        // Existence --> work!
-        MCIProperty property = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence", 0.02);
-        // Absence --> implemented
+        // Absence
+//        MCIProperty property = new MCIProperty("TreatmentRateRescueRateProperty", "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
 //        property.setThresholdValue(0); // RescueRate - TreatmentRate can not be minus
-        // Universality --> implemented
+//        MCIAbsenceChecker mciPropertyChecker = new MCIAbsenceChecker();
+
+        // Universality
+//        MCIProperty property = new MCIProperty("RescueRateProperty", "RescuedPatientRatioLowerThanValue", "MCIUniversality");
 //        property.setThresholdValue(1.0); // RescueRate should be 100%?? condition is rescuerate <= threshold && rescuerate > 0
-        // TransientStateProbability --> work!
+//        MCIUniversalityChecker mciPropertyChecker = new MCIUniversalityChecker();
+
+        // TransientStateProbability
+//        MCIProperty property = new MCIProperty("", "", "MCITransientSP");
 //        property.setStateProbabilityValues(0.6, 60, 81);
-        // SteadyStateProbability --> work!
+//        MCITransientSPChecker mciPropertyChecker = new MCITransientSPChecker();
+
+        // SteadyStateProbability
+//        MCIProperty property = new MCIProperty("", "", "MCISteadySP");
 //        property.setStateProbabilityValues(0.15, 0, 81);
-        // MinimumDuration --> implemented
+//        MCISteadySPChecker mciPropertyChecker = new MCISteadySPChecker();
+
+        // MinimumDuration
+//        MCIProperty property = new MCIProperty("", "", "MCIMinimumDuration");
 //        property.setThresholdValue(1); // FF가 10명 이상 활동하고 있어야 한다. More than 10 FF active -seems like value of 5 and above always results in false?
 //        property.setDuration(65); // 최소 65 Frame 이상   at least 65 frame
-        // MaximumDuration --> implemented
+//        MCIMinimumDurationChecker mciPropertyChecker = new MCIMinimumDurationChecker();
+
+        // MaximumDuration
+//        MCIProperty property = new MCIProperty("", "", "MCIMaximumDuration");
 //        property.setThresholdValue(0); // rescueRate == verificationProperty.getThresholdValue() == 0? is this correct?
 //        property.setDuration(60); // 최대 60 Frame 이하
-        // Bounded Existence --> work!
+//        MCIMaximumDurationChecker mciPropertyChecker = new MCIMaximumDurationChecker();
+
+        // Bounded Existence
+//        MCIProperty property = new MCIProperty("", "", "MCIBoundedExistence");
 //        property.setDuration(20); // Bounded Frame 20
 //        property.setState("Free"); // Ambulance's State가 Free인게 아님을 확인하기 위해
-        // Precedence --> Implemented, precedence checker always returns false in MCIPrecedenceChecker?
-        property.setPrevState("MoveToPatient");
-        property.setState("FirstAid");
-        // Response --> work!  ==> 근데 MCIResponseChecker 좀 바꿔야 할듯. 항상 true로 나오는 것 같음. 숫자 비교를 통해서 treatment의 값이 transfer 보다 작으면  true 인듯?
+//        MCIBoundedExistenceChecker mciPropertyChecker = new MCIBoundedExistenceChecker();
+
+        // Precedence --> Precedence checker always returns false in MCIPrecedenceChecker?
+//        MCIProperty property = new MCIProperty("", "", "MCIPrecedence");
+//        property.setPrevState("MoveToPatient");
+//        property.setState("FirstAid");
+//        MCIPrecedenceChecker mciPropertyChecker = new MCIPrecedenceChecker();
+
+        // Response --> 근데 MCIResponseChecker 좀 바꿔야 할듯. 항상 true로 나오는 것 같음. 숫자 비교를 통해서 treatment의 값이 transfer 보다 작으면  true 인듯?
+//        MCIProperty property = new MCIProperty("", "", "MCIResponse");
 //        property.setPrevState("FirstAid");
 //        property.setState("TransferToBridgehead");
-        // Recurrence --> work!  ==> 근데 MCIrecurrenceChecker 좀 바꿔야 할듯. 이것도 처음부터 true가 나옴.
+//        MCIResponseChecker mciPropertyChecker = new MCIResponseChecker();
+
+        // Recurrence --> 근데 MCIRecurrenceChecker 좀 바꿔야 할듯. 이것도 처음부터 true가 나옴.
+//        MCIProperty property = new MCIProperty("", "", "MCIRecurrence");
 //        property.setPrevState("MoveToPatient");
 //        property.setThresholdValue(51);
-        // Until--> work!  ==> 좀 바꿔줘야할듯?    -1 이 무슨 state 인 상태인걸까???
+//        MCIRecurrenceChecker mciPropertyChecker = new MCIRecurrenceChecker();
+
+        // Until --> 좀 바꿔줘야할듯? -1 이 무슨 state 인 상태인걸까???
+//        MCIProperty property = new MCIProperty("", "", "MCIUntil");
 //        property.setPrevState("Free");
-
-//        MCIPropertyChecker existenceChecker = new MCIPropertyChecker();
-//        MCIAbsenceChecker absenceChecker = new MCIAbsenceChecker();
-//        MCIUniversalityChecker universalityChecker = new MCIUniversalityChecker();
-//        MCITransientSPChecker transientSPChecker = new MCITransientSPChecker();
-//        MCISteadySPChecker steadySPChecker = new MCISteadySPChecker();
-//        MCIMinimumDurationChecker minimumDurationChecker = new MCIMinimumDurationChecker();
-//        MCIMaximumDurationChecker maximumDurationChecker = new MCIMaximumDurationChecker();
-//        MCIBoundedExistenceChecker boundedExistenceChecker = new MCIBoundedExistenceChecker();
-        MCIPrecedenceChecker precedenceChecker = new MCIPrecedenceChecker();
-//        MCIResponseChecker responseChecker = new MCIResponseChecker();
-//        MCIRecurrenceChecker recurrenceChecker = new MCIRecurrenceChecker();
-//        MCIUntilChecker untilChecker = new MCIUntilChecker();
+//        MCIUntilChecker mciPropertyChecker = new MCIUntilChecker();
 
 
-//        verifier = new SPRT(existenceChecker);
-//        verifier = new RuntimeVerification(existenceChecker);
-//        verifier = new SPRT(absenceChecker);
-//        verifier = new RuntimeVerification(absenceChecker);
-//        verifier = new SPRT(universalityChecker);
-//        verifier = new RuntimeVerification(universalityChecker);
-//        verifier = new SPRT(transientSPChecker);
-//        verifier = new RuntimeVerification(transientSPChecker);
-//        verifier = new SPRT(steadySPChecker);
-//        verifier = new RuntimeVerification(steadySPChecker);
-//        verifier = new SPRT(minimumDurationChecker);
-//        verifier = new RuntimeVerification(minimumDurationChecker);
-//        verifier = new SPRT(maximumDurationChecker);
-//        verifier = new RuntimeVerification(maximumDurationChecker);
-//        verifier = new SPRT(boundedExistenceChecker);
-//        verifier = new RuntimeVerification(boundedExistenceChecker);
-//        verifier = new SPRT(precedenceChecker);
-        verifier = new RuntimeVerification(precedenceChecker);
-//        verifier = new SPRT(responseChecker);
-//        verifier = new RuntimeVerification(responseChecker);
-//        verifier = new SPRT(recurrenceChecker);
-//        verifier = new RuntimeVerification(recurrenceChecker);
-//        verifier = new SPRT(untilChecker);
-//        verifier = new RuntimeVerification(untilChecker);
+
+
+//        verifier = new SPRT(mciPropertyChecker);
+
+        // Scopes
+        // Globally
+//        verifier = new RuntimeVerification(mciPropertyChecker);
+
+        // Before
+//        MCIProperty event = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+//        event.setRescueRate(0.02);
+//        MCIPropertyChecker eventPropertyChecker = new MCIPropertyChecker();
+//        verifier = new RuntimeVerification(mciPropertyChecker, "Before", event, eventPropertyChecker);
+
+        // After
+//        MCIProperty event = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+//        event.setRescueRate(0.02);
+//        MCIPropertyChecker eventPropertyChecker = new MCIPropertyChecker();
+//        verifier = new RuntimeVerification(mciPropertyChecker, "After", event, eventPropertyChecker);
+
+        // Between
+//        MCIProperty beforeEvent = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+//        beforeEvent.setRescueRate(0.02);
+//        MCIPropertyChecker beforeEventPropertyChecker = new MCIPropertyChecker();
+//        MCIProperty afterEvent = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+//        beforeEvent.setRescueRate(0.50);
+//        MCIPropertyChecker afterEventPropertyChecker = new MCIPropertyChecker();
+//        verifier = new RuntimeVerification(mciPropertyChecker, "Between", beforeEvent, beforeEventPropertyChecker, afterEvent, afterEventPropertyChecker);
+
+        // Interval
+//        verifier = new RuntimeVerification(mciPropertyChecker, "Interval", 100, 500);
+
+        // Existence
+        MCIProperty event = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+        event.setRescueRate(0.02);
+        MCIPropertyChecker eventPropertyChecker = new MCIPropertyChecker();
+        verifier = new RuntimeVerification(mciPropertyChecker, "Existence", event, eventPropertyChecker);
+
         Pair<Pair<Integer, Boolean>, String> verificationResult;
-
-
 
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
         simulationEngine.setRunning();
