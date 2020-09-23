@@ -18,10 +18,12 @@ public class RuntimeVerification extends Verifier {
     protected PropertyChecker end_event_checker;
 
     protected String scope;
+    protected String scope_text;
 
     public RuntimeVerification(PropertyChecker checker) {
         super(checker);
-        this.scope = null;
+        this.scope = "Globally";
+        this.scope_text = "Globally";
     }
 
     public RuntimeVerification(PropertyChecker checker, String scope, int start_tick, int end_tick) {
@@ -32,6 +34,7 @@ public class RuntimeVerification extends Verifier {
             this.end_tick = end_tick;
             this.isStarted = false;
             this.isEnded = false;
+            this.scope_text = "Interval from tick " + start_tick + " to tick " + end_tick;
         }
     }
 
@@ -43,15 +46,18 @@ public class RuntimeVerification extends Verifier {
             this.end_event_checker = propertyChecker;
             this.isStarted = true;
             this.isEnded = false;
+            this.scope_text = "Before " + property.getName();
         } else if (scope.equals("After")) {
             this.scope = "After";
             this.start_event = property;
             this.start_event_checker = propertyChecker;
             this.isStarted = false;
+            this.scope_text = "After " + property.getName();
         } else if (scope.equals("Existence")) {
             this.scope = "Existence";
             this.start_event = property;
             this.start_event_checker = propertyChecker;
+            this.scope_text = "Existence of " + property.getName();
         }
     }
 
@@ -65,11 +71,12 @@ public class RuntimeVerification extends Verifier {
             this.end_event_checker = propertyChecker2;
             this.isStarted = false;
             this.isEnded = false;
+            this.scope_text = "Between " + property1.getName() + " and " + property2.getName();
         }
     }
 
     public boolean checkScope(Log log) {
-        if (this.scope == null) {
+        if (this.scope.equals("Globally")) {
             return true;
         }
 
@@ -117,11 +124,11 @@ public class RuntimeVerification extends Verifier {
         boolean verificationResult;
         if (checkScope(log)){
             verificationResult = (this.propertychecker.check(log, verificationProperty));
-            System.out.println("Verification result: " + verificationResult);
+            System.out.println(verificationProperty.getName() + " in Scope " + this.scope_text + " / Verification result: " + verificationResult);
             return verificationResult;
         }
 
-        System.out.println("Verification result: Not in the Scope");
+//        System.out.println(verificationProperty.getName() + " in Scope " + this.scope_text + " / Verification result: Not in the Scope");
         return true;
     }
 }

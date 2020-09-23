@@ -13,6 +13,7 @@ import java.awt.event.*;
 // Add parts of key
 
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.*;
 
@@ -233,7 +234,7 @@ public class SoSSimulationProgram implements KeyListener {
         return log;
     }
 
-    public Log runtimeVerificationRun(RuntimeVerification verifier, MCIProperty property){
+    public Log runtimeVerificationRun(ArrayList<RuntimeVerification> verifiers, ArrayList<MCIProperty> properties){
 //        Scanner scan = new Scanner();
 //        RuntimeMonitoring runtimeMonitoring = new RuntimeMonitoring();
 //        String className = "core.World";
@@ -256,7 +257,12 @@ public class SoSSimulationProgram implements KeyListener {
                 currentUpdateTime = System.nanoTime();
                 if (!pause) {
                     update((int) ((currentUpdateTime - lastUpdateTime) / (1000 * 1000)), log);
-                    verifier.RuntimeVerificationResult(log, property);
+                    System.out.println(this.world.frameCount);
+                    for(int i = 0; i < properties.size(); i++){
+                        RuntimeVerification verifier = verifiers.get(i);
+                        MCIProperty property = properties.get(i);
+                        verifier.RuntimeVerificationResult(log, property);
+                    }
                 } else {                                                // 키보드 입력을 통한 pause 는 첫 번째 시뮬레이션에서만!
                     frame.setVisible(true);                            // pause 상태에서는 GUI 를 숨긴다.
                     if (isExpert) {                                     // Expert 모드와 Beginner 모드가 존재함

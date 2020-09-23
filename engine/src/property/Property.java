@@ -32,4 +32,7 @@ public class Property {
     public int getDuration() {return -1;}
     public String getState() {return "-1";}
     public String getPrevState() {return "-1";}
+    public String getName() {
+        return name;
+    }
 }

@@ -441,7 +441,7 @@ public class World extends SoSObject {
         addChild(organization);
     }
 
-    int frameCount = 0;
+    public int frameCount = 0;
     public int savedPatientCount = 0;
 
     // Update at every frame
