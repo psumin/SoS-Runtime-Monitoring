@@ -1,28 +1,30 @@
 package property;
 
 public class MCIProperty extends Property {
-
   double rescueRate;
   double thresholdValue;
   String prevState;
   String state;
-  
-  public MCIProperty(String name, String specification, String propertyType, double etc) {
+
+  public MCIProperty(String name, String specification, String propertyType) {
     super(name, specification, propertyType);
-    this.rescueRate = etc;
   }
 
   double prob;
   int t;
   int T;
   int duration;
-  
+
+  public void setRescueRate(double rescueRate) {
+    this.rescueRate = rescueRate;
+  }
+
   public void setStateProbabilityValues(double prob, int t, int T) {
     this.prob = prob;
     this.t = t;
     this.T = T;
   }
-  
+
   public double getProb() {
     return this.prob;
   }
