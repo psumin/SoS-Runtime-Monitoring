@@ -34,12 +34,12 @@ public class main {
         ArrayList<MCIProperty> properties = new ArrayList<MCIProperty>(0);
 
         // Existence
-        MCIProperty property = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
-        property.setRescueRate(0.02);
-        MCIPropertyChecker mciPropertyChecker = new MCIPropertyChecker();
-        properties.add(property);
-        properties.add(property);
-        properties.add(property);
+//        MCIProperty property = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+//        property.setRescueRate(0.02);
+//        MCIPropertyChecker mciPropertyChecker = new MCIPropertyChecker();
+//        properties.add(property);
+//        properties.add(property);
+//        properties.add(property);
 
         // Absence
 //        MCIProperty property = new MCIProperty("TreatmentRateRescueRateProperty", "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
@@ -73,11 +73,11 @@ public class main {
 //        properties.add(property);
 
         // MaximumDuration
-//        MCIProperty property = new MCIProperty("", "", "MCIMaximumDuration");
-//        property.setThresholdValue(0); // rescueRate == verificationProperty.getThresholdValue() == 0? is this correct?
-//        property.setDuration(60); // 최대 60 Frame 이하
-//        MCIMaximumDurationChecker mciPropertyChecker = new MCIMaximumDurationChecker();
-//        properties.add(property);
+        MCIProperty property = new MCIProperty("", "", "MCIMaximumDuration");
+        property.setThresholdValue(0); // rescueRate == verificationProperty.getThresholdValue() == 0? is this correct?
+        property.setDuration(60); // 최대 60 Frame 이하
+        MCIMaximumDurationChecker mciPropertyChecker = new MCIMaximumDurationChecker();
+        properties.add(property);
 
         // Bounded Existence
 //        MCIProperty property = new MCIProperty("", "", "MCIBoundedExistence");
