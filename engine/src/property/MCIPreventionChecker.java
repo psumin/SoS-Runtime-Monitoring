@@ -27,22 +27,23 @@ public class MCIPreventionChecker extends PreventionChecker {
         int logSize = snapshots.size(); // 0 ... 10 => size: 11, endTime: 10
         ArrayList<Integer> prevList = new ArrayList<>(Collections.nCopies(50,-1));
         //ArrayList<Integer> latterList = new ArrayList<>(Collections.nCopies(50,-1));
-        ArrayList<Integer> indexCounter = new ArrayList<>(Collections.nCopies(15,0));
+        //ArrayList<Integer> indexCounter = new ArrayList<>(Collections.nCopies(15,0));
         boolean occurrence = false;
-        double treatRate = -1;
+        double rescueRate = -1;
 
         for(int i = 1; i < logSize; i++) {
             temp = snapshots.get(i).getSnapshotString();
+            //System.out.println(temp);
 
             StringTokenizer st = new StringTokenizer(temp, " ");
             counter = 0;
             while(st.hasMoreTokens()) {
                 String tokens = st.nextToken();
                 if(occurrence){
-                    if(tokens.equals("TreatmentRate:")) {
-                        treatRate = Double.parseDouble(st.nextToken());
-                        System.out.println(temp);
-                        if(treatRate <= verificationProperty.getThresholdValue()){
+                    if(tokens.equals("RescuedRate:")) {
+                        rescueRate = Double.parseDouble(st.nextToken());
+                        //System.out.println(temp);
+                        if(rescueRate <= verificationProperty.getThresholdValue()){
                             return false;
                         }
                         break;
@@ -57,9 +58,16 @@ public class MCIPreventionChecker extends PreventionChecker {
                     while(counter < numFF) {
                         String fflog = st.nextToken();
                         if(fflog.contains(prev)) { // 마지막으로 prev state가 관찰될때
-                            System.out.println(temp);
-                            occurrence = true;
-                            break;
+                            //System.out.println(temp);
+                            //occurrence = true;
+                            prevList.set(counter, 1);
+                        }
+                        else{
+                            if(prevList.get(counter)==1) {
+                                System.out.println(temp);
+                                occurrence = true;
+                                break;
+                            }
                         }
                         counter++;
                     }
