@@ -120,7 +120,7 @@ public class main {
 //        properties.add(property);
 
         // Prevention
-        MCIProperty property = new MCIProperty("", "", "MCIPrevention", 0);
+        MCIProperty property = new MCIProperty("", "", "MCIPrevention");
         property.setPrevState("TransferToBridgehead");
         property.setThresholdValue(0);
         MCIPreventionChecker mciPropertyChecker = new MCIPreventionChecker();
