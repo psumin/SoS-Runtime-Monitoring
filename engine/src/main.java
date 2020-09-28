@@ -73,11 +73,11 @@ public class main {
 //        properties.add(property);
 
         // MaximumDuration
-        MCIProperty property = new MCIProperty("", "", "MCIMaximumDuration");
-        property.setThresholdValue(0); // rescueRate == verificationProperty.getThresholdValue() == 0? is this correct?
-        property.setDuration(60); // 최대 60 Frame 이하
-        MCIMaximumDurationChecker mciPropertyChecker = new MCIMaximumDurationChecker();
-        properties.add(property);
+//        MCIProperty property = new MCIProperty("", "", "MCIMaximumDuration");
+//        property.setThresholdValue(0); // rescueRate == verificationProperty.getThresholdValue() == 0? is this correct?
+//        property.setDuration(60); // 최대 60 Frame 이하
+//        MCIMaximumDurationChecker mciPropertyChecker = new MCIMaximumDurationChecker();
+//        properties.add(property);
 
         // Bounded Existence
 //        MCIProperty property = new MCIProperty("", "", "MCIBoundedExistence");
@@ -112,6 +112,11 @@ public class main {
 //        property.setPrevState("Free");
 //        MCIUntilChecker mciPropertyChecker = new MCIUntilChecker();
 //        properties.add(property);
+
+        // NumberOfEvents
+        MCIProperty property = new MCIProperty("", "", "MCINumberofEvents");
+        MCINumberofEventsChecker mciPropertyChecker = new MCINumberofEventsChecker();
+        properties.add(property);
 
 
 //        SPRT verifier;
