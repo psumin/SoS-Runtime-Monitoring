@@ -31,7 +31,7 @@ public class main {
         //Verification Properties
 
         // Existence --> work!
-        MCIProperty property = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence", 0.02);
+//        MCIProperty property = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence", 0.02);
         // Absence --> implemented
 //        property.setThresholdValue(0); // RescueRate - TreatmentRate can not be minus
         // Universality --> implemented
@@ -50,9 +50,10 @@ public class main {
 //        property.setDuration(20); // Bounded Frame 20
 //        property.setState("Free"); // Ambulance's State가 Free인게 아님을 확인하기 위해
         // Precedence --> Implemented, precedence checker always returns false in MCIPrecedenceChecker?
-        property.setPrevState("MoveToPatient");
-        property.setState("FirstAid");
+        //property.setPrevState("MoveToPatient");
+        //property.setState("FirstAid");
         // Response --> work!  ==> 근데 MCIResponseChecker 좀 바꿔야 할듯. 항상 true로 나오는 것 같음. 숫자 비교를 통해서 treatment의 값이 transfer 보다 작으면  true 인듯?
+//        MCIProperty property = new MCIProperty("", "", "MCIResponse", 0);
 //        property.setPrevState("FirstAid");
 //        property.setState("TransferToBridgehead");
         // Recurrence --> work!  ==> 근데 MCIrecurrenceChecker 좀 바꿔야 할듯. 이것도 처음부터 true가 나옴.
@@ -60,6 +61,9 @@ public class main {
 //        property.setThresholdValue(51);
         // Until--> work!  ==> 좀 바꿔줘야할듯?    -1 이 무슨 state 인 상태인걸까???
 //        property.setPrevState("Free");
+        MCIProperty property = new MCIProperty("", "", "MCIPrevention", 0);
+        property.setPrevState("TransferToBridgehead");
+        property.setThresholdValue(0);
 
 //        MCIPropertyChecker existenceChecker = new MCIPropertyChecker();
 //        MCIAbsenceChecker absenceChecker = new MCIAbsenceChecker();
@@ -69,10 +73,11 @@ public class main {
 //        MCIMinimumDurationChecker minimumDurationChecker = new MCIMinimumDurationChecker();
 //        MCIMaximumDurationChecker maximumDurationChecker = new MCIMaximumDurationChecker();
 //        MCIBoundedExistenceChecker boundedExistenceChecker = new MCIBoundedExistenceChecker();
-        MCIPrecedenceChecker precedenceChecker = new MCIPrecedenceChecker();
+//        MCIPrecedenceChecker precedenceChecker = new MCIPrecedenceChecker();
 //        MCIResponseChecker responseChecker = new MCIResponseChecker();
 //        MCIRecurrenceChecker recurrenceChecker = new MCIRecurrenceChecker();
 //        MCIUntilChecker untilChecker = new MCIUntilChecker();
+        MCIPreventionChecker preventionChecker = new MCIPreventionChecker();
 
 
 //        verifier = new SPRT(existenceChecker);
@@ -92,13 +97,14 @@ public class main {
 //        verifier = new SPRT(boundedExistenceChecker);
 //        verifier = new RuntimeVerification(boundedExistenceChecker);
 //        verifier = new SPRT(precedenceChecker);
-        verifier = new RuntimeVerification(precedenceChecker);
+//        verifier = new RuntimeVerification(precedenceChecker);
 //        verifier = new SPRT(responseChecker);
 //        verifier = new RuntimeVerification(responseChecker);
 //        verifier = new SPRT(recurrenceChecker);
 //        verifier = new RuntimeVerification(recurrenceChecker);
 //        verifier = new SPRT(untilChecker);
 //        verifier = new RuntimeVerification(untilChecker);
+        verifier = new RuntimeVerification(preventionChecker);
         Pair<Pair<Integer, Boolean>, String> verificationResult;
 
 
