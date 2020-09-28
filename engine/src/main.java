@@ -34,12 +34,12 @@ public class main {
         ArrayList<MCIProperty> properties = new ArrayList<MCIProperty>(0);
 
         // Existence
-        MCIProperty property = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
-        property.setRescueRate(0.02);
-        MCIPropertyChecker mciPropertyChecker = new MCIPropertyChecker();
-        properties.add(property);
-        properties.add(property);
-        properties.add(property);
+//        MCIProperty property = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+//        property.setRescueRate(0.02);
+//        MCIPropertyChecker mciPropertyChecker = new MCIPropertyChecker();
+//        properties.add(property);
+//        properties.add(property);
+//        properties.add(property);
 
         // Absence
 //        MCIProperty property = new MCIProperty("TreatmentRateRescueRateProperty", "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
@@ -112,6 +112,12 @@ public class main {
 //        property.setPrevState("Free");
 //        MCIUntilChecker mciPropertyChecker = new MCIUntilChecker();
 //        properties.add(property);
+
+        // NumberOfEvents
+        MCIProperty property = new MCIProperty("RouteMsgCountProperty", "RouteMsgCountLTEQX", "MCINumberofEvents");
+        property.setThresholdValue(600);
+        MCINumberofEventsChecker mciPropertyChecker = new MCINumberofEventsChecker();
+        properties.add(property);
 
 
 //        SPRT verifier;

@@ -5,6 +5,7 @@ import action.ambulanceaction.AmbulanceMoveToBridgehead;
 import action.ambulanceaction.AmbulanceSearch;
 import action.ambulanceaction.AmbulanceTransferToHospital;
 import action.firefighteraction.*;
+import action.Action;
 
 import agents.*;
 //import misc.ExcelHelper;
@@ -147,7 +148,6 @@ public class World extends SoSObject {
 //    long endFrame = 0;                                                              // 프로그램 종료의 frame 수
 
     int maxFrame = 0;                                                               // 시뮬레이션 한 번의 최대 frame 수
-
     public int transferCounter = 0;                                                 // Hospital에서 치료를 마친 환자 수
     public int rescuedPatientCount = 0;                                             // Bridgehead까지 이송 시킨 환자 수
 
