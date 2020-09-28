@@ -114,9 +114,16 @@ public class main {
 //        properties.add(property);
 
         // NumberOfEvents
-        MCIProperty property = new MCIProperty("RouteMsgCountProperty", "RouteMsgCountLTEQX", "MCINumberofEvents");
-        property.setThresholdValue(600);
-        MCINumberofEventsChecker mciPropertyChecker = new MCINumberofEventsChecker();
+//        MCIProperty property = new MCIProperty("RouteMsgCountProperty", "RouteMsgCountLTEQX", "MCINumberofEvents");
+//        property.setThresholdValue(600);
+//        MCINumberofEventsChecker mciPropertyChecker = new MCINumberofEventsChecker();
+//        properties.add(property);
+
+        // Prevention
+        MCIProperty property = new MCIProperty("", "", "MCIPrevention");
+        property.setPrevState("TransferToBridgehead");
+        property.setThresholdValue(0);
+        MCIPreventionChecker mciPropertyChecker = new MCIPreventionChecker();
         properties.add(property);
 
 
