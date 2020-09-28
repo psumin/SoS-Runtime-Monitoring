@@ -148,7 +148,6 @@ public class World extends SoSObject {
 //    long endFrame = 0;                                                              // 프로그램 종료의 frame 수
 
     int maxFrame = 0;                                                               // 시뮬레이션 한 번의 최대 frame 수
-    CS globalCS = null;
     public int transferCounter = 0;                                                 // Hospital에서 치료를 마친 환자 수
     public int rescuedPatientCount = 0;                                             // Bridgehead까지 이송 시킨 환자 수
 
@@ -1488,8 +1487,6 @@ public class World extends SoSObject {
         cs.canUpdate(false);
         cs.currentAction.name = "Removed";
 
-        globalCS = cs;
-
         // Remove 하려는 CS가 Firefighter인 경우
         // 현재의 action 상태에 따라 다르게 처리한다.
         if(cs instanceof FireFighter) {
@@ -1814,15 +1811,6 @@ public class World extends SoSObject {
 
     public int getFFNumber() {
         return fireFighterCounter;
-    }
-
-    public Action getCSAction() {
-        if (globalCS != null) {
-            return globalCS.currentAction;
-        }
-        else {
-            return null;
-        }
     }
 
     public int getAmbNumber() {

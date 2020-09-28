@@ -114,7 +114,8 @@ public class main {
 //        properties.add(property);
 
         // NumberOfEvents
-        MCIProperty property = new MCIProperty("", "", "MCINumberofEvents");
+        MCIProperty property = new MCIProperty("RouteMsgCountProperty", "RouteMsgCountLTEQX", "MCINumberofEvents");
+        property.setThresholdValue(600);
         MCINumberofEventsChecker mciPropertyChecker = new MCINumberofEventsChecker();
         properties.add(property);
 
