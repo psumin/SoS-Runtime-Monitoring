@@ -4,14 +4,6 @@ import log.Log;
 import log.Snapshot;
 
 public abstract class PropertyChecker {
-
-/*
-  public PropertyChecker() {  //constructor
-
-
-  }
-*/
-
     /**
      * A method to evaluate a property satisfaction for a snapshot.
      *

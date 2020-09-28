@@ -69,6 +69,7 @@ public class MsgRouter extends SoSObject {
     private int TOTAL_ORG_TO_BRIDGE_SEND = 0;
     private int TOTAL_ORG_TO_BRIDGE_RECV = 0;
 
+    private int routeCount = 0;
 
     private class DelayedMsg {
         public Msg source;
@@ -257,6 +258,7 @@ public class MsgRouter extends SoSObject {
         SoSObject target = world.findObject(msg.to);
         if(target != null) {
             target.recvMsg(msg);
+            routeCount++;
         }
     }
 
@@ -500,6 +502,10 @@ public class MsgRouter extends SoSObject {
                 }
             });
         }
+    }
+
+    public int getRouteCount() {
+       return routeCount;
     }
 
     public void add(Delay condition) {
