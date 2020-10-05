@@ -28,10 +28,10 @@ public class main {
 
         //verification method
 //        ArrayList<SPRT> sprtVerifiers = new ArrayList<SPRT>(0);
-        ArrayList<RuntimeVerification> runtimeVerifiers = new ArrayList<RuntimeVerification>(0);
+        ArrayList<RuntimeVerification> runtimeVerifiers = new ArrayList<RuntimeVerification>(0);        // 여러개를 한번에 처리하기 위해 배열로 정의
 
         //Verification Properties
-        ArrayList<MCIProperty> properties = new ArrayList<MCIProperty>(0);
+        ArrayList<MCIProperty> properties = new ArrayList<MCIProperty>(0);                      // 다양한 pattern 들을 한번에 처리하기 위해 배열로 정의
 
         // Existence
 //        MCIProperty property = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
