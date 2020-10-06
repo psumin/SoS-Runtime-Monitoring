@@ -49,7 +49,8 @@ public class main {
 //        MCIAbsenceChecker mciPropertyChecker = new MCIAbsenceChecker();
 //        properties.add(property);
 
-        // Universality: 설정한 thresholdvalue 값보다 시뮬레이션이 끝날때까지 작아야 함을 확인하는 시나리오
+        // Universality
+        // 설명: '시뮬레이션 종료 시점'까지, [Rescue rate이 0% 이상 100% 이하]가 항상 만족된다.
 //        MCIProperty property = new MCIProperty("RescueRateProperty", "RescuedPatientRatioLowerThanValue", "MCIUniversality");
 //        property.setThresholdValue(1.0); // RescueRate should be 100%?? condition is rescuerate <= threshold && rescuerate > 0
 //        MCIUniversalityChecker mciPropertyChecker = new MCIUniversalityChecker();
