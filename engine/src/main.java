@@ -119,6 +119,7 @@ public class main {
 //        properties.add(property);
 
         // Until --> 좀 바꿔줘야할듯? -1 이 무슨 state 인 상태인걸까???
+        // 설명: 'RescueRate = 1.00인 상태'까지, [모든 소방 요원들이 활동하는] 상태가 지속될 확률이 '기대 확률' 이상이다.
 //        MCIProperty property = new MCIProperty("", "", "MCIUntil");
 //        property.setPrevState("Free");
 //        MCIUntilChecker mciPropertyChecker = new MCIUntilChecker();
