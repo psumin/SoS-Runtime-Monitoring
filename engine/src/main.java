@@ -86,7 +86,8 @@ public class main {
 //        MCIMaximumDurationChecker mciPropertyChecker = new MCIMaximumDurationChecker();
 //        properties.add(property);
 
-        // Bounded Existence
+        // BoundedExistence
+        // 설명: '입력 시점 t'까지, [모든 Ambulance가 활동 상태가 되는 사건]이 만족될 확률이 '기대 확률' 이상이다.
 //        MCIProperty property = new MCIProperty("", "", "MCIBoundedExistence");
 //        property.setDuration(20); // Bounded Frame 20
 //        property.setState("Free"); // Ambulance's State가 Free인게 아님을 확인하기 위해
