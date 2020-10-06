@@ -71,6 +71,7 @@ public class main {
 //        properties.add(property);
 
         // MinimumDuration
+        // 설명: '시뮬레이션 종료 시점'까지, [생성된 소방 요원들의 활동율이 문턱 활동율보다 큰] 상태가 최소 [일정 논리 시간] 이상 지속될 확률이 '기대 확률' 이상이다.
 //        MCIProperty property = new MCIProperty("", "", "MCIMinimumDuration");
 //        property.setThresholdValue(1); // FF가 10명 이상 활동하고 있어야 한다. More than 10 FF active -seems like value of 5 and above always results in false?
 //        property.setDuration(65); // 최소 65 Frame 이상   at least 65 frame
