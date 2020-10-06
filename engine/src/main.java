@@ -33,7 +33,7 @@ public class main {
         //Verification Properties
         ArrayList<MCIProperty> properties = new ArrayList<MCIProperty>(0);                      // 다양한 pattern 들을 한번에 처리하기 위해 배열로 정의
 
-        // Existence
+        // Existence: 설정한 rescuerate 보다 더 높은 수치의 환자를 구하는지 확인하는 시나리오
 //        MCIProperty property = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
 //        property.setRescueRate(0.02);
 //        MCIPropertyChecker mciPropertyChecker = new MCIPropertyChecker();
