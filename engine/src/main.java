@@ -56,7 +56,8 @@ public class main {
 //        MCIUniversalityChecker mciPropertyChecker = new MCIUniversalityChecker();
 //        properties.add(property);
 
-        // TransientStateProbability:
+        // TransientStateProbability
+        // 설명: '시뮬레이션 종료 시점'까지, '지정 시간' 이후로 [구조된 환자의 수가 '문턱 환자 수'보다 큰] 상태가 지속될 확률이 '기대 확률' 이상이다.
 //        MCIProperty property = new MCIProperty("", "", "MCITransientSP");
 //        property.setStateProbabilityValues(0.6, 60, 81);
 //        MCITransientSPChecker mciPropertyChecker = new MCITransientSPChecker();
