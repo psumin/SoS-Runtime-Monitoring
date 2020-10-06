@@ -64,6 +64,7 @@ public class main {
 //        properties.add(property);
 
         // SteadyStateProbability
+        // 설명: '시뮬레이션 종료 시점'까지, 긴 시간동안 [구조된 환자의 수가 '문턱 환자 수'보다 큰] 상태가 지속될 확률이 '기대 확률' 이상이다.
 //        MCIProperty property = new MCIProperty("", "", "MCISteadySP");
 //        property.setStateProbabilityValues(0.15, 0, 81);
 //        MCISteadySPChecker mciPropertyChecker = new MCISteadySPChecker();
