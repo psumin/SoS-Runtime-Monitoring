@@ -111,6 +111,7 @@ public class main {
 //        properties.add(property);
 
         // Recurrence --> 근데 MCIRecurrenceChecker 좀 바꿔야 할듯. 이것도 처음부터 true가 나옴.
+        // 설명: '시뮬레이션 종료 시점'까지, [모든 소방요원들이 일정 논리 시간 간격으로 환자 구조를 반복하는] 상태가 지속될 확률이 '기대 확률' 이상이다.
 //        MCIProperty property = new MCIProperty("", "", "MCIRecurrence");
 //        property.setPrevState("MoveToPatient");
 //        property.setThresholdValue(51);
