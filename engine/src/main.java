@@ -42,7 +42,8 @@ public class main {
 //        properties.add(property);
 //        properties.add(property);
 
-        // Absence: 설정한 thresholdvalue 값보다 작은 값이 나올 수 없음을 확인하는 시나리오
+        // Absence
+        // 설명: '시뮬레이션 종료 시점'까지, [Rescue rate보다 Treatment rate이 더 큰] 상태가 발생할 확률이 '기대 확률' 미만이다.
 //        MCIProperty property = new MCIProperty("TreatmentRateRescueRateProperty", "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
 //        property.setThresholdValue(0); // RescueRate - TreatmentRate can not be minus
 //        MCIAbsenceChecker mciPropertyChecker = new MCIAbsenceChecker();
