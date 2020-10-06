@@ -79,6 +79,7 @@ public class main {
 //        properties.add(property);
 
         // MaximumDuration
+        // 설명: '시뮬레이션 종료 시점'까지, [남은 환자가 문턱 환자수 이하인] 상태가 최대 [일정 논리 시간]까지 지속될 확률이 '기대 확률' 이상이다.
 //        MCIProperty property = new MCIProperty("", "", "MCIMaximumDuration");
 //        property.setThresholdValue(0); // rescueRate == verificationProperty.getThresholdValue() == 0? is this correct?
 //        property.setDuration(60); // 최대 60 Frame 이하
