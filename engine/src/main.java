@@ -33,7 +33,8 @@ public class main {
         //Verification Properties
         ArrayList<MCIProperty> properties = new ArrayList<MCIProperty>(0);                      // 다양한 pattern 들을 한번에 처리하기 위해 배열로 정의
 
-        // Existence: 설정한 rescuerate 보다 더 높은 수치의 환자를 구하는지 확인하는 시나리오
+        // Existence
+        // 설명: '시뮬레이션 종료 시점'까지, [누적된 발생 환자의 수가 '전체 기대 환자 수'와 같아지는 사건]이 언젠가 만족될 확률이 '기대 확률' 이상이다.
 //        MCIProperty property = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
 //        property.setRescueRate(0.02);
 //        MCIPropertyChecker mciPropertyChecker = new MCIPropertyChecker();
@@ -53,7 +54,7 @@ public class main {
 //        MCIUniversalityChecker mciPropertyChecker = new MCIUniversalityChecker();
 //        properties.add(property);
 
-        // TransientStateProbability
+        // TransientStateProbability:
 //        MCIProperty property = new MCIProperty("", "", "MCITransientSP");
 //        property.setStateProbabilityValues(0.6, 60, 81);
 //        MCITransientSPChecker mciPropertyChecker = new MCITransientSPChecker();
