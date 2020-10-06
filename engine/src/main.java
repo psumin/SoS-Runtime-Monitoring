@@ -95,6 +95,7 @@ public class main {
 //        properties.add(property);
 
         // Precedence --> Precedence checker always returns false in MCIPrecedenceChecker?
+        // 설명: '시뮬레이션 종료 시점'까지, [소방 요원이 Rescue Activity를 진행하는] 상태가 [소방요원이 Treatment Activity를 진행하는] 상태보다 선행될 확률이 '기대 확률' 이상이다.
 //        MCIProperty property = new MCIProperty("", "", "MCIPrecedence");
 //        property.setPrevState("MoveToPatient");
 //        property.setState("FirstAid");
