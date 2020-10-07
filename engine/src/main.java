@@ -33,62 +33,67 @@ public class main {
         //Verification Properties
         ArrayList<MCIProperty> properties = new ArrayList<MCIProperty>(0);                      // 다양한 pattern 들을 한번에 처리하기 위해 배열로 정의
 
-        // Existence
-        // 설명: '시뮬레이션 종료 시점'까지, [누적된 발생 환자의 수가 '전체 기대 환자 수'와 같아지는 사건]이 언젠가 만족될 확률이 '기대 확률' 이상이다.
-        MCIProperty existenceProperty = new MCIProperty("[Existence Pattern] RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
-        existenceProperty.setRescueRate(0.02);
-        MCIPropertyChecker existencePropertyChecker = new MCIPropertyChecker();
-        properties.add(existenceProperty);
-        properties.add(existenceProperty);
-        properties.add(existenceProperty);
-        properties.add(existenceProperty);
-        properties.add(existenceProperty);
-        properties.add(existenceProperty);
-
-
-        // Absence
-        // 설명: '시뮬레이션 종료 시점'까지, [Rescue rate보다 Treatment rate이 더 큰] 상태가 발생할 확률이 '기대 확률' 미만이다.
-        MCIProperty absenceProperty = new MCIProperty("[Absence Pattern] TreatmentRateRescueRateProperty", "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
-        absenceProperty.setThresholdValue(0); // RescueRate - TreatmentRate can not be minus
-        MCIAbsenceChecker absencePropertyChecker = new MCIAbsenceChecker();
-        properties.add(absenceProperty);
-        properties.add(absenceProperty);
-        properties.add(absenceProperty);
-        properties.add(absenceProperty);
-        properties.add(absenceProperty);
-        properties.add(absenceProperty);
-
-        // Universality
-        // 설명: '시뮬레이션 종료 시점'까지, [Rescue rate이 0% 이상 100% 이하]가 항상 만족된다.
-        MCIProperty universalityproperty = new MCIProperty("[Universality Pattern] RescueRateProperty", "RescuedPatientRatioLowerThanValue", "MCIUniversality");
-        universalityproperty.setThresholdValue(1.0); // RescueRate should be 100%?? condition is rescuerate <= threshold && rescuerate > 0
-        MCIUniversalityChecker universalityPropertyChecker = new MCIUniversalityChecker();
-        properties.add(universalityproperty);
-        properties.add(universalityproperty);
-        properties.add(universalityproperty);
-        properties.add(universalityproperty);
-        properties.add(universalityproperty);
-        properties.add(universalityproperty);
-
-
-        // TransientStateProbability
-        // 설명: '시뮬레이션 종료 시점'까지, '지정 시간' 이후로 [구조된 환자의 수가 '문턱 환자 수'보다 큰] 상태가 지속될 확률이 '기대 확률' 이상이다.
-        MCIProperty transientStateProbabilityproperty = new MCIProperty("[TransientStateProbability Pattern] ", "", "MCITransientSP");
-        transientStateProbabilityproperty.setStateProbabilityValues(0.6, 60, 81);
-        MCITransientSPChecker transientStateProbabilityPropertyChecker = new MCITransientSPChecker();
-        properties.add(transientStateProbabilityproperty);
-        properties.add(transientStateProbabilityproperty);
-        properties.add(transientStateProbabilityproperty);
-        properties.add(transientStateProbabilityproperty);
-        properties.add(transientStateProbabilityproperty);
-        properties.add(transientStateProbabilityproperty);
+//        // Existence
+//        // 설명: '시뮬레이션 종료 시점'까지, [누적된 발생 환자의 수가 '전체 기대 환자 수'와 같아지는 사건]이 언젠가 만족될 확률이 '기대 확률' 이상이다.
+//        MCIProperty existenceProperty = new MCIProperty("[Existence Pattern] RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+//        existenceProperty.setRescueRate(0.02);
+//        MCIPropertyChecker existencePropertyChecker = new MCIPropertyChecker();
+//        properties.add(existenceProperty);
+//        properties.add(existenceProperty);
+//        properties.add(existenceProperty);
+//        properties.add(existenceProperty);
+//        properties.add(existenceProperty);
+//        properties.add(existenceProperty);
+//
+//
+//        // Absence
+//        // 설명: '시뮬레이션 종료 시점'까지, [Rescue rate보다 Treatment rate이 더 큰] 상태가 발생할 확률이 '기대 확률' 미만이다.
+//        MCIProperty absenceProperty = new MCIProperty("[Absence Pattern] TreatmentRateRescueRateProperty", "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
+//        absenceProperty.setThresholdValue(0); // RescueRate - TreatmentRate can not be minus
+//        MCIAbsenceChecker absencePropertyChecker = new MCIAbsenceChecker();
+//        properties.add(absenceProperty);
+//        properties.add(absenceProperty);
+//        properties.add(absenceProperty);
+//        properties.add(absenceProperty);
+//        properties.add(absenceProperty);
+//        properties.add(absenceProperty);
+//
+//        // Universality
+//        // 설명: '시뮬레이션 종료 시점'까지, [Rescue rate이 0% 이상 100% 이하]가 항상 만족된다.
+//        MCIProperty universalityproperty = new MCIProperty("[Universality Pattern] RescueRateProperty", "RescuedPatientRatioLowerThanValue", "MCIUniversality");
+//        universalityproperty.setThresholdValue(1.0); // RescueRate should be 100%?? condition is rescuerate <= threshold && rescuerate > 0
+//        MCIUniversalityChecker universalityPropertyChecker = new MCIUniversalityChecker();
+//        properties.add(universalityproperty);
+//        properties.add(universalityproperty);
+//        properties.add(universalityproperty);
+//        properties.add(universalityproperty);
+//        properties.add(universalityproperty);
+//        properties.add(universalityproperty);
+//
+//
+//        // TransientStateProbability
+//        // 설명: '시뮬레이션 종료 시점'까지, '지정 시간' 이후로 [구조된 환자의 수가 '문턱 환자 수'보다 큰] 상태가 지속될 확률이 '기대 확률' 이상이다.
+//        MCIProperty transientStateProbabilityproperty = new MCIProperty("[TransientStateProbability Pattern] ", "", "MCITransientSP");
+//        transientStateProbabilityproperty.setStateProbabilityValues(0.6, 60, 81);
+//        MCITransientSPChecker transientStateProbabilityPropertyChecker = new MCITransientSPChecker();
+//        properties.add(transientStateProbabilityproperty);
+//        properties.add(transientStateProbabilityproperty);
+//        properties.add(transientStateProbabilityproperty);
+//        properties.add(transientStateProbabilityproperty);
+//        properties.add(transientStateProbabilityproperty);
+//        properties.add(transientStateProbabilityproperty);
 
         // SteadyStateProbability
         // 설명: '시뮬레이션 종료 시점'까지, 긴 시간동안 [구조된 환자의 수가 '문턱 환자 수'보다 큰] 상태가 지속될 확률이 '기대 확률' 이상이다.
-//        MCIProperty property = new MCIProperty("[SteadyStateProbability Pattern] ", "", "MCISteadySP");
-//        property.setStateProbabilityValues(0.15, 0, 81);
-//        MCISteadySPChecker mciPropertyChecker = new MCISteadySPChecker();
-//        properties.add(property);
+        MCIProperty steadyStateProbabilityproperty = new MCIProperty("[SteadyStateProbability Pattern] ", "", "MCISteadySP");
+        steadyStateProbabilityproperty.setStateProbabilityValues(0.15, 0, 81);
+        MCISteadySPChecker steadyStateProbabilityPropertyChecker = new MCISteadySPChecker();
+        properties.add(steadyStateProbabilityproperty);
+        properties.add(steadyStateProbabilityproperty);
+        properties.add(steadyStateProbabilityproperty);
+        properties.add(steadyStateProbabilityproperty);
+        properties.add(steadyStateProbabilityproperty);
+        properties.add(steadyStateProbabilityproperty);
 
         // MinimumDuration
         // 설명: '시뮬레이션 종료 시점'까지, [생성된 소방 요원들의 활동율이 문턱 활동율보다 큰] 상태가 최소 [일정 논리 시간] 이상 지속될 확률이 '기대 확률' 이상이다.
@@ -165,228 +170,286 @@ public class main {
         RuntimeVerification absenceVerifier;
         RuntimeVerification universalityVerifier;
         RuntimeVerification transientStateProbabilityVerifier;
+        RuntimeVerification steadyStateProbabilityVerifier;
+
+//
+//        // Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes
+//        // Globally
+//        existenceVerifier = new RuntimeVerification(existencePropertyChecker);
+//        runtimeVerifiers.add(existenceVerifier);
+//
+//
+//        // Before
+//        MCIProperty existenceBeforeEvent = new MCIProperty("RescuePatientProperty",
+//                "RescuedPatientRatioUpperThanValue", "MCIExistence");
+//        existenceBeforeEvent.setRescueRate(0.02);
+//        MCIPropertyChecker existenceBeforePropertyChecker = new MCIPropertyChecker();
+//        existenceVerifier = new RuntimeVerification(existencePropertyChecker,
+//                "Before", existenceBeforeEvent, existenceBeforePropertyChecker);
+//        runtimeVerifiers.add(existenceVerifier);
+//
+//
+//        // After
+//        MCIProperty existenceAfterEvent = new MCIProperty("RescuePatientProperty",
+//                "RescuedPatientRatioUpperThanValue", "MCIExistence");
+//        existenceAfterEvent.setRescueRate(0.02);
+//        MCIPropertyChecker existenceAfterPropertyChecker = new MCIPropertyChecker();
+//        existenceVerifier = new RuntimeVerification(existencePropertyChecker,
+//                "After", existenceAfterEvent, existenceAfterPropertyChecker);
+//        runtimeVerifiers.add(existenceVerifier);
+//
+//        // Between
+//        MCIProperty existenceBetweenEvent1 = new MCIProperty("[Previous event] RescuePatientProperty",
+//                "RescuedPatientRatioUpperThanValue", "MCIExistence");
+//        existenceBetweenEvent1.setRescueRate(0.02);
+//        MCIPropertyChecker existenceEvent1PropertyChecker = new MCIPropertyChecker();
+//        MCIProperty exitenceBetweenEvent2 = new MCIProperty("[Next event] RescuePatientProperty",
+//                "RescuedPatientRatioUpperThanValue", "MCIExistence");
+//        exitenceBetweenEvent2.setRescueRate(0.50);
+//        MCIPropertyChecker existenceEvent2PropertyChecker = new MCIPropertyChecker();
+//        existenceVerifier = new RuntimeVerification(existencePropertyChecker, "Between", existenceBetweenEvent1,
+//                existenceEvent1PropertyChecker, exitenceBetweenEvent2, existenceEvent2PropertyChecker);
+//        runtimeVerifiers.add(existenceVerifier);
+//
+//        // Interval
+//        existenceVerifier = new RuntimeVerification(existencePropertyChecker, "Interval", 100, 300);
+//        runtimeVerifiers.add(existenceVerifier);
+//
+//        // Existence
+//        MCIProperty existenceExistenceEvent = new MCIProperty("RescuePatientProperty",
+//                "RescuedPatientRatioUpperThanValue", "MCIExistence");
+//        existenceExistenceEvent.setRescueRate(0.02);
+//        MCIPropertyChecker existenceExistencePropertyChecker = new MCIPropertyChecker();
+//        existenceVerifier = new RuntimeVerification(existencePropertyChecker, "Existence",
+//                existenceExistenceEvent, existenceExistencePropertyChecker);
+//        runtimeVerifiers.add(existenceVerifier);
+//
+//
+//
+//
+//        // Absence Scopes Absence Scopes Absence Scopes Absence Scopes Absence Scopes Absence Scopes Absence Scopes Absence Scopes Absence Scopes Absence Scopes
+//        // Globally
+//        absenceVerifier = new RuntimeVerification(absencePropertyChecker);
+//        runtimeVerifiers.add(absenceVerifier);
+//
+//
+//        // Before
+//        MCIProperty absenceBeforeEvent = new MCIProperty("[Absence Pattern] TreatmentRateRescueRateProperty",
+//                "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
+//        absenceBeforeEvent.setThresholdValue(0);
+//        MCIPropertyChecker absenceBeforePropertyChecker = new MCIPropertyChecker();
+//        absenceVerifier = new RuntimeVerification(absencePropertyChecker,
+//                "Before", absenceBeforeEvent, absenceBeforePropertyChecker);
+//        runtimeVerifiers.add(absenceVerifier);
+//
+//
+//        // After
+//        MCIProperty absenceAfterEvent = new MCIProperty("[Absence Pattern] TreatmentRateRescueRateProperty",
+//                "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
+//        absenceAfterEvent.setThresholdValue(0);
+//        MCIPropertyChecker absenceAfterPropertyChecker = new MCIPropertyChecker();
+//        absenceVerifier = new RuntimeVerification(absencePropertyChecker,
+//                "After", absenceAfterEvent, absenceAfterPropertyChecker);
+//        runtimeVerifiers.add(absenceVerifier);
+//
+//        // Between
+//        MCIProperty absenceBetweenEvent1 = new MCIProperty("[Absence Pattern] TreatmentRateRescueRateProperty",
+//                "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
+//        absenceBetweenEvent1.setThresholdValue(0.02);
+//        MCIPropertyChecker absenceEvent1PropertyChecker = new MCIPropertyChecker();
+//        MCIProperty absenceBetweenEvent2 = new MCIProperty("[Absence Pattern] TreatmentRateRescueRateProperty",
+//                "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
+//        absenceBetweenEvent2.setThresholdValue(0.05);
+//        MCIPropertyChecker absenceEvent2PropertyChecker = new MCIPropertyChecker();
+//        absenceVerifier = new RuntimeVerification(absencePropertyChecker, "Between", absenceBetweenEvent1,
+//                absenceEvent1PropertyChecker, absenceBetweenEvent2, absenceEvent2PropertyChecker);
+//        runtimeVerifiers.add(absenceVerifier);
+//
+//        // Interval
+//        absenceVerifier = new RuntimeVerification(absencePropertyChecker, "Interval", 100, 300);
+//        runtimeVerifiers.add(absenceVerifier);
+//
+//        // Existence
+//        MCIProperty absenceExistenceEvent = new MCIProperty("[Absence Pattern] TreatmentRateRescueRateProperty",
+//                "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
+//        absenceExistenceEvent.setThresholdValue(0);
+//        MCIPropertyChecker absenceExistencePropertyChecker = new MCIPropertyChecker();
+//        absenceVerifier = new RuntimeVerification(absencePropertyChecker, "Existence", absenceExistenceEvent,
+//                absenceExistencePropertyChecker);
+//        runtimeVerifiers.add(absenceVerifier);
+//
+//
+//
+//
+//
+//
+//        // Universality Scopes Universality Scopes Universality Scopes Universality Scopes Universality Scopes Universality Scopes Universality Scopes
+//        // Globally
+//        universalityVerifier = new RuntimeVerification(universalityPropertyChecker);
+//        runtimeVerifiers.add(universalityVerifier);
+//
+//
+//        // Before
+//        MCIProperty universalityBeforeEvent = new MCIProperty("[Universality Pattern] RescueRateProperty",
+//                "RescuedPatientRatioLowerThanValue", "MCIUniversality");
+//        universalityBeforeEvent.setThresholdValue(1.0);
+//        MCIPropertyChecker universalityBeforePropertyChecker = new MCIPropertyChecker();
+//        universalityVerifier = new RuntimeVerification(universalityPropertyChecker,
+//                "Before", universalityBeforeEvent, universalityBeforePropertyChecker);
+//        runtimeVerifiers.add(universalityVerifier);
+//
+//
+//        // After
+//        MCIProperty universalityAfterEvent = new MCIProperty("[Universality Pattern] RescueRateProperty",
+//                "RescuedPatientRatioLowerThanValue", "MCIUniversality");
+//        universalityAfterEvent.setThresholdValue(1.0);
+//        MCIPropertyChecker universalityAfterPropertyChecker = new MCIPropertyChecker();
+//        universalityVerifier = new RuntimeVerification(universalityPropertyChecker,
+//                "After", universalityAfterEvent, universalityAfterPropertyChecker);
+//        runtimeVerifiers.add(universalityVerifier);
+//
+//        // Between
+//        MCIProperty universalityBetweenEvent1 = new MCIProperty("[Universality Pattern] RescueRateProperty",
+//                "RescuedPatientRatioLowerThanValue", "MCIUniversality");
+//        universalityBetweenEvent1.setThresholdValue(0.02);
+//        MCIPropertyChecker universalityEvent1PropertyChecker = new MCIPropertyChecker();
+//        MCIProperty universalityBetweenEvent2 = new MCIProperty("[Universality Pattern] RescueRateProperty",
+//                "RescuedPatientRatioLowerThanValue", "MCIUniversality");
+//        universalityBetweenEvent2.setThresholdValue(0.05);
+//        MCIPropertyChecker universalityEvent2PropertyChecker = new MCIPropertyChecker();
+//        universalityVerifier = new RuntimeVerification(universalityPropertyChecker,
+//                "Between", universalityBetweenEvent1, universalityEvent1PropertyChecker,
+//                universalityBetweenEvent2, universalityEvent2PropertyChecker);
+//        runtimeVerifiers.add(universalityVerifier);
+//
+//        // Interval
+//        universalityVerifier = new RuntimeVerification(universalityPropertyChecker, "Interval", 100, 300);
+//        runtimeVerifiers.add(universalityVerifier);
+//
+//        // Existence
+//        MCIProperty universalityExistenceEvent = new MCIProperty("[Universality Pattern] RescueRateProperty",
+//                "RescuedPatientRatioLowerThanValue", "MCIUniversality");
+//        universalityExistenceEvent.setThresholdValue(1.0);
+//        MCIPropertyChecker universalityExistencePropertyChecker = new MCIPropertyChecker();
+//        universalityVerifier = new RuntimeVerification(universalityPropertyChecker, "Existence",
+//                universalityExistenceEvent, universalityExistencePropertyChecker);
+//        runtimeVerifiers.add(universalityVerifier);
+//
+//
+//
+//
+//
+//        // TransientStateProbability Scopes TransientStateProbability Scopes TransientStateProbability Scopes TransientStateProbability Scopes
+//        // Globally
+//        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker);
+//        runtimeVerifiers.add(transientStateProbabilityVerifier);
+//
+//
+//        // Before
+//        MCIProperty transientStateProbabilityBeforeEvent = new MCIProperty("[TransientStateProbability Pattern] ",
+//                "", "MCITransientSP");
+//        transientStateProbabilityBeforeEvent.setStateProbabilityValues(0.6, 60, 81);
+//        MCIPropertyChecker transientStateProbabilityBeforePropertyChecker = new MCIPropertyChecker();
+//        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
+//                "Before", transientStateProbabilityBeforeEvent, transientStateProbabilityBeforePropertyChecker);
+//        runtimeVerifiers.add(transientStateProbabilityVerifier);
+//
+//
+//        // After
+//        MCIProperty transientStateProbabilityAfterEvent = new MCIProperty("[TransientStateProbability Pattern] ",
+//                "", "MCITransientSP");
+//        transientStateProbabilityAfterEvent.setStateProbabilityValues(0.6, 60, 81);
+//        MCIPropertyChecker transientStateProbabilityAfterPropertyChecker = new MCIPropertyChecker();
+//        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
+//                "After", transientStateProbabilityAfterEvent, transientStateProbabilityAfterPropertyChecker);
+//        runtimeVerifiers.add(transientStateProbabilityVerifier);
+//
+//        // Between
+//        MCIProperty transientStateProbabilityBetweenEvent1 = new MCIProperty("[TransientStateProbability Pattern] ",
+//                "", "MCITransientSP");
+//        transientStateProbabilityBetweenEvent1.setStateProbabilityValues(0.6, 60, 81);
+//        MCIPropertyChecker transientStateProbabilityEvent1PropertyChecker = new MCIPropertyChecker();
+//        MCIProperty transientStateProbabilityBetweenEvent2 = new MCIProperty("[TransientStateProbability Pattern] ",
+//                "", "MCITransientSP");
+//        transientStateProbabilityBetweenEvent2.setStateProbabilityValues(0.6, 60, 81);
+//        MCIPropertyChecker transientStateProbabilityEvent2PropertyChecker = new MCIPropertyChecker();
+//        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
+//                "Between", transientStateProbabilityBetweenEvent1, transientStateProbabilityEvent1PropertyChecker,
+//                transientStateProbabilityBetweenEvent2, transientStateProbabilityEvent2PropertyChecker);
+//        runtimeVerifiers.add(transientStateProbabilityVerifier);
+//
+//        // Interval
+//        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
+//                "Interval", 100, 300);
+//        runtimeVerifiers.add(transientStateProbabilityVerifier);
+//
+//        // Existence
+//        MCIProperty transientStateProbabilityExistenceEvent = new MCIProperty("[TransientStateProbability Pattern] ",
+//                "", "MCITransientSP");
+//        transientStateProbabilityExistenceEvent.setStateProbabilityValues(0.6, 60, 81);
+//        MCIPropertyChecker transientStateProbabilityExistencePropertyChecker = new MCIPropertyChecker();
+//        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
+//                "Existence", transientStateProbabilityExistenceEvent, transientStateProbabilityExistencePropertyChecker);
+//        runtimeVerifiers.add(transientStateProbabilityVerifier);
+//
 
 
 
-        // Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes
+
+
+
+        // SteadyStateProbability Scopes SteadyStateProbability Scopes SteadyStateProbability Scopes SteadyStateProbability Scopes
         // Globally
-        existenceVerifier = new RuntimeVerification(existencePropertyChecker);
-        runtimeVerifiers.add(existenceVerifier);
+        steadyStateProbabilityVerifier = new RuntimeVerification(steadyStateProbabilityPropertyChecker);
+        runtimeVerifiers.add(steadyStateProbabilityVerifier);
 
 
         // Before
-        MCIProperty existenceBeforeEvent = new MCIProperty("RescuePatientProperty",
-                "RescuedPatientRatioUpperThanValue", "MCIExistence");
-        existenceBeforeEvent.setRescueRate(0.02);
-        MCIPropertyChecker existenceBeforePropertyChecker = new MCIPropertyChecker();
-        existenceVerifier = new RuntimeVerification(existencePropertyChecker,
-                "Before", existenceBeforeEvent, existenceBeforePropertyChecker);
-        runtimeVerifiers.add(existenceVerifier);
+        MCIProperty steadyStateProbabilityBeforeEvent = new MCIProperty("[SteadyStateProbability Pattern] ",
+                "", "MCISteadySP");
+        steadyStateProbabilityBeforeEvent.setStateProbabilityValues(0.15, 0, 81);
+        MCIPropertyChecker steadyStateProbabilityBeforePropertyChecker = new MCIPropertyChecker();
+        steadyStateProbabilityVerifier = new RuntimeVerification(steadyStateProbabilityPropertyChecker,
+                "Before", steadyStateProbabilityBeforeEvent, steadyStateProbabilityBeforePropertyChecker);
+        runtimeVerifiers.add(steadyStateProbabilityVerifier);
 
 
         // After
-        MCIProperty existenceAfterEvent = new MCIProperty("RescuePatientProperty",
-                "RescuedPatientRatioUpperThanValue", "MCIExistence");
-        existenceAfterEvent.setRescueRate(0.02);
-        MCIPropertyChecker existenceAfterPropertyChecker = new MCIPropertyChecker();
-        existenceVerifier = new RuntimeVerification(existencePropertyChecker,
-                "After", existenceAfterEvent, existenceAfterPropertyChecker);
-        runtimeVerifiers.add(existenceVerifier);
+        MCIProperty steadyStateProbabilityAfterEvent = new MCIProperty("[SteadyStateProbability Pattern] ",
+                "", "MCISteadySP");
+        steadyStateProbabilityAfterEvent.setStateProbabilityValues(0.15, 0, 81);
+        MCIPropertyChecker steadyStateProbabilityAfterPropertyChecker = new MCIPropertyChecker();
+        steadyStateProbabilityVerifier = new RuntimeVerification(steadyStateProbabilityPropertyChecker,
+                "After", steadyStateProbabilityAfterEvent, steadyStateProbabilityAfterPropertyChecker);
+        runtimeVerifiers.add(steadyStateProbabilityVerifier);
 
         // Between
-        MCIProperty existenceBetweenEvent1 = new MCIProperty("[Previous event] RescuePatientProperty",
-                "RescuedPatientRatioUpperThanValue", "MCIExistence");
-        existenceBetweenEvent1.setRescueRate(0.02);
-        MCIPropertyChecker existenceEvent1PropertyChecker = new MCIPropertyChecker();
-        MCIProperty exitenceBetweenEvent2 = new MCIProperty("[Next event] RescuePatientProperty",
-                "RescuedPatientRatioUpperThanValue", "MCIExistence");
-        exitenceBetweenEvent2.setRescueRate(0.50);
-        MCIPropertyChecker existenceEvent2PropertyChecker = new MCIPropertyChecker();
-        existenceVerifier = new RuntimeVerification(existencePropertyChecker, "Between", existenceBetweenEvent1,
-                existenceEvent1PropertyChecker, exitenceBetweenEvent2, existenceEvent2PropertyChecker);
-        runtimeVerifiers.add(existenceVerifier);
+        MCIProperty steadyStateProbabilityBetweenEvent1 = new MCIProperty("[SteadyStateProbability Pattern] ",
+                "", "MCISteadySP");
+        steadyStateProbabilityBetweenEvent1.setStateProbabilityValues(0.15, 0, 81);
+        MCIPropertyChecker steadyStateProbabilityEvent1PropertyChecker = new MCIPropertyChecker();
+        MCIProperty steadyStateProbabilityBetweenEvent2 = new MCIProperty("[SteadyStateProbability Pattern] ",
+                "", "MCISteadySP");
+        steadyStateProbabilityBetweenEvent2.setStateProbabilityValues(0.15, 0, 81);
+        MCIPropertyChecker steadyStateProbabilityEvent2PropertyChecker = new MCIPropertyChecker();
+        steadyStateProbabilityVerifier = new RuntimeVerification(steadyStateProbabilityPropertyChecker,
+                "Between", steadyStateProbabilityBetweenEvent1, steadyStateProbabilityEvent1PropertyChecker,
+                steadyStateProbabilityBetweenEvent2, steadyStateProbabilityEvent2PropertyChecker);
+        runtimeVerifiers.add(steadyStateProbabilityVerifier);
 
         // Interval
-        existenceVerifier = new RuntimeVerification(existencePropertyChecker, "Interval", 100, 300);
-        runtimeVerifiers.add(existenceVerifier);
-
-        // Existence
-        MCIProperty existenceExistenceEvent = new MCIProperty("RescuePatientProperty",
-                "RescuedPatientRatioUpperThanValue", "MCIExistence");
-        existenceExistenceEvent.setRescueRate(0.02);
-        MCIPropertyChecker existenceExistencePropertyChecker = new MCIPropertyChecker();
-        existenceVerifier = new RuntimeVerification(existencePropertyChecker, "Existence",
-                existenceExistenceEvent, existenceExistencePropertyChecker);
-        runtimeVerifiers.add(existenceVerifier);
-
-
-
-
-        // Absence Scopes Absence Scopes Absence Scopes Absence Scopes Absence Scopes Absence Scopes Absence Scopes Absence Scopes Absence Scopes Absence Scopes
-        // Globally
-        absenceVerifier = new RuntimeVerification(absencePropertyChecker);
-        runtimeVerifiers.add(absenceVerifier);
-
-
-        // Before
-        MCIProperty absenceBeforeEvent = new MCIProperty("[Absence Pattern] TreatmentRateRescueRateProperty",
-                "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
-        absenceBeforeEvent.setThresholdValue(0);
-        MCIPropertyChecker absenceBeforePropertyChecker = new MCIPropertyChecker();
-        absenceVerifier = new RuntimeVerification(absencePropertyChecker,
-                "Before", absenceBeforeEvent, absenceBeforePropertyChecker);
-        runtimeVerifiers.add(absenceVerifier);
-
-
-        // After
-        MCIProperty absenceAfterEvent = new MCIProperty("[Absence Pattern] TreatmentRateRescueRateProperty",
-                "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
-        absenceAfterEvent.setThresholdValue(0);
-        MCIPropertyChecker absenceAfterPropertyChecker = new MCIPropertyChecker();
-        absenceVerifier = new RuntimeVerification(absencePropertyChecker,
-                "After", absenceAfterEvent, absenceAfterPropertyChecker);
-        runtimeVerifiers.add(absenceVerifier);
-
-        // Between
-        MCIProperty absenceBetweenEvent1 = new MCIProperty("[Absence Pattern] TreatmentRateRescueRateProperty",
-                "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
-        absenceBetweenEvent1.setThresholdValue(0.02);
-        MCIPropertyChecker absenceEvent1PropertyChecker = new MCIPropertyChecker();
-        MCIProperty absenceBetweenEvent2 = new MCIProperty("[Absence Pattern] TreatmentRateRescueRateProperty",
-                "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
-        absenceBetweenEvent2.setThresholdValue(0.05);
-        MCIPropertyChecker absenceEvent2PropertyChecker = new MCIPropertyChecker();
-        absenceVerifier = new RuntimeVerification(absencePropertyChecker, "Between", absenceBetweenEvent1,
-                absenceEvent1PropertyChecker, absenceBetweenEvent2, absenceEvent2PropertyChecker);
-        runtimeVerifiers.add(absenceVerifier);
-
-        // Interval
-        absenceVerifier = new RuntimeVerification(absencePropertyChecker, "Interval", 100, 300);
-        runtimeVerifiers.add(absenceVerifier);
-
-        // Existence
-        MCIProperty absenceExistenceEvent = new MCIProperty("[Absence Pattern] TreatmentRateRescueRateProperty",
-                "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
-        absenceExistenceEvent.setThresholdValue(0);
-        MCIPropertyChecker absenceExistencePropertyChecker = new MCIPropertyChecker();
-        absenceVerifier = new RuntimeVerification(absencePropertyChecker, "Existence", absenceExistenceEvent,
-                absenceExistencePropertyChecker);
-        runtimeVerifiers.add(absenceVerifier);
-
-
-
-
-
-
-        // Universality Scopes Universality Scopes Universality Scopes Universality Scopes Universality Scopes Universality Scopes Universality Scopes
-        // Globally
-        universalityVerifier = new RuntimeVerification(universalityPropertyChecker);
-        runtimeVerifiers.add(universalityVerifier);
-
-
-        // Before
-        MCIProperty universalityBeforeEvent = new MCIProperty("[Universality Pattern] RescueRateProperty",
-                "RescuedPatientRatioLowerThanValue", "MCIUniversality");
-        universalityBeforeEvent.setThresholdValue(1.0);
-        MCIPropertyChecker universalityBeforePropertyChecker = new MCIPropertyChecker();
-        universalityVerifier = new RuntimeVerification(universalityPropertyChecker, "Before", universalityBeforeEvent, universalityBeforePropertyChecker);
-        runtimeVerifiers.add(universalityVerifier);
-
-
-        // After
-        MCIProperty universalityAfterEvent = new MCIProperty("[Universality Pattern] RescueRateProperty",
-                "RescuedPatientRatioLowerThanValue", "MCIUniversality");
-        universalityAfterEvent.setThresholdValue(1.0);
-        MCIPropertyChecker universalityAfterPropertyChecker = new MCIPropertyChecker();
-        universalityVerifier = new RuntimeVerification(universalityPropertyChecker,
-                "After", universalityAfterEvent, universalityAfterPropertyChecker);
-        runtimeVerifiers.add(universalityVerifier);
-
-        // Between
-        MCIProperty universalityBetweenEvent1 = new MCIProperty("[Universality Pattern] RescueRateProperty",
-                "RescuedPatientRatioLowerThanValue", "MCIUniversality");
-        universalityBetweenEvent1.setThresholdValue(0.02);
-        MCIPropertyChecker universalityEvent1PropertyChecker = new MCIPropertyChecker();
-        MCIProperty universalityBetweenEvent2 = new MCIProperty("[Universality Pattern] RescueRateProperty",
-                "RescuedPatientRatioLowerThanValue", "MCIUniversality");
-        universalityBetweenEvent2.setThresholdValue(0.05);
-        MCIPropertyChecker universalityEvent2ropertyChecker = new MCIPropertyChecker();
-        universalityVerifier = new RuntimeVerification(universalityPropertyChecker,
-                "Between", universalityBetweenEvent1, universalityEvent1PropertyChecker, universalityBetweenEvent2, universalityEvent2ropertyChecker);
-        runtimeVerifiers.add(universalityVerifier);
-
-        // Interval
-        universalityVerifier = new RuntimeVerification(universalityPropertyChecker, "Interval", 100, 300);
-        runtimeVerifiers.add(universalityVerifier);
-
-        // Existence
-        MCIProperty universalityExistenceEvent = new MCIProperty("[Universality Pattern] RescueRateProperty",
-                "RescuedPatientRatioLowerThanValue", "MCIUniversality");
-        universalityExistenceEvent.setThresholdValue(1.0);
-        MCIPropertyChecker universalityExistencePropertyChecker = new MCIPropertyChecker();
-        universalityVerifier = new RuntimeVerification(universalityPropertyChecker, "Existence", universalityExistenceEvent, universalityExistencePropertyChecker);
-        runtimeVerifiers.add(universalityVerifier);
-
-
-
-
-
-        // TransientStateProbability Scopes TransientStateProbability Scopes TransientStateProbability Scopes TransientStateProbability Scopes
-        // Globally
-        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker);
-        runtimeVerifiers.add(transientStateProbabilityVerifier);
-
-
-        // Before
-        MCIProperty transientStateProbabilityBeforeEvent = new MCIProperty("[TransientStateProbability Pattern] ",
-                "", "MCITransientSP");
-        transientStateProbabilityBeforeEvent.setStateProbabilityValues(0.6, 60, 81);
-        MCIPropertyChecker transientStateProbabilityBeforePropertyChecker = new MCIPropertyChecker();
-        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
-                "Before", transientStateProbabilityBeforeEvent, transientStateProbabilityBeforePropertyChecker);
-        runtimeVerifiers.add(transientStateProbabilityVerifier);
-
-
-        // After
-        MCIProperty transientStateProbabilityAfterEvent = new MCIProperty("[TransientStateProbability Pattern] ",
-                "", "MCITransientSP");
-        transientStateProbabilityAfterEvent.setStateProbabilityValues(0.6, 60, 81);
-        MCIPropertyChecker transientStateProbabilityAfterPropertyChecker = new MCIPropertyChecker();
-        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
-                "After", transientStateProbabilityAfterEvent, transientStateProbabilityAfterPropertyChecker);
-        runtimeVerifiers.add(transientStateProbabilityVerifier);
-
-        // Between
-        MCIProperty transientStateProbabilityBetweenEvent1 = new MCIProperty("[TransientStateProbability Pattern] ",
-                "", "MCITransientSP");
-        transientStateProbabilityBetweenEvent1.setStateProbabilityValues(0.6, 60, 81);
-        MCIPropertyChecker transientStateProbabilityEvent1PropertyChecker = new MCIPropertyChecker();
-        MCIProperty transientStateProbabilityBetweenEvent2 = new MCIProperty("[TransientStateProbability Pattern] ",
-                "", "MCITransientSP");
-        transientStateProbabilityBetweenEvent2.setStateProbabilityValues(0.6, 60, 81);
-        MCIPropertyChecker transientStateProbabilityEvent2ropertyChecker = new MCIPropertyChecker();
-        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
-                "Between", transientStateProbabilityBetweenEvent1, transientStateProbabilityEvent1PropertyChecker,
-                transientStateProbabilityBetweenEvent2, transientStateProbabilityEvent2ropertyChecker);
-        runtimeVerifiers.add(transientStateProbabilityVerifier);
-
-        // Interval
-        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
+        steadyStateProbabilityVerifier = new RuntimeVerification(steadyStateProbabilityPropertyChecker,
                 "Interval", 100, 300);
-        runtimeVerifiers.add(transientStateProbabilityVerifier);
+        runtimeVerifiers.add(steadyStateProbabilityVerifier);
 
         // Existence
-        MCIProperty transientStateProbabilityExistenceEvent = new MCIProperty("[TransientStateProbability Pattern] ",
-                "", "MCITransientSP");
-        transientStateProbabilityExistenceEvent.setStateProbabilityValues(0.6, 60, 81);
-        MCIPropertyChecker transientStateProbabilityExistencePropertyChecker = new MCIPropertyChecker();
-        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
-                "Existence", transientStateProbabilityExistenceEvent, transientStateProbabilityExistencePropertyChecker);
-        runtimeVerifiers.add(transientStateProbabilityVerifier);
-
-
-
-
+        MCIProperty steadyStateProbabilityExistenceEvent = new MCIProperty("[SteadyStateProbability Pattern] ",
+                "", "MCISteadySP");
+        steadyStateProbabilityExistenceEvent.setStateProbabilityValues(0.15, 0, 81);
+        MCIPropertyChecker steadyStateProbabilityExistencePropertyChecker = new MCIPropertyChecker();
+        steadyStateProbabilityVerifier = new RuntimeVerification(steadyStateProbabilityPropertyChecker,
+                "Existence", steadyStateProbabilityExistenceEvent, steadyStateProbabilityExistencePropertyChecker);
+        runtimeVerifiers.add(steadyStateProbabilityVerifier);
 
 
 
