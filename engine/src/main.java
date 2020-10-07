@@ -35,7 +35,7 @@ public class main {
 
         // Existence
         // 설명: '시뮬레이션 종료 시점'까지, [누적된 발생 환자의 수가 '전체 기대 환자 수'와 같아지는 사건]이 언젠가 만족될 확률이 '기대 확률' 이상이다.
-        MCIProperty existenceProperty = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+        MCIProperty existenceProperty = new MCIProperty("[Existence Pattern] RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
         existenceProperty.setRescueRate(0.02);
         MCIPropertyChecker existencePropertyChecker = new MCIPropertyChecker();
         properties.add(existenceProperty);
@@ -48,40 +48,40 @@ public class main {
 
         // Absence
         // 설명: '시뮬레이션 종료 시점'까지, [Rescue rate보다 Treatment rate이 더 큰] 상태가 발생할 확률이 '기대 확률' 미만이다.
-        MCIProperty absenceProperty = new MCIProperty("TreatmentRateRescueRateProperty", "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
+        MCIProperty absenceProperty = new MCIProperty("[Absence Pattern] TreatmentRateRescueRateProperty", "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
         absenceProperty.setThresholdValue(0); // RescueRate - TreatmentRate can not be minus
         MCIAbsenceChecker absencePropertyChecker = new MCIAbsenceChecker();
         properties.add(absenceProperty);
-        properties.add(absenceProperty);
-        properties.add(absenceProperty);
-        properties.add(absenceProperty);
-        properties.add(absenceProperty);
-        properties.add(absenceProperty);
+//        properties.add(absenceProperty);
+//        properties.add(absenceProperty);
+//        properties.add(absenceProperty);
+//        properties.add(absenceProperty);
+//        properties.add(absenceProperty);
 
         // Universality
         // 설명: '시뮬레이션 종료 시점'까지, [Rescue rate이 0% 이상 100% 이하]가 항상 만족된다.
-//        MCIProperty property = new MCIProperty("RescueRateProperty", "RescuedPatientRatioLowerThanValue", "MCIUniversality");
+//        MCIProperty property = new MCIProperty("[Universality Pattern] RescueRateProperty", "RescuedPatientRatioLowerThanValue", "MCIUniversality");
 //        property.setThresholdValue(1.0); // RescueRate should be 100%?? condition is rescuerate <= threshold && rescuerate > 0
 //        MCIUniversalityChecker mciPropertyChecker = new MCIUniversalityChecker();
 //        properties.add(property);
 
         // TransientStateProbability
         // 설명: '시뮬레이션 종료 시점'까지, '지정 시간' 이후로 [구조된 환자의 수가 '문턱 환자 수'보다 큰] 상태가 지속될 확률이 '기대 확률' 이상이다.
-//        MCIProperty property = new MCIProperty("", "", "MCITransientSP");
+//        MCIProperty property = new MCIProperty("[TransientStateProbability Pattern] ", "", "MCITransientSP");
 //        property.setStateProbabilityValues(0.6, 60, 81);
 //        MCITransientSPChecker mciPropertyChecker = new MCITransientSPChecker();
 //        properties.add(property);
 
         // SteadyStateProbability
         // 설명: '시뮬레이션 종료 시점'까지, 긴 시간동안 [구조된 환자의 수가 '문턱 환자 수'보다 큰] 상태가 지속될 확률이 '기대 확률' 이상이다.
-//        MCIProperty property = new MCIProperty("", "", "MCISteadySP");
+//        MCIProperty property = new MCIProperty("[SteadyStateProbability Pattern] ", "", "MCISteadySP");
 //        property.setStateProbabilityValues(0.15, 0, 81);
 //        MCISteadySPChecker mciPropertyChecker = new MCISteadySPChecker();
 //        properties.add(property);
 
         // MinimumDuration
         // 설명: '시뮬레이션 종료 시점'까지, [생성된 소방 요원들의 활동율이 문턱 활동율보다 큰] 상태가 최소 [일정 논리 시간] 이상 지속될 확률이 '기대 확률' 이상이다.
-//        MCIProperty property = new MCIProperty("", "", "MCIMinimumDuration");
+//        MCIProperty property = new MCIProperty("[MinimumDuration Pattern] ", "", "MCIMinimumDuration");
 //        property.setThresholdValue(1); // FF가 10명 이상 활동하고 있어야 한다. More than 10 FF active -seems like value of 5 and above always results in false?
 //        property.setDuration(65); // 최소 65 Frame 이상   at least 65 frame
 //        MCIMinimumDurationChecker mciPropertyChecker = new MCIMinimumDurationChecker();
@@ -89,7 +89,7 @@ public class main {
 
         // MaximumDuration
         // 설명: '시뮬레이션 종료 시점'까지, [남은 환자가 문턱 환자수 이하인] 상태가 최대 [일정 논리 시간]까지 지속될 확률이 '기대 확률' 이상이다.
-//        MCIProperty property = new MCIProperty("", "", "MCIMaximumDuration");
+//        MCIProperty property = new MCIProperty("[MaximumDuration Pattern] ", "", "MCIMaximumDuration");
 //        property.setThresholdValue(0); // rescueRate == verificationProperty.getThresholdValue() == 0? is this correct?
 //        property.setDuration(60); // 최대 60 Frame 이하
 //        MCIMaximumDurationChecker mciPropertyChecker = new MCIMaximumDurationChecker();
@@ -97,7 +97,7 @@ public class main {
 
         // BoundedExistence
         // 설명: '입력 시점 t'까지, [모든 Ambulance가 활동 상태가 되는 사건]이 만족될 확률이 '기대 확률' 이상이다.
-//        MCIProperty property = new MCIProperty("", "", "MCIBoundedExistence");
+//        MCIProperty property = new MCIProperty("[BoundedExistence Pattern] ", "", "MCIBoundedExistence");
 //        property.setDuration(20); // Bounded Frame 20
 //        property.setState("Free"); // Ambulance's State가 Free인게 아님을 확인하기 위해
 //        MCIBoundedExistenceChecker mciPropertyChecker = new MCIBoundedExistenceChecker();
@@ -105,7 +105,7 @@ public class main {
 
         // Precedence --> Precedence checker always returns false in MCIPrecedenceChecker?
         // 설명: '시뮬레이션 종료 시점'까지, [소방 요원이 Rescue Activity를 진행하는] 상태가 [소방요원이 Treatment Activity를 진행하는] 상태보다 선행될 확률이 '기대 확률' 이상이다.
-//        MCIProperty property = new MCIProperty("", "", "MCIPrecedence");
+//        MCIProperty property = new MCIProperty("[Precedence Pattern] ", "", "MCIPrecedence");
 //        property.setPrevState("MoveToPatient");
 //        property.setState("FirstAid");
 //        MCIPrecedenceChecker mciPropertyChecker = new MCIPrecedenceChecker();
@@ -113,7 +113,7 @@ public class main {
 
         // Response --> 근데 MCIResponseChecker 좀 바꿔야 할듯. 항상 true로 나오는 것 같음. 숫자 비교를 통해서 treatment의 값이 transfer 보다 작으면  true 인듯?
         // 설명: '시뮬레이션 종료 시점'까지, [소방요원이 Rescue Activity를 진행하는] 상태는 반드시 [소방요원이 Treatment Activity]상태 이후에 진행될 확률이 '기대 확률' 이상이다.
-//        MCIProperty property = new MCIProperty("", "", "MCIResponse");
+//        MCIProperty property = new MCIProperty("[Response Pattern] ", "", "MCIResponse");
 //        property.setPrevState("FirstAid");
 //        property.setState("TransferToBridgehead");
 //        MCIResponseChecker mciPropertyChecker = new MCIResponseChecker();
@@ -121,7 +121,7 @@ public class main {
 
         // Recurrence --> 근데 MCIRecurrenceChecker 좀 바꿔야 할듯. 이것도 처음부터 true가 나옴.
         // 설명: '시뮬레이션 종료 시점'까지, [모든 소방요원들이 일정 논리 시간 간격으로 환자 구조를 반복하는] 상태가 지속될 확률이 '기대 확률' 이상이다.
-//        MCIProperty property = new MCIProperty("", "", "MCIRecurrence");
+//        MCIProperty property = new MCIProperty("[Recurrence Pattern] ", "", "MCIRecurrence");
 //        property.setPrevState("MoveToPatient");
 //        property.setThresholdValue(51);
 //        MCIRecurrenceChecker mciPropertyChecker = new MCIRecurrenceChecker();
@@ -129,19 +129,19 @@ public class main {
 
         // Until --> 좀 바꿔줘야할듯? -1 이 무슨 state 인 상태인걸까???
         // 설명: 'RescueRate = 1.00인 상태'까지, [모든 소방 요원들이 활동하는] 상태가 지속될 확률이 '기대 확률' 이상이다.
-//        MCIProperty property = new MCIProperty("", "", "MCIUntil");
+//        MCIProperty property = new MCIProperty("[Until Pattern] ", "", "MCIUntil");
 //        property.setPrevState("Free");
 //        MCIUntilChecker mciPropertyChecker = new MCIUntilChecker();
 //        properties.add(property);
 
         // NumberOfEvents
-//        MCIProperty property = new MCIProperty("RouteMsgCountProperty", "RouteMsgCountLTEQX", "MCINumberofEvents");
+//        MCIProperty property = new MCIProperty("[NumberOfEvents Pattern] RouteMsgCountProperty", "RouteMsgCountLTEQX", "MCINumberofEvents");
 //        property.setThresholdValue(600);
 //        MCINumberofEventsChecker mciPropertyChecker = new MCINumberofEventsChecker();
 //        properties.add(property);
 
         // Prevention
-//        MCIProperty property = new MCIProperty("", "", "MCIPrevention");
+//        MCIProperty property = new MCIProperty("[Prevention Pattern] ", "", "MCIPrevention");
 //        property.setPrevState("TransferToBridgehead");
 //        property.setThresholdValue(0);
 //        MCIPreventionChecker mciPropertyChecker = new MCIPreventionChecker();
@@ -151,12 +151,13 @@ public class main {
 //        SPRT verifier;
 //        verifier = new SPRT(mciPropertyChecker);
         RuntimeVerification existenceVerifier;
-
+        RuntimeVerification absenceVerifier;
         // Scopes
         // Globally
         existenceVerifier = new RuntimeVerification(existencePropertyChecker);
         runtimeVerifiers.add(existenceVerifier);
-
+        absenceVerifier = new RuntimeVerification(absencePropertyChecker);
+        runtimeVerifiers.add(absenceVerifier);
 
         // Before
         MCIProperty beforeEvent = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
@@ -173,10 +174,10 @@ public class main {
         runtimeVerifiers.add(existenceVerifier);
 
         // Between
-        MCIProperty betweenBeforeEvent = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+        MCIProperty betweenBeforeEvent = new MCIProperty("[Previous event] RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
         betweenBeforeEvent.setRescueRate(0.02);
         MCIPropertyChecker betweenBeforeEventPropertyChecker = new MCIPropertyChecker();
-        MCIProperty betweenAfterEvent = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+        MCIProperty betweenAfterEvent = new MCIProperty("[Next event] RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
         betweenAfterEvent.setRescueRate(0.50);
         MCIPropertyChecker betweenAfterEventPropertyChecker = new MCIPropertyChecker();
         existenceVerifier = new RuntimeVerification(existencePropertyChecker, "Between", betweenBeforeEvent, betweenBeforeEventPropertyChecker, betweenAfterEvent, betweenAfterEventPropertyChecker);
