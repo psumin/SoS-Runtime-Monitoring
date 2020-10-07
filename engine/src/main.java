@@ -35,48 +35,53 @@ public class main {
 
         // Existence
         // 설명: '시뮬레이션 종료 시점'까지, [누적된 발생 환자의 수가 '전체 기대 환자 수'와 같아지는 사건]이 언젠가 만족될 확률이 '기대 확률' 이상이다.
-//        MCIProperty existenceProperty = new MCIProperty("[Existence Pattern] RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
-//        existenceProperty.setRescueRate(0.02);
-//        MCIPropertyChecker existencePropertyChecker = new MCIPropertyChecker();
-//        properties.add(existenceProperty);
-//        properties.add(existenceProperty);
-//        properties.add(existenceProperty);
-//        properties.add(existenceProperty);
-//        properties.add(existenceProperty);
-//        properties.add(existenceProperty);
+        MCIProperty existenceProperty = new MCIProperty("[Existence Pattern] RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+        existenceProperty.setRescueRate(0.02);
+        MCIPropertyChecker existencePropertyChecker = new MCIPropertyChecker();
+        properties.add(existenceProperty);
+        properties.add(existenceProperty);
+        properties.add(existenceProperty);
+        properties.add(existenceProperty);
+        properties.add(existenceProperty);
+        properties.add(existenceProperty);
 
 
         // Absence
         // 설명: '시뮬레이션 종료 시점'까지, [Rescue rate보다 Treatment rate이 더 큰] 상태가 발생할 확률이 '기대 확률' 미만이다.
-//        MCIProperty absenceProperty = new MCIProperty("[Absence Pattern] TreatmentRateRescueRateProperty", "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
-//        absenceProperty.setThresholdValue(0); // RescueRate - TreatmentRate can not be minus
-//        MCIAbsenceChecker absencePropertyChecker = new MCIAbsenceChecker();
-//        properties.add(absenceProperty);
-//        properties.add(absenceProperty);
-//        properties.add(absenceProperty);
-//        properties.add(absenceProperty);
-//        properties.add(absenceProperty);
-//        properties.add(absenceProperty);
+        MCIProperty absenceProperty = new MCIProperty("[Absence Pattern] TreatmentRateRescueRateProperty", "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
+        absenceProperty.setThresholdValue(0); // RescueRate - TreatmentRate can not be minus
+        MCIAbsenceChecker absencePropertyChecker = new MCIAbsenceChecker();
+        properties.add(absenceProperty);
+        properties.add(absenceProperty);
+        properties.add(absenceProperty);
+        properties.add(absenceProperty);
+        properties.add(absenceProperty);
+        properties.add(absenceProperty);
 
         // Universality
         // 설명: '시뮬레이션 종료 시점'까지, [Rescue rate이 0% 이상 100% 이하]가 항상 만족된다.
-        MCIProperty property = new MCIProperty("[Universality Pattern] RescueRateProperty", "RescuedPatientRatioLowerThanValue", "MCIUniversality");
-        property.setThresholdValue(1.0); // RescueRate should be 100%?? condition is rescuerate <= threshold && rescuerate > 0
+        MCIProperty universalityproperty = new MCIProperty("[Universality Pattern] RescueRateProperty", "RescuedPatientRatioLowerThanValue", "MCIUniversality");
+        universalityproperty.setThresholdValue(1.0); // RescueRate should be 100%?? condition is rescuerate <= threshold && rescuerate > 0
         MCIUniversalityChecker universalityPropertyChecker = new MCIUniversalityChecker();
-        properties.add(property);
-        properties.add(property);
-        properties.add(property);
-        properties.add(property);
-        properties.add(property);
-        properties.add(property);
+        properties.add(universalityproperty);
+        properties.add(universalityproperty);
+        properties.add(universalityproperty);
+        properties.add(universalityproperty);
+        properties.add(universalityproperty);
+        properties.add(universalityproperty);
 
 
         // TransientStateProbability
         // 설명: '시뮬레이션 종료 시점'까지, '지정 시간' 이후로 [구조된 환자의 수가 '문턱 환자 수'보다 큰] 상태가 지속될 확률이 '기대 확률' 이상이다.
-        MCIProperty property = new MCIProperty("[TransientStateProbability Pattern] ", "", "MCITransientSP");
-        property.setStateProbabilityValues(0.6, 60, 81);
+        MCIProperty transientStateProbabilityproperty = new MCIProperty("[TransientStateProbability Pattern] ", "", "MCITransientSP");
+        transientStateProbabilityproperty.setStateProbabilityValues(0.6, 60, 81);
         MCITransientSPChecker transientStateProbabilityPropertyChecker = new MCITransientSPChecker();
-        properties.add(property);
+        properties.add(transientStateProbabilityproperty);
+        properties.add(transientStateProbabilityproperty);
+        properties.add(transientStateProbabilityproperty);
+        properties.add(transientStateProbabilityproperty);
+        properties.add(transientStateProbabilityproperty);
+        properties.add(transientStateProbabilityproperty);
 
         // SteadyStateProbability
         // 설명: '시뮬레이션 종료 시점'까지, 긴 시간동안 [구조된 환자의 수가 '문턱 환자 수'보다 큰] 상태가 지속될 확률이 '기대 확률' 이상이다.
@@ -163,7 +168,7 @@ public class main {
 
 
 
-                // Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes
+        // Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes
         // Globally
         existenceVerifier = new RuntimeVerification(existencePropertyChecker);
         runtimeVerifiers.add(existenceVerifier);
@@ -324,12 +329,6 @@ public class main {
 
 
 
-// TransientStateProbability
-        // 설명: '시뮬레이션 종료 시점'까지, '지정 시간' 이후로 [구조된 환자의 수가 '문턱 환자 수'보다 큰] 상태가 지속될 확률이 '기대 확률' 이상이다.
-        MCIProperty property = new MCIProperty("[TransientStateProbability Pattern] ", "", "MCITransientSP");
-        property.setStateProbabilityValues(0.6, 60, 81);
-        MCITransientSPChecker mciPropertyChecker = new MCITransientSPChecker();
-        properties.add(property);
 
 
         // TransientStateProbability Scopes TransientStateProbability Scopes TransientStateProbability Scopes TransientStateProbability Scopes
@@ -339,32 +338,32 @@ public class main {
 
 
         // Before
-        MCIProperty transientStateProbabilityBeforeEvent = new MCIProperty("[Universality Pattern] RescueRateProperty",
-                "RescuedPatientRatioLowerThanValue", "MCIUniversality");
-        transientStateProbabilityBeforeEvent.setThresholdValue(1.0);
+        MCIProperty transientStateProbabilityBeforeEvent = new MCIProperty("[TransientStateProbability Pattern] ",
+                "", "MCITransientSP");
+        transientStateProbabilityBeforeEvent.setStateProbabilityValues(0.6, 60, 81);
         MCIPropertyChecker transientStateProbabilityBeforePropertyChecker = new MCIPropertyChecker();
-        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker, "Before",
-                transientStateProbabilityBeforeEvent, transientStateProbabilityBeforePropertyChecker);
+        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
+                "Before", transientStateProbabilityBeforeEvent, transientStateProbabilityBeforePropertyChecker);
         runtimeVerifiers.add(transientStateProbabilityVerifier);
 
 
         // After
-        MCIProperty transientStateProbabilityAfterEvent = new MCIProperty("[Universality Pattern] RescueRateProperty",
-                "RescuedPatientRatioLowerThanValue", "MCIUniversality");
-        transientStateProbabilityAfterEvent.setThresholdValue(1.0);
+        MCIProperty transientStateProbabilityAfterEvent = new MCIProperty("[TransientStateProbability Pattern] ",
+                "", "MCITransientSP");
+        transientStateProbabilityAfterEvent.setStateProbabilityValues(0.6, 60, 81);
         MCIPropertyChecker transientStateProbabilityAfterPropertyChecker = new MCIPropertyChecker();
         transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
                 "After", transientStateProbabilityAfterEvent, transientStateProbabilityAfterPropertyChecker);
         runtimeVerifiers.add(transientStateProbabilityVerifier);
 
         // Between
-        MCIProperty transientStateProbabilityBetweenEvent1 = new MCIProperty("[Universality Pattern] RescueRateProperty",
-                "RescuedPatientRatioLowerThanValue", "MCIUniversality");
-        transientStateProbabilityBetweenEvent1.setThresholdValue(0.02);
+        MCIProperty transientStateProbabilityBetweenEvent1 = new MCIProperty("[TransientStateProbability Pattern] ",
+                "", "MCITransientSP");
+        transientStateProbabilityBetweenEvent1.setStateProbabilityValues(0.6, 60, 81);
         MCIPropertyChecker transientStateProbabilityEvent1PropertyChecker = new MCIPropertyChecker();
-        MCIProperty transientStateProbabilityBetweenEvent2 = new MCIProperty("[Universality Pattern] RescueRateProperty",
-                "RescuedPatientRatioLowerThanValue", "MCIUniversality");
-        transientStateProbabilityBetweenEvent2.setThresholdValue(0.05);
+        MCIProperty transientStateProbabilityBetweenEvent2 = new MCIProperty("[TransientStateProbability Pattern] ",
+                "", "MCITransientSP");
+        transientStateProbabilityBetweenEvent2.setStateProbabilityValues(0.6, 60, 81);
         MCIPropertyChecker transientStateProbabilityEvent2ropertyChecker = new MCIPropertyChecker();
         transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
                 "Between", transientStateProbabilityBetweenEvent1, transientStateProbabilityEvent1PropertyChecker,
@@ -372,13 +371,14 @@ public class main {
         runtimeVerifiers.add(transientStateProbabilityVerifier);
 
         // Interval
-        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker, "Interval", 100, 300);
+        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
+                "Interval", 100, 300);
         runtimeVerifiers.add(transientStateProbabilityVerifier);
 
         // Existence
-        MCIProperty transientStateProbabilityExistenceEvent = new MCIProperty("[Universality Pattern] RescueRateProperty",
-                "RescuedPatientRatioLowerThanValue", "MCIUniversality");
-        transientStateProbabilityExistenceEvent.setThresholdValue(1.0);
+        MCIProperty transientStateProbabilityExistenceEvent = new MCIProperty("[TransientStateProbability Pattern] ",
+                "", "MCITransientSP");
+        transientStateProbabilityExistenceEvent.setStateProbabilityValues(0.6, 60, 81);
         MCIPropertyChecker transientStateProbabilityExistencePropertyChecker = new MCIPropertyChecker();
         transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
                 "Existence", transientStateProbabilityExistenceEvent, transientStateProbabilityExistencePropertyChecker);
