@@ -35,19 +35,28 @@ public class main {
 
         // Existence
         // 설명: '시뮬레이션 종료 시점'까지, [누적된 발생 환자의 수가 '전체 기대 환자 수'와 같아지는 사건]이 언젠가 만족될 확률이 '기대 확률' 이상이다.
-//        MCIProperty property = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
-//        property.setRescueRate(0.02);
+//        MCIProperty existenceProperty = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+//        existenceProperty.setRescueRate(0.02);
 //        MCIPropertyChecker mciPropertyChecker = new MCIPropertyChecker();
-//        properties.add(property);
-//        properties.add(property);
-//        properties.add(property);
+//        properties.add(existenceProperty);
+//        properties.add(existenceProperty);
+//        properties.add(existenceProperty);
+//        properties.add(existenceProperty);
+//        properties.add(existenceProperty);
+//        properties.add(existenceProperty);
+
 
         // Absence
         // 설명: '시뮬레이션 종료 시점'까지, [Rescue rate보다 Treatment rate이 더 큰] 상태가 발생할 확률이 '기대 확률' 미만이다.
-//        MCIProperty property = new MCIProperty("TreatmentRateRescueRateProperty", "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
-//        property.setThresholdValue(0); // RescueRate - TreatmentRate can not be minus
-//        MCIAbsenceChecker mciPropertyChecker = new MCIAbsenceChecker();
-//        properties.add(property);
+        MCIProperty absenceProperty = new MCIProperty("TreatmentRateRescueRateProperty", "TreatmentRateMinusRescueRateUpperThanValue", "MCIAbsence");
+        absenceProperty.setThresholdValue(0); // RescueRate - TreatmentRate can not be minus
+        MCIAbsenceChecker mciPropertyChecker = new MCIAbsenceChecker();
+        properties.add(absenceProperty);
+        properties.add(absenceProperty);
+        properties.add(absenceProperty);
+        properties.add(absenceProperty);
+        properties.add(absenceProperty);
+        properties.add(absenceProperty);
 
         // Universality
         // 설명: '시뮬레이션 종료 시점'까지, [Rescue rate이 0% 이상 100% 이하]가 항상 만족된다.
@@ -132,11 +141,11 @@ public class main {
 //        properties.add(property);
 
         // Prevention
-        MCIProperty property = new MCIProperty("", "", "MCIPrevention");
-        property.setPrevState("TransferToBridgehead");
-        property.setThresholdValue(0);
-        MCIPreventionChecker mciPropertyChecker = new MCIPreventionChecker();
-        properties.add(property);
+//        MCIProperty property = new MCIProperty("", "", "MCIPrevention");
+//        property.setPrevState("TransferToBridgehead");
+//        property.setThresholdValue(0);
+//        MCIPreventionChecker mciPropertyChecker = new MCIPreventionChecker();
+//        properties.add(property);
 
 
 //        SPRT verifier;
@@ -149,39 +158,39 @@ public class main {
         runtimeVerifiers.add(verifier);
 
         // Before
-        MCIProperty event = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
-        event.setRescueRate(0.02);
-        MCIPropertyChecker eventPropertyChecker = new MCIPropertyChecker();
-        verifier = new RuntimeVerification(mciPropertyChecker, "Before", event, eventPropertyChecker);
+        MCIProperty beforeEvent = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+        beforeEvent.setRescueRate(0.02);
+        MCIPropertyChecker beforeEventPropertyChecker = new MCIPropertyChecker();
+        verifier = new RuntimeVerification(mciPropertyChecker, "Before", beforeEvent, beforeEventPropertyChecker);
         runtimeVerifiers.add(verifier);
 
         // After
-//        MCIProperty event = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
-//        event.setRescueRate(0.02);
-//        MCIPropertyChecker eventPropertyChecker = new MCIPropertyChecker();
-//        verifier = new RuntimeVerification(mciPropertyChecker, "After", event, eventPropertyChecker);
-//        runtimeVerifiers.add(verifier);
+        MCIProperty afterEvent = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+        afterEvent.setRescueRate(0.02);
+        MCIPropertyChecker afterEventPropertyChecker = new MCIPropertyChecker();
+        verifier = new RuntimeVerification(mciPropertyChecker, "After", afterEvent, afterEventPropertyChecker);
+        runtimeVerifiers.add(verifier);
 
         // Between
-//        MCIProperty beforeEvent = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
-//        beforeEvent.setRescueRate(0.02);
-//        MCIPropertyChecker beforeEventPropertyChecker = new MCIPropertyChecker();
-//        MCIProperty afterEvent = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
-//        beforeEvent.setRescueRate(0.50);
-//        MCIPropertyChecker afterEventPropertyChecker = new MCIPropertyChecker();
-//        verifier = new RuntimeVerification(mciPropertyChecker, "Between", beforeEvent, beforeEventPropertyChecker, afterEvent, afterEventPropertyChecker);
-//        runtimeVerifiers.add(verifier);
+        MCIProperty betweenBeforeEvent = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+        betweenBeforeEvent.setRescueRate(0.02);
+        MCIPropertyChecker betweenBeforeEventPropertyChecker = new MCIPropertyChecker();
+        MCIProperty betweenAfterEvent = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+        betweenAfterEvent.setRescueRate(0.50);
+        MCIPropertyChecker betweenAfterEventPropertyChecker = new MCIPropertyChecker();
+        verifier = new RuntimeVerification(mciPropertyChecker, "Between", betweenBeforeEvent, betweenBeforeEventPropertyChecker, betweenAfterEvent, betweenAfterEventPropertyChecker);
+        runtimeVerifiers.add(verifier);
 
         // Interval
-        verifier = new RuntimeVerification(mciPropertyChecker, "Interval", 100, 500);
+        verifier = new RuntimeVerification(mciPropertyChecker, "Interval", 100, 300);
         runtimeVerifiers.add(verifier);
 
         // Existence
-//        MCIProperty event = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
-//        event.setRescueRate(0.02);
-//        MCIPropertyChecker eventPropertyChecker = new MCIPropertyChecker();
-//        verifier = new RuntimeVerification(mciPropertyChecker, "Existence", event, eventPropertyChecker);
-//        runtimeVerifiers.add(verifier);
+        MCIProperty existenceEvent = new MCIProperty("RescuePatientProperty", "RescuedPatientRatioUpperThanValue", "MCIExistence");
+        existenceEvent.setRescueRate(0.02);
+        MCIPropertyChecker existenceEventPropertyChecker = new MCIPropertyChecker();
+        verifier = new RuntimeVerification(mciPropertyChecker, "Existence", existenceEvent, existenceEventPropertyChecker);
+        runtimeVerifiers.add(verifier);
 
         Pair<Pair<Integer, Boolean>, String> verificationResult;
 
