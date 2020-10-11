@@ -149,14 +149,24 @@ public class main {
         responseProperty.setState("TransferToBridgehead");
         MCIResponseChecker responsePropertyChecker = new MCIResponseChecker();
         properties.add(responseProperty);
+        properties.add(responseProperty);
+        properties.add(responseProperty);
+        properties.add(responseProperty);
+        properties.add(responseProperty);
+        properties.add(responseProperty);
 
         // Recurrence --> 근데 MCIRecurrenceChecker 좀 바꿔야 할듯. 이것도 처음부터 true가 나옴.
         // 설명: '시뮬레이션 종료 시점'까지, [모든 소방요원들이 일정 논리 시간 간격으로 환자 구조를 반복하는] 상태가 지속될 확률이 '기대 확률' 이상이다.
-//        MCIProperty property = new MCIProperty("[Recurrence Pattern] ", "", "MCIRecurrence");
-//        property.setPrevState("MoveToPatient");
-//        property.setThresholdValue(51);
-//        MCIRecurrenceChecker mciPropertyChecker = new MCIRecurrenceChecker();
-//        properties.add(property);
+        MCIProperty recurrenceProperty = new MCIProperty("[Recurrence Pattern] ", "", "MCIRecurrence");
+        recurrenceProperty.setPrevState("MoveToPatient");
+        recurrenceProperty.setThresholdValue(51);
+        MCIRecurrenceChecker recurrencePropertyChecker = new MCIRecurrenceChecker();
+        properties.add(recurrenceProperty);
+        properties.add(recurrenceProperty);
+        properties.add(recurrenceProperty);
+        properties.add(recurrenceProperty);
+        properties.add(recurrenceProperty);
+        properties.add(recurrenceProperty);
 
         // Until --> 좀 바꿔줘야할듯? -1 이 무슨 state 인 상태인걸까???
         // 설명: 'RescueRate = 1.00인 상태'까지, [모든 소방 요원들이 활동하는] 상태가 지속될 확률이 '기대 확률' 이상이다.
@@ -191,6 +201,9 @@ public class main {
         RuntimeVerification boundedExistenceVerifier;
         RuntimeVerification precedenceVerifier;
         RuntimeVerification responseVerifier;
+        RuntimeVerification recurrenceVerifier;
+
+
 
 
 
@@ -664,10 +677,6 @@ public class main {
 
 
 
-*/
-
-
-
 
 
         // Precedence Scopes Precedence Scopes Precedence Scopes Precedence Scopes Precedence Scopes Precedence Scopes Precedence Scopes
@@ -726,7 +735,7 @@ public class main {
 
 
 
-
+*/
 
 
 
@@ -786,6 +795,62 @@ public class main {
 
 
 
+
+
+
+
+        // Recurrence Scopes Recurrence Scopes Recurrence Scopes Recurrence Scopes Recurrence Scopes Recurrence Scopes Recurrence Scopes
+        // Globally
+        recurrenceVerifier = new RuntimeVerification(recurrencePropertyChecker);
+        runtimeVerifiers.add(recurrenceVerifier);
+
+
+        //before
+        MCIProperty recurrenceBeforeEvent = new MCIProperty("[Recurrence Pattern] ", "", "MCIRecurrence");
+        recurrenceBeforeEvent.setPrevState("MoveToPatient");
+        recurrenceBeforeEvent.setThresholdValue(51);
+        MCIPropertyChecker recurrenceBeforePropertyChecker = new MCIPropertyChecker();
+        recurrenceVerifier = new RuntimeVerification(recurrencePropertyChecker,
+                "Before", recurrenceBeforeEvent, recurrenceBeforePropertyChecker);
+        runtimeVerifiers.add(recurrenceVerifier);
+
+
+        // After
+        MCIProperty recurrenceAfterEvent = new MCIProperty("[Recurrence Pattern] ", "", "MCIRecurrence");
+        recurrenceAfterEvent.setPrevState("MoveToPatient");
+        recurrenceAfterEvent.setThresholdValue(51);
+        MCIPropertyChecker recurrenceAfterPropertyChecker = new MCIPropertyChecker();
+        recurrenceVerifier = new RuntimeVerification(recurrencePropertyChecker,
+                "After", recurrenceAfterEvent, recurrenceAfterPropertyChecker);
+        runtimeVerifiers.add(recurrenceVerifier);
+
+        // Between
+        MCIProperty recurrenceBetweenEvent1 = new MCIProperty("[Recurrence Pattern] ", "", "MCIRecurrence");
+        recurrenceBetweenEvent1.setPrevState("MoveToPatient");
+        recurrenceBetweenEvent1.setThresholdValue(51);
+        MCIPropertyChecker recurrenceEvent1PropertyChecker = new MCIPropertyChecker();
+        MCIProperty recurrenceBetweenEvent2 = new MCIProperty("[Recurrence Pattern] ", "", "MCIRecurrence");
+        recurrenceBetweenEvent2.setPrevState("MoveToPatient");
+        recurrenceBetweenEvent2.setThresholdValue(51);
+        MCIPropertyChecker recurrenceEvent2PropertyChecker = new MCIPropertyChecker();
+        recurrenceVerifier = new RuntimeVerification(recurrencePropertyChecker,
+                "Between", recurrenceBetweenEvent1, recurrenceEvent1PropertyChecker,
+                recurrenceBetweenEvent2, recurrenceEvent2PropertyChecker);
+        runtimeVerifiers.add(recurrenceVerifier);
+
+        // Interval
+        recurrenceVerifier = new RuntimeVerification(recurrencePropertyChecker,
+                "Interval", 100, 300);
+        runtimeVerifiers.add(recurrenceVerifier);
+
+        // Existence
+        MCIProperty recurrenceExistenceEvent = new MCIProperty("[Recurrence Pattern] ", "", "MCIRecurrence");
+        recurrenceExistenceEvent.setPrevState("MoveToPatient");
+        recurrenceExistenceEvent.setThresholdValue(51);
+        MCIPropertyChecker recurrenceExistenceEventChecker = new MCIPropertyChecker();
+        recurrenceVerifier = new RuntimeVerification(recurrencePropertyChecker,
+                "Existence", recurrenceExistenceEvent, recurrenceExistenceEventChecker);
+        runtimeVerifiers.add(recurrenceVerifier);
 
 
 
