@@ -136,11 +136,11 @@ public class main {
 
         // Precedence --> Precedence checker always returns false in MCIPrecedenceChecker?
         // 설명: '시뮬레이션 종료 시점'까지, [소방 요원이 Rescue Activity를 진행하는] 상태가 [소방요원이 Treatment Activity를 진행하는] 상태보다 선행될 확률이 '기대 확률' 이상이다.
-//        MCIProperty property = new MCIProperty("[Precedence Pattern] ", "", "MCIPrecedence");
-//        property.setPrevState("MoveToPatient");
-//        property.setState("FirstAid");
-//        MCIPrecedenceChecker mciPropertyChecker = new MCIPrecedenceChecker();
-//        properties.add(property);
+        MCIProperty precedenceProperty = new MCIProperty("[Precedence Pattern] ", "", "MCIPrecedence");
+        precedenceProperty.setPrevState("MoveToPatient");
+        precedenceProperty.setState("FirstAid");
+        MCIPrecedenceChecker precedencePropertyChecker = new MCIPrecedenceChecker();
+        properties.add(precedenceProperty);
 
         // Response --> 근데 MCIResponseChecker 좀 바꿔야 할듯. 항상 true로 나오는 것 같음. 숫자 비교를 통해서 treatment의 값이 transfer 보다 작으면  true 인듯?
         // 설명: '시뮬레이션 종료 시점'까지, [소방요원이 Rescue Activity를 진행하는] 상태는 반드시 [소방요원이 Treatment Activity]상태 이후에 진행될 확률이 '기대 확률' 이상이다.
@@ -189,6 +189,9 @@ public class main {
         RuntimeVerification minimumDurationVerifier;
         RuntimeVerification maximumDurationVerifier;
         RuntimeVerification boundedExistenceVerifier;
+        RuntimeVerification precedenceVerifier;
+
+
 
 /*
         // Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes
@@ -241,6 +244,10 @@ public class main {
         existenceVerifier = new RuntimeVerification(existencePropertyChecker, "Existence",
                 existenceExistenceEvent, existenceExistencePropertyChecker);
         runtimeVerifiers.add(existenceVerifier);
+
+
+
+
 
 
 
@@ -301,6 +308,9 @@ public class main {
 
 
 
+
+
+
         // Universality Scopes Universality Scopes Universality Scopes Universality Scopes Universality Scopes Universality Scopes Universality Scopes
         // Globally
         universalityVerifier = new RuntimeVerification(universalityPropertyChecker);
@@ -352,6 +362,9 @@ public class main {
         universalityVerifier = new RuntimeVerification(universalityPropertyChecker, "Existence",
                 universalityExistenceEvent, universalityExistencePropertyChecker);
         runtimeVerifiers.add(universalityVerifier);
+
+
+
 
 
 
@@ -530,7 +543,7 @@ public class main {
 
 
 
-*/
+
 
 
         // MaximumDuration Scopes MaximumDuration Scopes MaximumDuration Scopes MaximumDuration Scopes MaximumDuration Scopes
@@ -587,10 +600,7 @@ public class main {
         runtimeVerifiers.add(maximumDurationVerifier);
 
 
-
-
-
-
+*/
 
 
 
@@ -648,6 +658,73 @@ public class main {
         boundedExistenceVerifier = new RuntimeVerification(boundedExistencePropertyChecker,
                 "Existence", boundedExistenceExistenceEvent, boundedExistenceExistenceEventChecker);
         runtimeVerifiers.add(boundedExistenceVerifier);
+
+
+
+
+
+
+
+
+
+
+        // Precedence Scopes Precedence Scopes Precedence Scopes Precedence Scopes Precedence Scopes Precedence Scopes Precedence Scopes
+        // Globally
+        precedenceVerifier = new RuntimeVerification(precedencePropertyChecker);
+        runtimeVerifiers.add(precedenceVerifier);
+
+
+        //before
+        MCIProperty precedenceBeforeEvent = new MCIProperty(MCIProperty precedenceProperty = new MCIProperty("[Precedence Pattern] ", "", "MCIPrecedence");
+        precedenceBeforeEvent.setPrevState("MoveToPatient");
+        precedenceBeforeEvent.setState("FirstAid");
+        MCIPropertyChecker precedenceBeforePropertyChecker = new MCIPropertyChecker();
+        precedenceVerifier = new RuntimeVerification(precedencePropertyChecker,
+                "Before", precedenceBeforeEvent, precedenceBeforePropertyChecker);
+        runtimeVerifiers.add(precedenceVerifier);
+
+
+        // After
+        MCIProperty precedenceAfterEvent = new MCIProperty(MCIProperty precedenceProperty = new MCIProperty("[Precedence Pattern] ", "", "MCIPrecedence");
+        precedenceAfterEvent.setPrevState("MoveToPatient");
+        precedenceAfterEvent.setState("FirstAid");
+        MCIPropertyChecker precedenceAfterPropertyChecker = new MCIPropertyChecker();
+        precedenceVerifier = new RuntimeVerification(precedencePropertyChecker,
+                "After", precedenceAfterEvent, precedenceAfterPropertyChecker);
+        runtimeVerifiers.add(precedenceVerifier);
+
+        // Between
+        MCIProperty precedenceBetweenEvent1 = new MCIProperty(MCIProperty precedenceProperty = new MCIProperty("[Precedence Pattern] ", "", "MCIPrecedence");
+        precedenceBetweenEvent1.setPrevState("MoveToPatient");
+        precedenceBetweenEvent1.setState("FirstAid");
+        MCIPropertyChecker precedenceEvent1PropertyChecker = new MCIPropertyChecker();
+        MCIProperty precedenceBetweenEvent2 = new MCIProperty(MCIProperty precedenceProperty = new MCIProperty("[Precedence Pattern] ", "", "MCIPrecedence");
+        precedenceBetweenEvent2.setPrevState("MoveToPatient");
+        precedenceBetweenEvent2.setState("FirstAid");
+        MCIPropertyChecker precedenceEvent2PropertyChecker = new MCIPropertyChecker();
+        precedenceVerifier = new RuntimeVerification(precedencePropertyChecker,
+                "Between", precedenceBetweenEvent1, precedenceEvent1PropertyChecker,
+                precedenceBetweenEvent2, precedenceEvent2PropertyChecker);
+        runtimeVerifiers.add(precedenceVerifier);
+
+        // Interval
+        precedenceVerifier = new RuntimeVerification(precedencePropertyChecker,
+                "Interval", 100, 300);
+        runtimeVerifiers.add(precedenceVerifier);
+
+        // Existence
+        MCIProperty precedenceExistenceEvent = new MCIProperty(MCIProperty precedenceProperty = new MCIProperty("[Precedence Pattern] ", "", "MCIPrecedence");
+        precedenceExistenceEvent.setPrevState("MoveToPatient");
+        precedenceExistenceEvent.setState("FirstAid");
+        MCIPropertyChecker precedenceExistenceEventChecker = new MCIPropertyChecker();
+        precedenceVerifier = new RuntimeVerification(precedencePropertyChecker,
+                "Existence", precedenceExistenceEvent, precedenceExistenceEventChecker);
+        runtimeVerifiers.add(precedenceVerifier);
+
+
+
+
+
 
 
 
