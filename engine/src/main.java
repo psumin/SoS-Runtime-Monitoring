@@ -187,11 +187,11 @@ public class main {
         properties.add(numberOfEventsProperty);
 
         // Prevention
-//        MCIProperty property = new MCIProperty("[Prevention Pattern] ", "", "MCIPrevention");
-//        property.setPrevState("TransferToBridgehead");
-//        property.setThresholdValue(0);
-//        MCIPreventionChecker mciPropertyChecker = new MCIPreventionChecker();
-//        properties.add(property);
+        MCIProperty preventionProperty = new MCIProperty("[Prevention Pattern] ", "", "MCIPrevention");
+        preventionProperty.setPrevState("TransferToBridgehead");
+        preventionProperty.setThresholdValue(0);
+        MCIPreventionChecker preventionPropertyChecker = new MCIPreventionChecker();
+        properties.add(preventionProperty);
 
 
 //        SPRT verifier;
@@ -209,7 +209,7 @@ public class main {
         RuntimeVerification recurrenceVerifier;
         RuntimeVerification untilVerifier;
         RuntimeVerification numberOfEventsVerifier;
-
+        RuntimeVerification preventionVerifier;
 
 
 
@@ -864,7 +864,7 @@ public class main {
 
 
 
-*/
+
 
 
         // Until Scopes Until Scopes Until Scopes Until Scopes Until Scopes Until Scopes Until Scopes Until Scopes Until Scopes
@@ -918,7 +918,7 @@ public class main {
 
 
 
-
+*/
 
 
 
@@ -973,6 +973,64 @@ public class main {
                 "Existence", numberOfEventsExistenceEvent, numberOfEventsExistenceEventChecker);
         runtimeVerifiers.add(numberOfEventsVerifier);
 
+
+
+
+
+
+
+        // Prevention Scopes Prevention Scopes Prevention Scopes Prevention Scopes Prevention Scopes Prevention Scopes Prevention Scopes
+        // Globally
+        preventionVerifier = new RuntimeVerification(preventionPropertyChecker);
+        runtimeVerifiers.add(preventionVerifier);
+
+
+        //before
+        MCIProperty preventionBeforeEvent = new MCIProperty("[Prevention Pattern] ", "", "MCIPrevention");
+        preventionBeforeEvent.setPrevState("TransferToBridgehead");
+        preventionBeforeEvent.setThresholdValue(0);
+        MCIPropertyChecker preventionBeforePropertyChecker = new MCIPropertyChecker();
+        preventionVerifier = new RuntimeVerification(preventionPropertyChecker,
+                "Before", preventionBeforeEvent, preventionBeforePropertyChecker);
+        runtimeVerifiers.add(preventionVerifier);
+
+
+        // After
+        MCIProperty preventionAfterEvent = new MCIProperty("[Prevention Pattern] ", "", "MCIPrevention");
+        preventionAfterEvent.setPrevState("TransferToBridgehead");
+        preventionAfterEvent.setThresholdValue(0);
+        MCIPropertyChecker preventionAfterPropertyChecker = new MCIPropertyChecker();
+        preventionVerifier = new RuntimeVerification(preventionPropertyChecker,
+                "After", preventionAfterEvent, preventionAfterPropertyChecker);
+        runtimeVerifiers.add(preventionVerifier);
+
+        // Between
+        MCIProperty preventionBetweenEvent1 = new MCIProperty("[Prevention Pattern] ", "", "MCIPrevention");
+        preventionBetweenEvent1.setPrevState("TransferToBridgehead");
+        preventionBetweenEvent1.setThresholdValue(0);
+        MCIPropertyChecker preventionEvent1PropertyChecker = new MCIPropertyChecker();
+        MCIProperty preventionBetweenEvent2 = new MCIProperty("[Prevention Pattern] ", "", "MCIPrevention");
+        preventionBetweenEvent2.setPrevState("TransferToBridgehead");
+        preventionBetweenEvent2.setThresholdValue(0);
+        MCIPropertyChecker preventionEvent2PropertyChecker = new MCIPropertyChecker();
+        preventionVerifier = new RuntimeVerification(preventionPropertyChecker,
+                "Between", preventionBetweenEvent1, preventionEvent1PropertyChecker,
+                preventionBetweenEvent2, preventionEvent2PropertyChecker);
+        runtimeVerifiers.add(preventionVerifier);
+
+        // Interval
+        preventionVerifier = new RuntimeVerification(preventionPropertyChecker,
+                "Interval", 100, 300);
+        runtimeVerifiers.add(preventionVerifier);
+
+        // Existence
+        MCIProperty preventionExistenceEvent = new MCIProperty("[Prevention Pattern] ", "", "MCIPrevention");
+        preventionExistenceEvent.setPrevState("TransferToBridgehead");
+        preventionExistenceEvent.setThresholdValue(0);
+        MCIPropertyChecker preventionExistenceEventChecker = new MCIPropertyChecker();
+        preventionVerifier = new RuntimeVerification(preventionPropertyChecker,
+                "Existence", preventionExistenceEvent, preventionExistenceEventChecker);
+        runtimeVerifiers.add(preventionVerifier);
 
 
 
