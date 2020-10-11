@@ -181,10 +181,10 @@ public class main {
         properties.add(untilProperty);
 
         // NumberOfEvents
-//        MCIProperty property = new MCIProperty("[NumberOfEvents Pattern] RouteMsgCountProperty", "RouteMsgCountLTEQX", "MCINumberofEvents");
-//        property.setThresholdValue(600);
-//        MCINumberofEventsChecker mciPropertyChecker = new MCINumberofEventsChecker();
-//        properties.add(property);
+        MCIProperty numberOfEventsProperty = new MCIProperty("[NumberOfEvents Pattern] RouteMsgCountProperty", "RouteMsgCountLTEQX", "MCINumberofEvents");
+        numberOfEventsProperty.setThresholdValue(600);
+        MCINumberofEventsChecker numberOfEventsPropertyChecker = new MCINumberofEventsChecker();
+        properties.add(numberOfEventsProperty);
 
         // Prevention
 //        MCIProperty property = new MCIProperty("[Prevention Pattern] ", "", "MCIPrevention");
@@ -208,10 +208,13 @@ public class main {
         RuntimeVerification responseVerifier;
         RuntimeVerification recurrenceVerifier;
         RuntimeVerification untilVerifier;
+        RuntimeVerification numberOfEventsVerifier;
 
 
 
 
+
+/*
 
 
 
@@ -861,7 +864,7 @@ public class main {
 
 
 
-
+*/
 
 
         // Until Scopes Until Scopes Until Scopes Until Scopes Until Scopes Until Scopes Until Scopes Until Scopes Until Scopes
@@ -911,6 +914,67 @@ public class main {
         untilVerifier = new RuntimeVerification(untilPropertyChecker,
                 "Existence", untilExistenceEvent, untilExistenceEventChecker);
         runtimeVerifiers.add(untilVerifier);
+
+
+
+
+
+
+
+
+
+
+
+        // NumberOfEvents Scopes NumberOfEvents Scopes NumberOfEvents Scopes NumberOfEvents Scopes NumberOfEvents Scopes NumberOfEvents Scopes
+        // Globally
+        numberOfEventsVerifier = new RuntimeVerification(numberOfEventsPropertyChecker);
+        runtimeVerifiers.add(numberOfEventsVerifier);
+
+
+        //before
+        MCIProperty numberOfEventsBeforeEvent = new MCIProperty("[NumberOfEvents Pattern] RouteMsgCountProperty", "RouteMsgCountLTEQX", "MCINumberofEvents");
+        numberOfEventsBeforeEvent.setThresholdValue(600);
+        MCIPropertyChecker numberOfEventsBeforePropertyChecker = new MCIPropertyChecker();
+        numberOfEventsVerifier = new RuntimeVerification(numberOfEventsPropertyChecker,
+                "Before", numberOfEventsBeforeEvent, numberOfEventsBeforePropertyChecker);
+        runtimeVerifiers.add(numberOfEventsVerifier);
+
+
+        // After
+        MCIProperty numberOfEventsAfterEvent = new MCIProperty("[NumberOfEvents Pattern] RouteMsgCountProperty", "RouteMsgCountLTEQX", "MCINumberofEvents");
+        numberOfEventsAfterEvent.setThresholdValue(600);
+        MCIPropertyChecker numberOfEventsAfterPropertyChecker = new MCIPropertyChecker();
+        numberOfEventsVerifier = new RuntimeVerification(numberOfEventsPropertyChecker,
+                "After", numberOfEventsAfterEvent, numberOfEventsAfterPropertyChecker);
+        runtimeVerifiers.add(numberOfEventsVerifier);
+
+        // Between
+        MCIProperty numberOfEventsBetweenEvent1 = new MCIProperty("[NumberOfEvents Pattern] RouteMsgCountProperty", "RouteMsgCountLTEQX", "MCINumberofEvents");
+        numberOfEventsBetweenEvent1.setThresholdValue(600);
+        MCIPropertyChecker numberOfEventsEvent1PropertyChecker = new MCIPropertyChecker();
+        MCIProperty numberOfEventsBetweenEvent2 = new MCIProperty("[NumberOfEvents Pattern] RouteMsgCountProperty", "RouteMsgCountLTEQX", "MCINumberofEvents");
+        numberOfEventsBetweenEvent2.setThresholdValue(600);
+        MCIPropertyChecker numberOfEventsEvent2PropertyChecker = new MCIPropertyChecker();
+        numberOfEventsVerifier = new RuntimeVerification(numberOfEventsPropertyChecker,
+                "Between", numberOfEventsBetweenEvent1, numberOfEventsEvent1PropertyChecker,
+                numberOfEventsBetweenEvent2, numberOfEventsEvent2PropertyChecker);
+        runtimeVerifiers.add(numberOfEventsVerifier);
+
+        // Interval
+        numberOfEventsVerifier = new RuntimeVerification(numberOfEventsPropertyChecker,
+                "Interval", 100, 300);
+        runtimeVerifiers.add(numberOfEventsVerifier);
+
+        // Existence
+        MCIProperty numberOfEventsExistenceEvent = new MCIProperty("[NumberOfEvents Pattern] RouteMsgCountProperty", "RouteMsgCountLTEQX", "MCINumberofEvents");
+        numberOfEventsExistenceEvent.setThresholdValue(600);
+        MCIPropertyChecker numberOfEventsExistenceEventChecker = new MCIPropertyChecker();
+        numberOfEventsVerifier = new RuntimeVerification(numberOfEventsPropertyChecker,
+                "Existence", numberOfEventsExistenceEvent, numberOfEventsExistenceEventChecker);
+        runtimeVerifiers.add(numberOfEventsVerifier);
+
+
+
 
 
 
