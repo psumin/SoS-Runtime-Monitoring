@@ -144,11 +144,11 @@ public class main {
 
         // Response --> 근데 MCIResponseChecker 좀 바꿔야 할듯. 항상 true로 나오는 것 같음. 숫자 비교를 통해서 treatment의 값이 transfer 보다 작으면  true 인듯?
         // 설명: '시뮬레이션 종료 시점'까지, [소방요원이 Rescue Activity를 진행하는] 상태는 반드시 [소방요원이 Treatment Activity]상태 이후에 진행될 확률이 '기대 확률' 이상이다.
-//        MCIProperty property = new MCIProperty("[Response Pattern] ", "", "MCIResponse");
-//        property.setPrevState("FirstAid");
-//        property.setState("TransferToBridgehead");
-//        MCIResponseChecker mciPropertyChecker = new MCIResponseChecker();
-//        properties.add(property);
+        MCIProperty responseProperty = new MCIProperty("[Response Pattern] ", "", "MCIResponse");
+        responseProperty.setPrevState("FirstAid");
+        responseProperty.setState("TransferToBridgehead");
+        MCIResponseChecker responsePropertyChecker = new MCIResponseChecker();
+        properties.add(responseProperty);
 
         // Recurrence --> 근데 MCIRecurrenceChecker 좀 바꿔야 할듯. 이것도 처음부터 true가 나옴.
         // 설명: '시뮬레이션 종료 시점'까지, [모든 소방요원들이 일정 논리 시간 간격으로 환자 구조를 반복하는] 상태가 지속될 확률이 '기대 확률' 이상이다.
@@ -190,6 +190,8 @@ public class main {
         RuntimeVerification maximumDurationVerifier;
         RuntimeVerification boundedExistenceVerifier;
         RuntimeVerification precedenceVerifier;
+        RuntimeVerification responseVerifier;
+
 
 
 
@@ -600,7 +602,7 @@ public class main {
         runtimeVerifiers.add(maximumDurationVerifier);
 
 
-*/
+
 
 
 
@@ -662,7 +664,7 @@ public class main {
 
 
 
-
+*/
 
 
 
@@ -675,7 +677,7 @@ public class main {
 
 
         //before
-        MCIProperty precedenceBeforeEvent = new MCIProperty(MCIProperty precedenceProperty = new MCIProperty("[Precedence Pattern] ", "", "MCIPrecedence");
+        MCIProperty precedenceBeforeEvent = new MCIProperty("[Precedence Pattern] ", "", "MCIPrecedence");
         precedenceBeforeEvent.setPrevState("MoveToPatient");
         precedenceBeforeEvent.setState("FirstAid");
         MCIPropertyChecker precedenceBeforePropertyChecker = new MCIPropertyChecker();
@@ -685,7 +687,7 @@ public class main {
 
 
         // After
-        MCIProperty precedenceAfterEvent = new MCIProperty(MCIProperty precedenceProperty = new MCIProperty("[Precedence Pattern] ", "", "MCIPrecedence");
+        MCIProperty precedenceAfterEvent = new MCIProperty("[Precedence Pattern] ", "", "MCIPrecedence");
         precedenceAfterEvent.setPrevState("MoveToPatient");
         precedenceAfterEvent.setState("FirstAid");
         MCIPropertyChecker precedenceAfterPropertyChecker = new MCIPropertyChecker();
@@ -694,11 +696,11 @@ public class main {
         runtimeVerifiers.add(precedenceVerifier);
 
         // Between
-        MCIProperty precedenceBetweenEvent1 = new MCIProperty(MCIProperty precedenceProperty = new MCIProperty("[Precedence Pattern] ", "", "MCIPrecedence");
+        MCIProperty precedenceBetweenEvent1 = new MCIProperty("[Precedence Pattern] ", "", "MCIPrecedence");
         precedenceBetweenEvent1.setPrevState("MoveToPatient");
         precedenceBetweenEvent1.setState("FirstAid");
         MCIPropertyChecker precedenceEvent1PropertyChecker = new MCIPropertyChecker();
-        MCIProperty precedenceBetweenEvent2 = new MCIProperty(MCIProperty precedenceProperty = new MCIProperty("[Precedence Pattern] ", "", "MCIPrecedence");
+        MCIProperty precedenceBetweenEvent2 = new MCIProperty("[Precedence Pattern] ", "", "MCIPrecedence");
         precedenceBetweenEvent2.setPrevState("MoveToPatient");
         precedenceBetweenEvent2.setState("FirstAid");
         MCIPropertyChecker precedenceEvent2PropertyChecker = new MCIPropertyChecker();
@@ -713,7 +715,7 @@ public class main {
         runtimeVerifiers.add(precedenceVerifier);
 
         // Existence
-        MCIProperty precedenceExistenceEvent = new MCIProperty(MCIProperty precedenceProperty = new MCIProperty("[Precedence Pattern] ", "", "MCIPrecedence");
+        MCIProperty precedenceExistenceEvent = new MCIProperty("[Precedence Pattern] ", "", "MCIPrecedence");
         precedenceExistenceEvent.setPrevState("MoveToPatient");
         precedenceExistenceEvent.setState("FirstAid");
         MCIPropertyChecker precedenceExistenceEventChecker = new MCIPropertyChecker();
@@ -721,6 +723,65 @@ public class main {
                 "Existence", precedenceExistenceEvent, precedenceExistenceEventChecker);
         runtimeVerifiers.add(precedenceVerifier);
 
+
+
+
+
+
+
+
+        // Response Scopes Response Scopes Response Scopes Response Scopes Response Scopes Response Scopes Response Scopes
+        // Globally
+        responseVerifier = new RuntimeVerification(responsePropertyChecker);
+        runtimeVerifiers.add(responseVerifier);
+
+
+        //before
+        MCIProperty responseBeforeEvent = new MCIProperty("[Response Pattern] ", "", "MCIResponse");
+        responseBeforeEvent.setPrevState("FirstAid");
+        responseBeforeEvent.setState("TransferToBridgehead");
+        MCIPropertyChecker responseBeforePropertyChecker = new MCIPropertyChecker();
+        responseVerifier = new RuntimeVerification(responsePropertyChecker,
+                "Before", responseBeforeEvent, responseBeforePropertyChecker);
+        runtimeVerifiers.add(responseVerifier);
+
+
+        // After
+        MCIProperty responseAfterEvent = new MCIProperty("[Response Pattern] ", "", "MCIResponse");
+        responseAfterEvent.setPrevState("FirstAid");
+        responseAfterEvent.setState("TransferToBridgehead");
+        MCIPropertyChecker responseAfterPropertyChecker = new MCIPropertyChecker();
+        responseVerifier = new RuntimeVerification(responsePropertyChecker,
+                "After", responseAfterEvent, responseAfterPropertyChecker);
+        runtimeVerifiers.add(responseVerifier);
+
+        // Between
+        MCIProperty responseBetweenEvent1 = new MCIProperty("[Response Pattern] ", "", "MCIResponse");
+        responseBetweenEvent1.setPrevState("FirstAid");
+        responseBetweenEvent1.setState("TransferToBridgehead");
+        MCIPropertyChecker responseEvent1PropertyChecker = new MCIPropertyChecker();
+        MCIProperty responseBetweenEvent2 = new MCIProperty("[Response Pattern] ", "", "MCIResponse");
+        responseBetweenEvent2.setPrevState("FirstAid");
+        responseBetweenEvent2.setState("TransferToBridgehead");
+        MCIPropertyChecker responseEvent2PropertyChecker = new MCIPropertyChecker();
+        responseVerifier = new RuntimeVerification(responsePropertyChecker,
+                "Between", responseBetweenEvent1, responseEvent1PropertyChecker,
+                responseBetweenEvent2, responseEvent2PropertyChecker);
+        runtimeVerifiers.add(responseVerifier);
+
+        // Interval
+        responseVerifier = new RuntimeVerification(responsePropertyChecker,
+                "Interval", 100, 300);
+        runtimeVerifiers.add(responseVerifier);
+
+        // Existence
+        MCIProperty responseExistenceEvent = new MCIProperty("[Response Pattern] ", "", "MCIResponse");
+        responseExistenceEvent.setPrevState("FirstAid");
+        responseExistenceEvent.setState("TransferToBridgehead");
+        MCIPropertyChecker responseExistenceEventChecker = new MCIPropertyChecker();
+        responseVerifier = new RuntimeVerification(responsePropertyChecker,
+                "Existence", responseExistenceEvent, responseExistenceEventChecker);
+        runtimeVerifiers.add(responseVerifier);
 
 
 
