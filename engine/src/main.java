@@ -214,7 +214,7 @@ public class main {
 
 
 
-/*
+
         // Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes
         // Globally
         existenceVerifier = new RuntimeVerification(existencePropertyChecker);
@@ -798,7 +798,7 @@ public class main {
 
 
 
-*/
+
 
 
 
