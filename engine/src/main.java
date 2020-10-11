@@ -123,11 +123,16 @@ public class main {
 
         // BoundedExistence
         // 설명: '입력 시점 t'까지, [모든 Ambulance가 활동 상태가 되는 사건]이 만족될 확률이 '기대 확률' 이상이다.
-//        MCIProperty property = new MCIProperty("[BoundedExistence Pattern] ", "", "MCIBoundedExistence");
-//        property.setDuration(20); // Bounded Frame 20
-//        property.setState("Free"); // Ambulance's State가 Free인게 아님을 확인하기 위해
-//        MCIBoundedExistenceChecker mciPropertyChecker = new MCIBoundedExistenceChecker();
-//        properties.add(property);
+        MCIProperty boundedExistenceProperty = new MCIProperty("[BoundedExistence Pattern] ", "", "MCIBoundedExistence");
+        boundedExistenceProperty.setDuration(20); // Bounded Frame 20
+        boundedExistenceProperty.setState("Free"); // Ambulance's State가 Free인게 아님을 확인하기 위해
+        MCIBoundedExistenceChecker boundedExistencePropertyChecker = new MCIBoundedExistenceChecker();
+        properties.add(boundedExistenceProperty);
+        properties.add(boundedExistenceProperty);
+        properties.add(boundedExistenceProperty);
+        properties.add(boundedExistenceProperty);
+        properties.add(boundedExistenceProperty);
+        properties.add(boundedExistenceProperty);
 
         // Precedence --> Precedence checker always returns false in MCIPrecedenceChecker?
         // 설명: '시뮬레이션 종료 시점'까지, [소방 요원이 Rescue Activity를 진행하는] 상태가 [소방요원이 Treatment Activity를 진행하는] 상태보다 선행될 확률이 '기대 확률' 이상이다.
@@ -183,6 +188,7 @@ public class main {
         RuntimeVerification steadyStateProbabilityVerifier;
         RuntimeVerification minimumDurationVerifier;
         RuntimeVerification maximumDurationVerifier;
+        RuntimeVerification boundedExistenceVerifier;
 
 /*
         // Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes Existence Scopes
@@ -469,7 +475,7 @@ public class main {
 
 
 
-        // minimumDuration Scopes minimumDuration Scopes minimumDuration Scopes minimumDuration Scopes minimumDuration Scopes
+        // MinimumDuration Scopes MinimumDuration Scopes MinimumDuration Scopes MinimumDuration Scopes MinimumDuration Scopes
         // Globally
         minimumDurationVerifier = new RuntimeVerification(minimumDurationPropertyChecker);
         runtimeVerifiers.add(minimumDurationVerifier);
@@ -527,7 +533,7 @@ public class main {
 */
 
 
-        // maximumDuration Scopes maximumDuration Scopes maximumDuration Scopes maximumDuration Scopes maximumDuration Scopes
+        // MaximumDuration Scopes MaximumDuration Scopes MaximumDuration Scopes MaximumDuration Scopes MaximumDuration Scopes
         // Globally
         maximumDurationVerifier = new RuntimeVerification(maximumDurationPropertyChecker);
         runtimeVerifiers.add(maximumDurationVerifier);
@@ -580,6 +586,68 @@ public class main {
                 "Existence", maximumDurationExistenceEvent, maximumDurationExistenceEventChecker);
         runtimeVerifiers.add(maximumDurationVerifier);
 
+
+
+
+
+
+
+
+
+
+
+        // BoundedExistence Scopes BoundedExistence Scopes BoundedExistence Scopes BoundedExistence Scopes BoundedExistence Scopes
+        // Globally
+        boundedExistenceVerifier = new RuntimeVerification(boundedExistencePropertyChecker);
+        runtimeVerifiers.add(boundedExistenceVerifier);
+
+
+        //before
+        MCIProperty boundedExistenceBeforeEvent = new MCIProperty("[BoundedExistence Pattern] ", "", "MCIBoundedExistence");
+        boundedExistenceBeforeEvent.setDuration(20); // Bounded Frame 20
+        boundedExistenceBeforeEvent.setState("Free"); // Ambulance's State가 Free인게 아님을 확인하기 위해
+        MCIPropertyChecker boundedExistenceBeforePropertyChecker = new MCIPropertyChecker();
+        boundedExistenceVerifier = new RuntimeVerification(boundedExistencePropertyChecker,
+                "Before", boundedExistenceBeforeEvent, boundedExistenceBeforePropertyChecker);
+        runtimeVerifiers.add(boundedExistenceVerifier);
+
+
+        // After
+        MCIProperty boundedExistenceAfterEvent = new MCIProperty("[BoundedExistence Pattern] ", "", "MCIBoundedExistence");
+        boundedExistenceAfterEvent.setDuration(20); // Bounded Frame 20
+        boundedExistenceAfterEvent.setState("Free"); // Ambulance's State가 Free인게 아님을 확인하기 위해
+        MCIPropertyChecker boundedExistenceAfterPropertyChecker = new MCIPropertyChecker();
+        boundedExistenceVerifier = new RuntimeVerification(boundedExistencePropertyChecker,
+                "After", boundedExistenceAfterEvent, boundedExistenceAfterPropertyChecker);
+        runtimeVerifiers.add(boundedExistenceVerifier);
+
+        // Between
+        MCIProperty boundedExistenceBetweenEvent1 = new MCIProperty("[BoundedExistence Pattern] ", "", "MCIBoundedExistence");
+        boundedExistenceBetweenEvent1.setDuration(20); // Bounded Frame 20
+        boundedExistenceBetweenEvent1.setState("Free"); // Ambulance's State가 Free인게 아님을 확인하기 위해
+        MCIPropertyChecker boundedExistenceEvent1PropertyChecker = new MCIPropertyChecker();
+        MCIProperty boundedExistenceBetweenEvent2 = new MCIProperty("[BoundedExistence Pattern] ", "", "MCIBoundedExistence");
+        boundedExistenceBetweenEvent2.setDuration(20); // Bounded Frame 20
+        boundedExistenceBetweenEvent2.setState("Free"); // Ambulance's State가 Free인게 아님을 확인하기 위해
+        MCIPropertyChecker boundedExistenceEvent2PropertyChecker = new MCIPropertyChecker();
+        boundedExistenceVerifier = new RuntimeVerification(boundedExistencePropertyChecker,
+                "Between", boundedExistenceBetweenEvent1, boundedExistenceEvent1PropertyChecker,
+                boundedExistenceBetweenEvent2, boundedExistenceEvent2PropertyChecker);
+        runtimeVerifiers.add(boundedExistenceVerifier);
+
+        // Interval
+        boundedExistenceVerifier = new RuntimeVerification(boundedExistencePropertyChecker,
+                "Interval", 100, 300);
+        runtimeVerifiers.add(boundedExistenceVerifier);
+
+        // Existence
+        MCIProperty boundedExistenceExistenceEvent = new MCIProperty("[BoundedExistence Pattern] ", "", "MCIBoundedExistence");
+        boundedExistenceExistenceEvent.setDuration(20); // Bounded Frame 20
+        boundedExistenceExistenceEvent.setState("Free"); // Ambulance's State가 Free인게 아님을 확인하기 위해
+        MCIPropertyChecker boundedExistenceExistenceEventChecker = new MCIPropertyChecker();
+        boundedExistenceVerifier = new RuntimeVerification(boundedExistencePropertyChecker,
+                "Existence", boundedExistenceExistenceEvent, boundedExistenceExistenceEventChecker);
+        runtimeVerifiers.add(boundedExistenceVerifier);
 
 
 
