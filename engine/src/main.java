@@ -170,10 +170,15 @@ public class main {
 
         // Until --> 좀 바꿔줘야할듯? -1 이 무슨 state 인 상태인걸까???
         // 설명: 'RescueRate = 1.00인 상태'까지, [모든 소방 요원들이 활동하는] 상태가 지속될 확률이 '기대 확률' 이상이다.
-//        MCIProperty property = new MCIProperty("[Until Pattern] ", "", "MCIUntil");
-//        property.setPrevState("Free");
-//        MCIUntilChecker mciPropertyChecker = new MCIUntilChecker();
-//        properties.add(property);
+        MCIProperty untilProperty = new MCIProperty("[Until Pattern] ", "", "MCIUntil");
+        untilProperty.setPrevState("Free");
+        MCIUntilChecker untilPropertyChecker = new MCIUntilChecker();
+        properties.add(untilProperty);
+        properties.add(untilProperty);
+        properties.add(untilProperty);
+        properties.add(untilProperty);
+        properties.add(untilProperty);
+        properties.add(untilProperty);
 
         // NumberOfEvents
 //        MCIProperty property = new MCIProperty("[NumberOfEvents Pattern] RouteMsgCountProperty", "RouteMsgCountLTEQX", "MCINumberofEvents");
@@ -202,6 +207,7 @@ public class main {
         RuntimeVerification precedenceVerifier;
         RuntimeVerification responseVerifier;
         RuntimeVerification recurrenceVerifier;
+        RuntimeVerification untilVerifier;
 
 
 
@@ -735,8 +741,6 @@ public class main {
 
 
 
-*/
-
 
 
         // Response Scopes Response Scopes Response Scopes Response Scopes Response Scopes Response Scopes Response Scopes
@@ -794,7 +798,7 @@ public class main {
 
 
 
-
+*/
 
 
 
@@ -851,6 +855,64 @@ public class main {
         recurrenceVerifier = new RuntimeVerification(recurrencePropertyChecker,
                 "Existence", recurrenceExistenceEvent, recurrenceExistenceEventChecker);
         runtimeVerifiers.add(recurrenceVerifier);
+
+
+
+
+
+
+
+
+
+        // Until Scopes Until Scopes Until Scopes Until Scopes Until Scopes Until Scopes Until Scopes Until Scopes Until Scopes
+        // Globally
+        untilVerifier = new RuntimeVerification(untilPropertyChecker);
+        runtimeVerifiers.add(untilVerifier);
+
+
+        //before
+        MCIProperty untilBeforeEvent = new MCIProperty("[Until Pattern] ", "", "MCIUntil");
+        untilBeforeEvent.setPrevState("Free");
+        MCIPropertyChecker untilBeforePropertyChecker = new MCIPropertyChecker();
+        untilVerifier = new RuntimeVerification(untilPropertyChecker,
+                "Before", untilBeforeEvent, untilBeforePropertyChecker);
+        runtimeVerifiers.add(untilVerifier);
+
+
+        // After
+        MCIProperty untilAfterEvent = new MCIProperty("[Until Pattern] ", "", "MCIUntil");
+        untilAfterEvent.setPrevState("Free");
+        MCIPropertyChecker untilAfterPropertyChecker = new MCIPropertyChecker();
+        untilVerifier = new RuntimeVerification(untilPropertyChecker,
+                "After", untilAfterEvent, untilAfterPropertyChecker);
+        runtimeVerifiers.add(untilVerifier);
+
+        // Between
+        MCIProperty untilBetweenEvent1 = new MCIProperty("[Until Pattern] ", "", "MCIUntil");
+        untilBetweenEvent1.setPrevState("Free");
+        MCIPropertyChecker untilEvent1PropertyChecker = new MCIPropertyChecker();
+        MCIProperty untilBetweenEvent2 = new MCIProperty("[Until Pattern] ", "", "MCIUntil");
+        untilBetweenEvent2.setPrevState("Free");
+        MCIPropertyChecker untilEvent2PropertyChecker = new MCIPropertyChecker();
+        untilVerifier = new RuntimeVerification(untilPropertyChecker,
+                "Between", untilBetweenEvent1, untilEvent1PropertyChecker,
+                untilBetweenEvent2, untilEvent2PropertyChecker);
+        runtimeVerifiers.add(untilVerifier);
+
+        // Interval
+        untilVerifier = new RuntimeVerification(untilPropertyChecker,
+                "Interval", 100, 300);
+        runtimeVerifiers.add(untilVerifier);
+
+        // Existence
+        MCIProperty untilExistenceEvent = new MCIProperty("[Until Pattern] ", "", "MCIUntil");
+        untilExistenceEvent.setPrevState("Free");
+        MCIPropertyChecker untilExistenceEventChecker = new MCIPropertyChecker();
+        untilVerifier = new RuntimeVerification(untilPropertyChecker,
+                "Existence", untilExistenceEvent, untilExistenceEventChecker);
+        runtimeVerifiers.add(untilVerifier);
+
+
 
 
 
