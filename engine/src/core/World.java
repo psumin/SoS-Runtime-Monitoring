@@ -387,10 +387,23 @@ public class World extends SoSObject {
             hospital.setCapacity(10);
 //            }
         }
+        //Buggy Model code START type: Hospital(s) out of world map boundary//
+        /*
+        hospitals.get(0).setPosition(0, 0);
+        hospitals.get(1).setPosition(Map.mapSize.width + 1, 0);
+        hospitals.get(2).setPosition(0, Map.mapSize.height - 1);
+        hospitals.get(3).setPosition(Map.mapSize.width + 1, Map.mapSize.height + 1);
+        */
+        //Buggy Model code END //
+
+        //Original Model code Start//
+
         hospitals.get(0).setPosition(0, 0);
         hospitals.get(1).setPosition(Map.mapSize.width - 1, 0);
         hospitals.get(2).setPosition(0, Map.mapSize.height - 1);
         hospitals.get(3).setPosition(Map.mapSize.width - 1, Map.mapSize.height - 1);
+
+        //Original Model code End//
 //        hospitals.get(4).setPosition(0, (Map.mapSize.height - 1) / 2);
 //        hospitals.get(5).setPosition(Map.mapSize.width - 1, (Map.mapSize.height - 1) / 2);
     }
