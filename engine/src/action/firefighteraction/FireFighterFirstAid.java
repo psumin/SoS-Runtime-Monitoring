@@ -35,7 +35,13 @@ public class FireFighterFirstAid extends FireFighterAction {
     @Override
     public void onUpdate() {
 
+        //Buggy Model code START type: Firefighter always search even if target patient found.//
+        //if(targetPatient.assignedFireFighter == fireFighter) {
+        //Buggy Model code END type: Firefighter always search even if target patient found.//
+
+        //Original Model code START type: Firefighter change to search ifff there is another firefighter at target patient.//
         if(targetPatient.assignedFireFighter != fireFighter) {          // If there is another Firefighter at the target patient, change the action to "Search"
+        //Original Model code START type: Firefighter change to search ifff there is another firefighter at target patient//
             fireFighter.changeAction(new FireFighterSearch(fireFighter));
             fireFighter.defaultImage.visible(true);
             fireFighter.firstAid.visible(false);
