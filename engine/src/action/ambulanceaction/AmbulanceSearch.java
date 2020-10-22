@@ -36,7 +36,15 @@ public class AmbulanceSearch extends AmbulanceAction {
         }
 
         ambulance.moveTo(targetBridgehead.position);
+        /*
+        //Buggy Model code START type: Ambulance no action after bridgehead//
+        if(!ambulance.isArrivedAt(targetBridgehead.position)) {
+        //Buggy Model code END type: Ambulance no action after bridgehead//
+        */
+
+        //Original Model code START type: Ambulance action after bridgehead//
         if(ambulance.isArrivedAt(targetBridgehead.position)) {
+        //Original Model code END type: Ambulance action after bridgehead//
 
             Hospital nearestHospital = (Hospital)ambulance.nearestObject(new ArrayList<>(world.hospitals));
             Patient patient = targetBridgehead.getPatient(Patient.Status.Serious);          // Serious patient first
