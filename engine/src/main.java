@@ -80,29 +80,29 @@ public class main {
         properties.add(universalityproperty);
 
 
-        // TransientStateProbability
-        // 설명: '시뮬레이션 종료 시점'까지, '지정 시간' 이후로 [구조된 환자의 수가 '문턱 환자 수'보다 큰] 상태가 지속될 확률이 '기대 확률' 이상이다.
-        MCIProperty transientStateProbabilityproperty = new MCIProperty("[TransientStateProbability Pattern] ", "", "MCITransientSP");
-        transientStateProbabilityproperty.setStateProbabilityValues(0.6, 60, 81);
-        MCITransientSPChecker transientStateProbabilityPropertyChecker = new MCITransientSPChecker();
-        properties.add(transientStateProbabilityproperty);
-        properties.add(transientStateProbabilityproperty);
-        properties.add(transientStateProbabilityproperty);
-        properties.add(transientStateProbabilityproperty);
-        properties.add(transientStateProbabilityproperty);
-        properties.add(transientStateProbabilityproperty);
-
-        // SteadyStateProbability
-        // 설명: '시뮬레이션 종료 시점'까지, 긴 시간동안 [구조된 환자의 수가 '문턱 환자 수'보다 큰] 상태가 지속될 확률이 '기대 확률' 이상이다.
-        MCIProperty steadyStateProbabilityproperty = new MCIProperty("[SteadyStateProbability Pattern] ", "", "MCISteadySP");
-        steadyStateProbabilityproperty.setStateProbabilityValues(0.15, 0, 81);
-        MCISteadySPChecker steadyStateProbabilityPropertyChecker = new MCISteadySPChecker();
-        properties.add(steadyStateProbabilityproperty);
-        properties.add(steadyStateProbabilityproperty);
-        properties.add(steadyStateProbabilityproperty);
-        properties.add(steadyStateProbabilityproperty);
-        properties.add(steadyStateProbabilityproperty);
-        properties.add(steadyStateProbabilityproperty);
+//        // TransientStateProbability
+//        // 설명: '시뮬레이션 종료 시점'까지, '지정 시간' 이후로 [구조된 환자의 수가 '문턱 환자 수'보다 큰] 상태가 지속될 확률이 '기대 확률' 이상이다.
+//        MCIProperty transientStateProbabilityproperty = new MCIProperty("[TransientStateProbability Pattern] ", "", "MCITransientSP");
+//        transientStateProbabilityproperty.setStateProbabilityValues(0.6, 60, 81);
+//        MCITransientSPChecker transientStateProbabilityPropertyChecker = new MCITransientSPChecker();
+//        properties.add(transientStateProbabilityproperty);
+//        properties.add(transientStateProbabilityproperty);
+//        properties.add(transientStateProbabilityproperty);
+//        properties.add(transientStateProbabilityproperty);
+//        properties.add(transientStateProbabilityproperty);
+//        properties.add(transientStateProbabilityproperty);
+//
+//        // SteadyStateProbability
+//        // 설명: '시뮬레이션 종료 시점'까지, 긴 시간동안 [구조된 환자의 수가 '문턱 환자 수'보다 큰] 상태가 지속될 확률이 '기대 확률' 이상이다.
+//        MCIProperty steadyStateProbabilityproperty = new MCIProperty("[SteadyStateProbability Pattern] ", "", "MCISteadySP");
+//        steadyStateProbabilityproperty.setStateProbabilityValues(0.15, 0, 81);
+//        MCISteadySPChecker steadyStateProbabilityPropertyChecker = new MCISteadySPChecker();
+//        properties.add(steadyStateProbabilityproperty);
+//        properties.add(steadyStateProbabilityproperty);
+//        properties.add(steadyStateProbabilityproperty);
+//        properties.add(steadyStateProbabilityproperty);
+//        properties.add(steadyStateProbabilityproperty);
+//        properties.add(steadyStateProbabilityproperty);
 
         // MinimumDuration
         // 설명: '시뮬레이션 종료 시점'까지, [생성된 소방 요원들의 활동율이 문턱 활동율보다 큰] 상태가 최소 [일정 논리 시간] 이상 지속될 확률이 '기대 확률' 이상이다.
@@ -220,8 +220,8 @@ public class main {
         RuntimeVerification existenceVerifier;
         RuntimeVerification absenceVerifier;
         RuntimeVerification universalityVerifier;
-        RuntimeVerification transientStateProbabilityVerifier;
-        RuntimeVerification steadyStateProbabilityVerifier;
+//        RuntimeVerification transientStateProbabilityVerifier;
+//        RuntimeVerification steadyStateProbabilityVerifier;
         RuntimeVerification minimumDurationVerifier;
         RuntimeVerification maximumDurationVerifier;
         RuntimeVerification boundedExistenceVerifier;
@@ -414,120 +414,120 @@ public class main {
 
 
 
-
-        // TransientStateProbability Scopes TransientStateProbability Scopes TransientStateProbability Scopes TransientStateProbability Scopes
-        // Globally
-        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker);
-        runtimeVerifiers.add(transientStateProbabilityVerifier);
-
-
-        // Before
-        MCIProperty transientStateProbabilityBeforeEvent = new MCIProperty("[TransientStateProbability Pattern] ",
-                "", "MCITransientSP");
-        transientStateProbabilityBeforeEvent.setStateProbabilityValues(0.6, 60, 81);
-        MCIPropertyChecker transientStateProbabilityBeforePropertyChecker = new MCIPropertyChecker();
-        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
-                "Before", transientStateProbabilityBeforeEvent, transientStateProbabilityBeforePropertyChecker);
-        runtimeVerifiers.add(transientStateProbabilityVerifier);
-
-
-        // After
-        MCIProperty transientStateProbabilityAfterEvent = new MCIProperty("[TransientStateProbability Pattern] ",
-                "", "MCITransientSP");
-        transientStateProbabilityAfterEvent.setStateProbabilityValues(0.6, 60, 81);
-        MCIPropertyChecker transientStateProbabilityAfterPropertyChecker = new MCIPropertyChecker();
-        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
-                "After", transientStateProbabilityAfterEvent, transientStateProbabilityAfterPropertyChecker);
-        runtimeVerifiers.add(transientStateProbabilityVerifier);
-
-        // Between
-        MCIProperty transientStateProbabilityBetweenEvent1 = new MCIProperty("[TransientStateProbability Pattern] ",
-                "", "MCITransientSP");
-        transientStateProbabilityBetweenEvent1.setStateProbabilityValues(0.6, 60, 81);
-        MCIPropertyChecker transientStateProbabilityEvent1PropertyChecker = new MCIPropertyChecker();
-        MCIProperty transientStateProbabilityBetweenEvent2 = new MCIProperty("[TransientStateProbability Pattern] ",
-                "", "MCITransientSP");
-        transientStateProbabilityBetweenEvent2.setStateProbabilityValues(0.6, 60, 81);
-        MCIPropertyChecker transientStateProbabilityEvent2PropertyChecker = new MCIPropertyChecker();
-        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
-                "Between", transientStateProbabilityBetweenEvent1, transientStateProbabilityEvent1PropertyChecker,
-                transientStateProbabilityBetweenEvent2, transientStateProbabilityEvent2PropertyChecker);
-        runtimeVerifiers.add(transientStateProbabilityVerifier);
-
-        // Interval
-        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
-                "Interval", 100, 300);
-        runtimeVerifiers.add(transientStateProbabilityVerifier);
-
-        // Existence
-        MCIProperty transientStateProbabilityExistenceEvent = new MCIProperty("[TransientStateProbability Pattern] ",
-                "", "MCITransientSP");
-        transientStateProbabilityExistenceEvent.setStateProbabilityValues(0.6, 60, 81);
-        MCIPropertyChecker transientStateProbabilityExistencePropertyChecker = new MCIPropertyChecker();
-        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
-                "Existence", transientStateProbabilityExistenceEvent, transientStateProbabilityExistencePropertyChecker);
-        runtimeVerifiers.add(transientStateProbabilityVerifier);
-
-
-
-
-
-
-
-        // SteadyStateProbability Scopes SteadyStateProbability Scopes SteadyStateProbability Scopes SteadyStateProbability Scopes
-        // Globally
-        steadyStateProbabilityVerifier = new RuntimeVerification(steadyStateProbabilityPropertyChecker);
-        runtimeVerifiers.add(steadyStateProbabilityVerifier);
-
-
-        // Before
-        MCIProperty steadyStateProbabilityBeforeEvent = new MCIProperty("[SteadyStateProbability Pattern] ",
-                "", "MCISteadySP");
-        steadyStateProbabilityBeforeEvent.setStateProbabilityValues(0.15, 0, 81);
-        MCIPropertyChecker steadyStateProbabilityBeforePropertyChecker = new MCIPropertyChecker();
-        steadyStateProbabilityVerifier = new RuntimeVerification(steadyStateProbabilityPropertyChecker,
-                "Before", steadyStateProbabilityBeforeEvent, steadyStateProbabilityBeforePropertyChecker);
-        runtimeVerifiers.add(steadyStateProbabilityVerifier);
-
-
-        // After
-        MCIProperty steadyStateProbabilityAfterEvent = new MCIProperty("[SteadyStateProbability Pattern] ",
-                "", "MCISteadySP");
-        steadyStateProbabilityAfterEvent.setStateProbabilityValues(0.15, 0, 81);
-        MCIPropertyChecker steadyStateProbabilityAfterPropertyChecker = new MCIPropertyChecker();
-        steadyStateProbabilityVerifier = new RuntimeVerification(steadyStateProbabilityPropertyChecker,
-                "After", steadyStateProbabilityAfterEvent, steadyStateProbabilityAfterPropertyChecker);
-        runtimeVerifiers.add(steadyStateProbabilityVerifier);
-
-        // Between
-        MCIProperty steadyStateProbabilityBetweenEvent1 = new MCIProperty("[SteadyStateProbability Pattern] ",
-                "", "MCISteadySP");
-        steadyStateProbabilityBetweenEvent1.setStateProbabilityValues(0.15, 0, 81);
-        MCIPropertyChecker steadyStateProbabilityEvent1PropertyChecker = new MCIPropertyChecker();
-        MCIProperty steadyStateProbabilityBetweenEvent2 = new MCIProperty("[SteadyStateProbability Pattern] ",
-                "", "MCISteadySP");
-        steadyStateProbabilityBetweenEvent2.setStateProbabilityValues(0.15, 0, 81);
-        MCIPropertyChecker steadyStateProbabilityEvent2PropertyChecker = new MCIPropertyChecker();
-        steadyStateProbabilityVerifier = new RuntimeVerification(steadyStateProbabilityPropertyChecker,
-                "Between", steadyStateProbabilityBetweenEvent1, steadyStateProbabilityEvent1PropertyChecker,
-                steadyStateProbabilityBetweenEvent2, steadyStateProbabilityEvent2PropertyChecker);
-        runtimeVerifiers.add(steadyStateProbabilityVerifier);
-
-        // Interval
-        steadyStateProbabilityVerifier = new RuntimeVerification(steadyStateProbabilityPropertyChecker,
-                "Interval", 100, 300);
-        runtimeVerifiers.add(steadyStateProbabilityVerifier);
-
-        // Existence
-        MCIProperty steadyStateProbabilityExistenceEvent = new MCIProperty("[SteadyStateProbability Pattern] ",
-                "", "MCISteadySP");
-        steadyStateProbabilityExistenceEvent.setStateProbabilityValues(0.15, 0, 81);
-        MCIPropertyChecker steadyStateProbabilityExistencePropertyChecker = new MCIPropertyChecker();
-        steadyStateProbabilityVerifier = new RuntimeVerification(steadyStateProbabilityPropertyChecker,
-                "Existence", steadyStateProbabilityExistenceEvent, steadyStateProbabilityExistencePropertyChecker);
-        runtimeVerifiers.add(steadyStateProbabilityVerifier);
-
-
+//
+//        // TransientStateProbability Scopes TransientStateProbability Scopes TransientStateProbability Scopes TransientStateProbability Scopes
+//        // Globally
+//        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker);
+//        runtimeVerifiers.add(transientStateProbabilityVerifier);
+//
+//
+//        // Before
+//        MCIProperty transientStateProbabilityBeforeEvent = new MCIProperty("[TransientStateProbability Pattern] ",
+//                "", "MCITransientSP");
+//        transientStateProbabilityBeforeEvent.setStateProbabilityValues(0.6, 60, 81);
+//        MCIPropertyChecker transientStateProbabilityBeforePropertyChecker = new MCIPropertyChecker();
+//        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
+//                "Before", transientStateProbabilityBeforeEvent, transientStateProbabilityBeforePropertyChecker);
+//        runtimeVerifiers.add(transientStateProbabilityVerifier);
+//
+//
+//        // After
+//        MCIProperty transientStateProbabilityAfterEvent = new MCIProperty("[TransientStateProbability Pattern] ",
+//                "", "MCITransientSP");
+//        transientStateProbabilityAfterEvent.setStateProbabilityValues(0.6, 60, 81);
+//        MCIPropertyChecker transientStateProbabilityAfterPropertyChecker = new MCIPropertyChecker();
+//        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
+//                "After", transientStateProbabilityAfterEvent, transientStateProbabilityAfterPropertyChecker);
+//        runtimeVerifiers.add(transientStateProbabilityVerifier);
+//
+//        // Between
+//        MCIProperty transientStateProbabilityBetweenEvent1 = new MCIProperty("[TransientStateProbability Pattern] ",
+//                "", "MCITransientSP");
+//        transientStateProbabilityBetweenEvent1.setStateProbabilityValues(0.6, 60, 81);
+//        MCIPropertyChecker transientStateProbabilityEvent1PropertyChecker = new MCIPropertyChecker();
+//        MCIProperty transientStateProbabilityBetweenEvent2 = new MCIProperty("[TransientStateProbability Pattern] ",
+//                "", "MCITransientSP");
+//        transientStateProbabilityBetweenEvent2.setStateProbabilityValues(0.6, 60, 81);
+//        MCIPropertyChecker transientStateProbabilityEvent2PropertyChecker = new MCIPropertyChecker();
+//        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
+//                "Between", transientStateProbabilityBetweenEvent1, transientStateProbabilityEvent1PropertyChecker,
+//                transientStateProbabilityBetweenEvent2, transientStateProbabilityEvent2PropertyChecker);
+//        runtimeVerifiers.add(transientStateProbabilityVerifier);
+//
+//        // Interval
+//        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
+//                "Interval", 100, 300);
+//        runtimeVerifiers.add(transientStateProbabilityVerifier);
+//
+//        // Existence
+//        MCIProperty transientStateProbabilityExistenceEvent = new MCIProperty("[TransientStateProbability Pattern] ",
+//                "", "MCITransientSP");
+//        transientStateProbabilityExistenceEvent.setStateProbabilityValues(0.6, 60, 81);
+//        MCIPropertyChecker transientStateProbabilityExistencePropertyChecker = new MCIPropertyChecker();
+//        transientStateProbabilityVerifier = new RuntimeVerification(transientStateProbabilityPropertyChecker,
+//                "Existence", transientStateProbabilityExistenceEvent, transientStateProbabilityExistencePropertyChecker);
+//        runtimeVerifiers.add(transientStateProbabilityVerifier);
+//
+//
+//
+//
+//
+//
+//
+//        // SteadyStateProbability Scopes SteadyStateProbability Scopes SteadyStateProbability Scopes SteadyStateProbability Scopes
+//        // Globally
+//        steadyStateProbabilityVerifier = new RuntimeVerification(steadyStateProbabilityPropertyChecker);
+//        runtimeVerifiers.add(steadyStateProbabilityVerifier);
+//
+//
+//        // Before
+//        MCIProperty steadyStateProbabilityBeforeEvent = new MCIProperty("[SteadyStateProbability Pattern] ",
+//                "", "MCISteadySP");
+//        steadyStateProbabilityBeforeEvent.setStateProbabilityValues(0.15, 0, 81);
+//        MCIPropertyChecker steadyStateProbabilityBeforePropertyChecker = new MCIPropertyChecker();
+//        steadyStateProbabilityVerifier = new RuntimeVerification(steadyStateProbabilityPropertyChecker,
+//                "Before", steadyStateProbabilityBeforeEvent, steadyStateProbabilityBeforePropertyChecker);
+//        runtimeVerifiers.add(steadyStateProbabilityVerifier);
+//
+//
+//        // After
+//        MCIProperty steadyStateProbabilityAfterEvent = new MCIProperty("[SteadyStateProbability Pattern] ",
+//                "", "MCISteadySP");
+//        steadyStateProbabilityAfterEvent.setStateProbabilityValues(0.15, 0, 81);
+//        MCIPropertyChecker steadyStateProbabilityAfterPropertyChecker = new MCIPropertyChecker();
+//        steadyStateProbabilityVerifier = new RuntimeVerification(steadyStateProbabilityPropertyChecker,
+//                "After", steadyStateProbabilityAfterEvent, steadyStateProbabilityAfterPropertyChecker);
+//        runtimeVerifiers.add(steadyStateProbabilityVerifier);
+//
+//        // Between
+//        MCIProperty steadyStateProbabilityBetweenEvent1 = new MCIProperty("[SteadyStateProbability Pattern] ",
+//                "", "MCISteadySP");
+//        steadyStateProbabilityBetweenEvent1.setStateProbabilityValues(0.15, 0, 81);
+//        MCIPropertyChecker steadyStateProbabilityEvent1PropertyChecker = new MCIPropertyChecker();
+//        MCIProperty steadyStateProbabilityBetweenEvent2 = new MCIProperty("[SteadyStateProbability Pattern] ",
+//                "", "MCISteadySP");
+//        steadyStateProbabilityBetweenEvent2.setStateProbabilityValues(0.15, 0, 81);
+//        MCIPropertyChecker steadyStateProbabilityEvent2PropertyChecker = new MCIPropertyChecker();
+//        steadyStateProbabilityVerifier = new RuntimeVerification(steadyStateProbabilityPropertyChecker,
+//                "Between", steadyStateProbabilityBetweenEvent1, steadyStateProbabilityEvent1PropertyChecker,
+//                steadyStateProbabilityBetweenEvent2, steadyStateProbabilityEvent2PropertyChecker);
+//        runtimeVerifiers.add(steadyStateProbabilityVerifier);
+//
+//        // Interval
+//        steadyStateProbabilityVerifier = new RuntimeVerification(steadyStateProbabilityPropertyChecker,
+//                "Interval", 100, 300);
+//        runtimeVerifiers.add(steadyStateProbabilityVerifier);
+//
+//        // Existence
+//        MCIProperty steadyStateProbabilityExistenceEvent = new MCIProperty("[SteadyStateProbability Pattern] ",
+//                "", "MCISteadySP");
+//        steadyStateProbabilityExistenceEvent.setStateProbabilityValues(0.15, 0, 81);
+//        MCIPropertyChecker steadyStateProbabilityExistencePropertyChecker = new MCIPropertyChecker();
+//        steadyStateProbabilityVerifier = new RuntimeVerification(steadyStateProbabilityPropertyChecker,
+//                "Existence", steadyStateProbabilityExistenceEvent, steadyStateProbabilityExistencePropertyChecker);
+//        runtimeVerifiers.add(steadyStateProbabilityVerifier);
+//
+//
 
 
 
@@ -763,7 +763,7 @@ public class main {
 //        runtimeVerifiers.add(precedenceVerifier);
 //
 //
-//
+
 //
 //
 //

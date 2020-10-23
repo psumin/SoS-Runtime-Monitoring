@@ -16,7 +16,8 @@ public class MCIMaximumDurationChecker extends MaximumDurationChecker {
     protected boolean evaluateState(Snapshot snapshot, Property verificationProperty) {
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
         while(st.hasMoreTokens()) {
-            if(st.nextToken().equals("RescuedRate:"))
+            String target = st.nextToken();
+            if(target.equals("RescuedRate:"))
                 break;
         }
     

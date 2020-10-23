@@ -14,7 +14,8 @@ public class MCIMinimumDurationChecker extends MinimumDurationChecker {
     protected boolean evaluateState(Snapshot snapshot, Property verificationProperty) {
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
         while(st.hasMoreTokens()) {
-            if(st.nextToken().equals("CurrentFF:"))
+            String target = st.nextToken();
+            if(target.equals("CurrentFF:"))
                 break;
         }
         

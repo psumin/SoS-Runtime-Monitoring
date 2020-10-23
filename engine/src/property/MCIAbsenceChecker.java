@@ -18,12 +18,15 @@ public class MCIAbsenceChecker extends AbsenceChecker {
         double treatRate = -1;
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
         while(st.hasMoreTokens()) {
-            if(st.nextToken().equals("RescuedRate:")) {
+            String target = st.nextToken();
+            if(target.equals("RescuedRate:")) {
                 rescueRate = Double.parseDouble(st.nextToken());
-            } else if (st.nextToken().equals("TreatmentRate:")) {
+            } else if (target.equals("TreatmentRate:")) {
                 treatRate = Double.parseDouble(st.nextToken());
             }
         }
+        System.out.println("rescuedrate :" + rescueRate);
+        System.out.println("treatmentrate : " + treatRate);
         
         if(rescueRate - treatRate >= verificationProperty.getThresholdValue()){
             //rescuerate - treatrate >= 0; return false

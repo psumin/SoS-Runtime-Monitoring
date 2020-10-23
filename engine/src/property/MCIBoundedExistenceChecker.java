@@ -19,10 +19,11 @@ public class MCIBoundedExistenceChecker extends BoundedExistenceChecker {
 
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
         while(st.hasMoreTokens()) {
-            if(st.nextToken().equals("CurrentAmb:")) {
+            String target = st.nextToken();
+            if(target.equals("CurrentAmb:")) {
                 ambNum = Integer.parseInt(st.nextToken());
             }
-            else if (st.nextToken().equals("Amb:")) {
+            else if (target.equals("Amb:")) {
                 for(int i = 0; i < ambNum; i++) {
                     tmp = st.nextToken();
                     StringTokenizer st2 = new StringTokenizer(tmp, "/");

@@ -30,13 +30,14 @@ public class MCIRecurrenceChecker extends RecurrenceChecker {
 
             StringTokenizer st = new StringTokenizer(temp, " ");
             counter = 0;
-            tempA = new ArrayList<>(Collections.nCopies(12,0));
+            tempA = new ArrayList<>(Collections.nCopies(40,0));     // 소방관 수를 늘리면 arraylist의 크기도 늘려줘야 함. (현재 고정 크기이므로)
             while(st.hasMoreTokens()) {
                 String tokens = st.nextToken();
                 if(tokens.equals("Amb:")) break;
                 if(tokens.equals("CurrentFF:")) {
                     int tmpFF = Integer.parseInt(st.nextToken());
-                    if(tmpFF > numFF) numFF = tmpFF;
+                    if(tmpFF > numFF)
+                        numFF = tmpFF;
                 }
                 if(tokens.equals("FF:")) {
                     while(counter < numFF) {
@@ -49,17 +50,17 @@ public class MCIRecurrenceChecker extends RecurrenceChecker {
                     }
                     if(flagFF) {
                         stateList.add((ArrayList<Integer>)tempA.clone());
-//                        System.out.println(tempA);
+//                        System.out.println("tempA : " +tempA);
                         flagFF = false;
                         tempA.clear();
                     }
                 }
             }
         }
-        System.out.println("FFs Rescue Activity Time Table");
-        for(int i = 0; i < stateList.size(); i++) {
-            System.out.println(stateList.get(i));
-        }
+//        System.out.println("FFs Rescue Activity Time Table");
+//        for(int i = 0; i < stateList.size(); i++) {
+//            System.out.println(stateList.get(i));
+//        }
 
         int sub = -1;
         ArrayList<Boolean> periodFlags = new ArrayList<>(Collections.nCopies(12,false));
@@ -77,7 +78,7 @@ public class MCIRecurrenceChecker extends RecurrenceChecker {
                 
                 if(periodFlags.get(j)) {
                     sub = stateList.get(i).get(j) - startingValues.get(j);
-                    System.out.println(j + "th FF: " + sub);
+//                    System.out.println(j + "th FF: " + sub);
                     if (sub > verificationProperty.getThresholdValue()) { // 구조 주기의 차이가 value보다 크면 return false
                         return false;
                     }

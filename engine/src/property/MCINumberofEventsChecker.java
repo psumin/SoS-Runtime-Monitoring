@@ -13,7 +13,8 @@ public class MCINumberofEventsChecker extends NumberofEventsChecker {
     protected boolean evaluateState(Snapshot snapshot, Property verificationProperty) {
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
         while(st.hasMoreTokens()) {
-            if(st.nextToken().equals("CurrentMsgCount:"))
+            String target = st.nextToken();
+            if(target.equals("CurrentMsgCount:"))
                 break;
         }
 
@@ -35,7 +36,7 @@ public class MCINumberofEventsChecker extends NumberofEventsChecker {
 //        ORG_TO_BRIDGE_RECV = 0;
 
         int routeCount = Integer.parseInt(st.nextToken());
-        System.out.println("ROUTEMSGCOUNT: " + routeCount);
+//        System.out.println("ROUTEMSGCOUNT: " + routeCount);
 
         if (routeCount <= (int) verificationProperty.getThresholdValue()) {
             return false;

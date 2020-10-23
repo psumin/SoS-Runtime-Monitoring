@@ -198,7 +198,7 @@ public class World extends SoSObject {
 
 
 //        writeScenario1();            // baseline for SoSE 2020
-//        writeScenario2();            // good case for SoSE 2020
+        writeScenario2();            // good case for SoSE 2020
 //        writeScenario3();            // bad case for SoSE 2020
 
 

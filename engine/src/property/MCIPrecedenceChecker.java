@@ -1,5 +1,6 @@
 package property;
 
+import core.World;
 import log.Log;
 import log.Snapshot;
 import property.pattern.PrecedenceChecker;
@@ -10,15 +11,16 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class MCIPrecedenceChecker extends PrecedenceChecker {
-    
+
     public MCIPrecedenceChecker() {
-        
+
         super();
     }
     
     @Override
     protected boolean evaluateState(Log log, Property verificationProperty) {
         System.out.println("Precedence Checker");
+        World world;
         String prev = verificationProperty.getPrevState();
         String latter = verificationProperty.getState();
         String temp = "";
@@ -29,30 +31,31 @@ public class MCIPrecedenceChecker extends PrecedenceChecker {
         ArrayList<Integer> prevList = new ArrayList<>(Collections.nCopies(50,-1));
         ArrayList<Integer> latterList = new ArrayList<>(Collections.nCopies(50,-1));
         ArrayList<Integer> indexCounter = new ArrayList<>(Collections.nCopies(15,0));
-        
-        for(int i = 1; i < logSize; i++) {
+
+
+        for (int i = 1; i < logSize; i++) {
             temp = snapshots.get(i).getSnapshotString();
-    
             StringTokenizer st = new StringTokenizer(temp, " ");
             counter = 0;
-            while(st.hasMoreTokens()) {
+            while (st.hasMoreTokens()) {
                 String tokens = st.nextToken();
-                if(tokens.equals("Amb:")) break;
-                if(tokens.equals("CurrentFF:")) {
+
+                if (tokens.equals("Amb:")) break;
+                if (tokens.equals("CurrentFF:")) {
                     int tmpFF = Integer.parseInt(st.nextToken());
-                    if(tmpFF > numFF) numFF = tmpFF;
+                    if (tmpFF > numFF) numFF = tmpFF;
                 }
-                if(tokens.equals("FF:")) {
-                    while(counter < numFF) {
+                if (tokens.equals("FF:")) {
+                    while (counter < numFF) {
                         String fflog = st.nextToken();
-                        if(fflog.contains(prev)) { // 마지막으로 prev state가 관찰될때
-                            if(prevList.get(counter + 12 * indexCounter.get(counter)) != -1
-                                && latterList.get(counter + 12 * indexCounter.get(counter)) != -1) // prev&latterList가 모두 꽉 차 있을때 Index 하나 더 증가
-                                indexCounter.set(counter, indexCounter.get(counter)+1);
-                            
+                        if (fflog.contains(prev)) { // 마지막으로 prev state가 관찰될때
+                            if (prevList.get(counter + 12 * indexCounter.get(counter)) != -1
+                                    && latterList.get(counter + 12 * indexCounter.get(counter)) != -1) // prev&latterList가 모두 꽉 차 있을때 Index 하나 더 증가
+                                indexCounter.set(counter, indexCounter.get(counter) + 1);
+
                             prevList.set(counter + 12 * indexCounter.get(counter), i);
-                        } else if (fflog.contains(latter) ) { // 처음 latter state가 관찰될때
-                            if(latterList.get(counter + 12 * indexCounter.get(counter)) == -1)
+                        } else if (fflog.contains(latter)) { // 처음 latter state가 관찰될때
+                            if (latterList.get(counter + 12 * indexCounter.get(counter)) == -1)
                                 latterList.set(counter + 12 * indexCounter.get(counter), i);
                         }
                         counter++;
@@ -60,6 +63,7 @@ public class MCIPrecedenceChecker extends PrecedenceChecker {
                 }
             }
         }
+
         System.out.println(prevList);
         System.out.println(latterList);
         return false;
