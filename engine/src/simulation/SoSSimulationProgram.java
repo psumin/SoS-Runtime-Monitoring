@@ -259,7 +259,7 @@ public class SoSSimulationProgram implements KeyListener {
                 currentUpdateTime = System.nanoTime();
                 if (!pause) {
                     update((int) ((currentUpdateTime - lastUpdateTime) / (1000 * 1000)), log);
-                    System.out.println(this.world.frameCount);
+                    System.out.println("FRAMECOUNT: " + this.world.frameCount);
                     for(int i = 0; i < properties.size(); i++){
                         RuntimeVerification verifier = verifiers.get(i);
                         MCIProperty property = properties.get(i);
