@@ -27,7 +27,7 @@ public abstract class MinimumDurationChecker extends PropertyChecker {
             }
         }
 
-        System.out.println("satisfiedCount: " + satisfiedCount + " duration: " + duration);
+        //System.out.println("satisfiedCount: " + satisfiedCount + " duration: " + duration);
         
         if (satisfiedCount >= duration){
             return true;

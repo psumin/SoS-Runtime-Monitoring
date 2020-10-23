@@ -35,7 +35,7 @@ public class MCINumberofEventsChecker extends NumberofEventsChecker {
 //        ORG_TO_BRIDGE_RECV = 0;
 
         int routeCount = Integer.parseInt(st.nextToken());
-        System.out.println("ROUTEMSGCOUNT: " + routeCount);
+        //System.out.println("ROUTEMSGCOUNT: " + routeCount);
 
         if (routeCount <= (int) verificationProperty.getThresholdValue()) {
             return false;
