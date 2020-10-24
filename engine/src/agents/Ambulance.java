@@ -35,7 +35,14 @@ public class Ambulance extends CS{
 
         currentAction = new AmbulanceFree(this);        // Start action
 
+        /*
+        //Buggy Model code START type: Ambulance moveDelay is 50//
+        moveDelay = 50;
+        //Buggy Model code END type: Ambulance moveDelay is 50//
+         */
+        //Original Model code START type: Ambulance moveDelay is 2//
         moveDelay = 2;
+        //Original Model code END type: Ambulance moveDelay is 2//
         frameCounter = moveDelay;
     }
 
