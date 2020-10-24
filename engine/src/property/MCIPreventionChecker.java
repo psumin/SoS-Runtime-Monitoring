@@ -64,7 +64,7 @@ public class MCIPreventionChecker extends PreventionChecker {
                         }
                         else{
                             if(prevList.get(counter)==1) {
-                                System.out.println(temp);
+//                                System.out.println(temp);
                                 occurrence = true;
                                 break;
                             }
