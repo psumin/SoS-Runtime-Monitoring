@@ -51,7 +51,14 @@ public class FireFighterFirstAid extends FireFighterAction {
 
         if(frameCounter <= 0) {                                         // After First Aid, transfer the patient
             world.removeChild(targetPatient);
+            /*
+            //Buggy Model code START type: Firefighter does not select transfer destination but search for patients after giving first-aid to patients//
+            fireFighter.changeAction(new FireFighterSearch(fireFighter));
+            //Buggy Model code END type: Firefighter does not select transfer destination but search for patients after giving first-aid to patients//
+             */
+            //Original Model code START type: Firefighter select transfer destination after giving first-aid to patients//
             fireFighter.changeAction(new FireFighterSelectTransferDestination(fireFighter, targetPatient));
+            //Original Model code END type: Firefighter select transfer destination after giving first-aid to patients//
             fireFighter.transferImage.visible(true);
             fireFighter.firstAid.visible(false);
         }
