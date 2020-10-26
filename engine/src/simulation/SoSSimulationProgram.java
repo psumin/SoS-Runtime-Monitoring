@@ -1,11 +1,9 @@
 package simulation;
 
-import agents.CS;
 import core.World;
 import log.Log;
 import misc.Time;
-import property.MCIProperty;
-import verifier.RuntimeVerification;
+import verifier.RuntimeVerifier;
 
 
 import java.awt.*;
@@ -14,7 +12,6 @@ import java.awt.event.*;
 // Add parts of key
 
 import java.awt.image.BufferStrategy;
-import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.*;
 
@@ -236,7 +233,7 @@ public class SoSSimulationProgram implements KeyListener {
         return log;
     }
 
-    public Log runtimeVerificationRun(ArrayList<RuntimeVerification> verifiers, ArrayList<MCIProperty> properties){
+    public Log runtimeVerificationRun(RuntimeVerifier verifier){
 //        Scanner scan = new Scanner();
 //        RuntimeMonitoring runtimeMonitoring = new RuntimeMonitoring();
 //        String className = "core.World";
@@ -259,12 +256,7 @@ public class SoSSimulationProgram implements KeyListener {
                 currentUpdateTime = System.nanoTime();
                 if (!pause) {
                     update((int) ((currentUpdateTime - lastUpdateTime) / (1000 * 1000)), log);
-                    System.out.println(this.world.frameCount);
-                    for(int i = 0; i < properties.size(); i++){
-                        RuntimeVerification verifier = verifiers.get(i);
-                        MCIProperty property = properties.get(i);
-                        verifier.RuntimeVerificationResult(log, property);
-                    }
+                    verifier.runtimeVerificationResult(log);
                 } else {                                                // 키보드 입력을 통한 pause 는 첫 번째 시뮬레이션에서만!
                     frame.setVisible(true);                            // pause 상태에서는 GUI 를 숨긴다.
                     if (isExpert) {                                     // Expert 모드와 Beginner 모드가 존재함
@@ -287,6 +279,8 @@ public class SoSSimulationProgram implements KeyListener {
                     }
                 }
         }
+
+        verifier.printFinalResult();
         return log;
     }
 
@@ -354,7 +348,7 @@ public class SoSSimulationProgram implements KeyListener {
         if(time >= Time.fromSecond(0.0f)) {
             timeImpl.update(deltaTime);
             world.update();
-            log.addSnapshot(timeImpl.getFrameCount(), " RescuedRate: " + String.valueOf(world.getRescuedRate()) +
+            log.addSnapshot(timeImpl.getFrameCount(), "Frame: " + timeImpl.getFrameCount() + " RescuedRate: " + String.valueOf(world.getRescuedRate()) +
                     " TreatmentRate: " +  String.valueOf(world.getTreatmentRate()) +
                     " CurrentFF: " + world.getFFNumber() + " CurrentAmb: " + world.getAmbNumber() +
                     " CurrentMsgCount: " + world.router.getRouteCount() +  " " + world.printCSSnapshot());
