@@ -2,10 +2,11 @@ package runtimeproperty.event;
 
 import log.Snapshot;
 import runtimeproperty.Event;
+import runtimeproperty.SoSEvent;
 
 import java.util.StringTokenizer;
 
-public class RescuedRateEvent extends Event {
+public class RescuedRateEvent extends SoSEvent {
     double targetRate;
 
     public RescuedRateEvent(double targetRate) {

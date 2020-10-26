@@ -1,15 +1,15 @@
 package runtimeproperty.scope;
 
 import log.Snapshot;
-import runtimeproperty.Event;
 import runtimeproperty.Scope;
+import runtimeproperty.SoSEvent;
 
 public class BetweenScope extends Scope {
-    Event startEvent;
-    Event endEvent;
+    SoSEvent startEvent;
+    SoSEvent endEvent;
     boolean isHappened;
 
-    public BetweenScope(Event startEvent, Event endEvent) {
+    public BetweenScope(SoSEvent startEvent, SoSEvent endEvent) {
         this.name = "Between " + startEvent.getName() + " and " + endEvent.getName();
         this.startEvent = startEvent;
         this.endEvent = endEvent;

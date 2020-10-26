@@ -1,9 +1,10 @@
 package runtimeproperty.pattern;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import log.Snapshot;
-import runtimeproperty.Event;
-import runtimeproperty.RuntimeProperty;
-import runtimeproperty.Scope;
+import runtimeproperty.*;
+
+import java.util.HashMap;
 
 public class RuntimeUniversality extends RuntimeProperty {
     Event targetEvent;
@@ -15,10 +16,24 @@ public class RuntimeUniversality extends RuntimeProperty {
     }
 
     protected void evaluateState(Snapshot snapshot) {
-        this.isHolding = targetEvent.checkHold(snapshot);
+        if (targetEvent instanceof SoSEvent){
+            this.isHolding = ((SoSEvent) targetEvent).checkHold(snapshot);
 
-        if (!isHolding) {
-            this.beConfirmed(snapshot);
+            if (!isHolding) {
+                this.beConfirmed(snapshot);
+            }
+        }
+        else {
+            HashMap<String, Boolean> holdingResult = ((AgentEvent) targetEvent).checkMultipleHold(snapshot);
+
+            for(Boolean result: holdingResult.values()){
+                if (!result){
+                    this.isHolding = false;
+                    this.beConfirmed(snapshot);
+                }
+            }
+
+            this.isHolding = true;
         }
     }
 }

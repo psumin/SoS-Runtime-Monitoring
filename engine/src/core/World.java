@@ -514,15 +514,26 @@ public class World extends SoSObject {
         
         // Current FF Pos & Action
         ret += "FF: ";
-        for (int i = 0; i < fireFighters.size(); i++) {
-            ret += fireFighters.get(i).position.toString() + "/" + fireFighters.get(i).currentAction.name + " ";
+        for (FireFighter fireFighter: fireFighters){
+            ret += fireFighter.name + "/";
+            ret += fireFighter.position.toString() + "/";
+            ret += fireFighter.currentAction.name + " ";
         }
         
         // Current Ambulance Pos & Action
         ret += "Amb: ";
-        for(int i = 0; i < ambulances.size(); i++) {
-            ret += ambulances.get(i).position.toString() + "/" + ambulances.get(i).currentAction.name + "/" + ambulances.get(i).currentDistance + " ";
-            ambulances.get(i).currentDistance = 0;
+        for (Ambulance ambulance: ambulances){
+            ret += ambulance.name + "/";
+            ret += ambulance.position.toString() + "/";
+            ret += ambulance.currentAction.name + "/";
+            ret += ambulance.totalDistance + " ";
+        }
+
+        ret += "Pat: ";
+        for (Patient patient: patients){
+            ret += patient.name + "/";
+            ret += patient.position.toString() + "/";
+            ret += patient.gotFirstAid + " ";
         }
         
         return ret;

@@ -60,6 +60,7 @@ public class Patient extends CS {
 
     SoSObject serious;
     SoSObject wounded;
+    public boolean gotFirstAid;
 
     public Patient(World world, String name) {
         super(world, name);

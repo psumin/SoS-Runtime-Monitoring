@@ -1,9 +1,9 @@
 package runtimeproperty.pattern;
 
 import log.Snapshot;
-import runtimeproperty.Event;
-import runtimeproperty.RuntimeProperty;
-import runtimeproperty.Scope;
+import runtimeproperty.*;
+
+import java.util.HashMap;
 
 public class RuntimeBoundedExistence extends RuntimeProperty {
     Event targetEvent;
@@ -25,8 +25,18 @@ public class RuntimeBoundedExistence extends RuntimeProperty {
     }
 
     protected void evaluateState(Snapshot snapshot) {
-        if(targetEvent.checkHold(snapshot))
-            currentCount++;
+        if (targetEvent instanceof SoSEvent){
+            if(((SoSEvent) targetEvent).checkHold(snapshot))
+                currentCount++;
+        }
+        else {
+            HashMap<String, Boolean> holdingResult = ((AgentEvent) targetEvent).checkMultipleHold(snapshot);
+
+            for(Boolean result: holdingResult.values()){
+                if (result)
+                    currentCount++;
+            }
+        }
 
         if(isAtMost) {
             if (currentCount > targetCount) {
@@ -48,5 +58,6 @@ public class RuntimeBoundedExistence extends RuntimeProperty {
                 this.isHolding = false;
             }
         }
+
     }
 }

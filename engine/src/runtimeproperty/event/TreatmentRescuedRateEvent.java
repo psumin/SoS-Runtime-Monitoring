@@ -1,11 +1,11 @@
 package runtimeproperty.event;
 
 import log.Snapshot;
-import runtimeproperty.Event;
+import runtimeproperty.SoSEvent;
 
 import java.util.StringTokenizer;
 
-public class TreatmentRescuedRateEvent extends Event {
+public class TreatmentRescuedRateEvent extends SoSEvent {
     public TreatmentRescuedRateEvent() {
         this.name = "Event that treatment rate is less or equal than rescued rate";
     }

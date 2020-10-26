@@ -1,14 +1,14 @@
 package runtimeproperty.scope;
 
 import log.Snapshot;
-import runtimeproperty.Event;
 import runtimeproperty.Scope;
+import runtimeproperty.SoSEvent;
 
 public class BeforeScope extends Scope {
-    Event startEvent;
+    SoSEvent startEvent;
     boolean isHappened;
 
-    public BeforeScope(Event event) {
+    public BeforeScope(SoSEvent event) {
         this.name = "Before " + event.getName();
         this.startEvent = event;
         this.isHappened = false;

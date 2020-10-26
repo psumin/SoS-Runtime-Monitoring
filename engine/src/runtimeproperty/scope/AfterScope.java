@@ -1,14 +1,14 @@
 package runtimeproperty.scope;
 
 import log.Snapshot;
-import runtimeproperty.Event;
 import runtimeproperty.Scope;
+import runtimeproperty.SoSEvent;
 
 public class AfterScope extends Scope {
-    Event endEvent;
+    SoSEvent endEvent;
     boolean isHappened;
 
-    public AfterScope(Event event) {
+    public AfterScope(SoSEvent event) {
         this.name = "After " + event.getName();
         this.endEvent = event;
         this.isHappened = false;

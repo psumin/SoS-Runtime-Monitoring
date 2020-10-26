@@ -1,13 +1,11 @@
 package runtimeproperty.event;
 
 import log.Snapshot;
-import runtimeproperty.Event;
-import runtimeproperty.scope.IntervalScope;
+import runtimeproperty.SoSEvent;
 
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class AmbulanceRouteEvent extends Event {
+public class AmbulanceRouteEvent extends SoSEvent {
     int xSize;
     int ySize;
 
@@ -59,7 +57,7 @@ public class AmbulanceRouteEvent extends Event {
 
             if (target.equals("Amb:")) {
                 for (int i = 0; i < numberOfAmbulance; i++) {
-                    String[] position = st.nextToken().split("/")[0].split(",");
+                    String[] position = st.nextToken().split("/")[1].split(",");
                     int xPos = Integer.parseInt(position[0]);
                     int yPos = Integer.parseInt(position[1]);
 

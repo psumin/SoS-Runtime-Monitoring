@@ -1,13 +1,13 @@
 package runtimeproperty.scope;
 
 import log.Snapshot;
-import runtimeproperty.Event;
 import runtimeproperty.Scope;
+import runtimeproperty.SoSEvent;
 
 public class DuringScope extends Scope {
-    Event targetEvent;
+    SoSEvent targetEvent;
 
-    public DuringScope(Event event) {
+    public DuringScope(SoSEvent event) {
         this.name = "During " + event.getName();
         this.targetEvent = event;
     }

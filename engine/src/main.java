@@ -1,14 +1,9 @@
 import log.Log;
+import property.pattern.MinimumDurationChecker;
 import runtimeproperty.RuntimeProperty;
 import runtimeproperty.Scope;
-import runtimeproperty.event.AmbulanceMoveEvent;
-import runtimeproperty.event.AmbulanceRouteEvent;
-import runtimeproperty.event.RescuedRateEvent;
-import runtimeproperty.event.TreatmentRescuedRateEvent;
-import runtimeproperty.pattern.RuntimeAbsence;
-import runtimeproperty.pattern.RuntimeBoundedExistence;
-import runtimeproperty.pattern.RuntimeExistence;
-import runtimeproperty.pattern.RuntimeUniversality;
+import runtimeproperty.event.*;
+import runtimeproperty.pattern.*;
 import runtimeproperty.scope.*;
 import simulation.SoSSimulationProgram;
 import verifier.RuntimeVerifier;
@@ -78,6 +73,31 @@ public class main {
         for(Scope scope: scopes) {
             runtimeProperties.add(new RuntimeBoundedExistence(ambulanceMoveEvent, scope, 500, true));
         }
+
+        // Minimum Duration
+        // Firefighter 의 Action 이 First Aid 인 사건이 지속되는 최소 시간이 8이어야 한다.
+        FirefighterFirstAidEvent firefighterFirstAidEvent = new FirefighterFirstAidEvent();
+        for(Scope scope: scopes) {
+            runtimeProperties.add(new RuntimeMinimumDuration(firefighterFirstAidEvent, scope, 8));
+        }
+
+        // Maximum Duration
+        // Ambulance 의 Action 이 Free State 인 사건이 지속되는 최대 시간이 1 이어야 한다.
+
+        // Recurrence
+        // 환자가 병원에 도착하는 사건이 시간 10 간격으로 반복적으로 발생해야 한다.
+
+        // Precedence
+        // 환자가 Bridgehead 에 도착하는 사건이 발생했다면, 그 이전에 해당 환자가 First Aid 를 받는 사건이 발생했어야 한다.
+
+        // Response
+        // Treatment Rate 가 100% 가 되는 사건이 발생한다면, Firefighter 의 Action 이 Halt 인 사건이 발생해야 한다.
+
+        // Until
+        // Firefighter 의 Action 이 Halt 가 아닌 사건이 Unvisited Tile 이 없어지는 사건이 일어날 때까지 지속되어야 한다.
+
+        // Prevention
+        // 한 환자가 First Aid 를 받는 사건이 발생한다면, 그 이후에 해당 환자가 First Aid 를 받는 사건이 다시 발생하지 않아야 한다.
 
         RuntimeVerifier runtimeVerifier = new RuntimeVerifier(runtimeProperties);
 
