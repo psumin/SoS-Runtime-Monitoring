@@ -10,14 +10,15 @@ public class RescuedRateEvent extends Event {
 
     public RescuedRateEvent(double targetRate) {
         this.targetRate = targetRate;
-        this.name = "Event that rescue rate exceeds " + targetRate;
+        this.name = "Event that rescued rate exceeds " + targetRate;
     }
 
     public boolean checkHold(Snapshot snapshot) {
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
         double currentRate = 0;
 
-        for (String target = ""; st.hasMoreTokens(); target = st.nextToken()) {
+        for (String target = ""; st.hasMoreTokens();) {
+            target = st.nextToken();
             if (target.equals("RescuedRate:")) {
                 currentRate = Double.parseDouble(st.nextToken());
             }

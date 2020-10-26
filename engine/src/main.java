@@ -3,8 +3,10 @@ import runtimeproperty.RuntimeProperty;
 import runtimeproperty.Scope;
 import runtimeproperty.event.AmbulanceRouteEvent;
 import runtimeproperty.event.RescuedRateEvent;
+import runtimeproperty.event.TreatmentRescuedRateEvent;
 import runtimeproperty.pattern.RuntimeAbsence;
 import runtimeproperty.pattern.RuntimeExistence;
+import runtimeproperty.pattern.RuntimeUniversality;
 import runtimeproperty.scope.*;
 import simulation.SoSSimulationProgram;
 import verifier.RuntimeVerifier;
@@ -52,6 +54,13 @@ public class main {
         AmbulanceRouteEvent ambulanceRouteEvent = new AmbulanceRouteEvent(34, 34);
         for(Scope scope: scopes) {
             runtimeProperties.add(new RuntimeAbsence(ambulanceRouteEvent, scope));
+        }
+
+        // Universality
+        // 설명: TreatmentRate 이 RescuedRate 이하인 사건이 항상 만족되어야 한다.
+        TreatmentRescuedRateEvent treatmentRescuedRateEvent = new TreatmentRescuedRateEvent();
+        for(Scope scope: scopes) {
+            runtimeProperties.add(new RuntimeUniversality(treatmentRescuedRateEvent, scope));
         }
 
         // Existence
