@@ -13,7 +13,7 @@ public class RuntimeRecurrence extends RuntimeProperty {
     public RuntimeRecurrence(Event event, Scope scope, int duration) {
         super(scope);
         this.targetEvent = event;
-        this.name = event.getName() + " holds eventually";
+        this.name = event.getName() + " holds repeatedly at most every " + duration;
         this.duration = duration;
         this.currentCount = new HashMap<>(0);
     }

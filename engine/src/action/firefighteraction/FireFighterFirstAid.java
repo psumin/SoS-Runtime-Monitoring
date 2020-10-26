@@ -55,6 +55,8 @@ public class FireFighterFirstAid extends FireFighterAction {
             fireFighter.transferImage.visible(true);
             fireFighter.firstAid.visible(false);
         }
+
+        targetPatient.gotFirstAid = world.frameCount;
         frameCounter--;
     }
 }

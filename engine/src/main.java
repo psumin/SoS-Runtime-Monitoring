@@ -97,6 +97,11 @@ public class main {
 
         // Precedence
         // 환자가 Bridgehead 에 도착하는 사건이 발생했다면, 그 이전에 해당 환자가 First Aid 를 받는 사건이 발생했어야 한다.
+        PatientGetFirstAidEvent patientGetFirstAidEvent = new PatientGetFirstAidEvent();
+        PatientArriveAtBridgeheadEvent patientArriveAtBridgeheadEvent = new PatientArriveAtBridgeheadEvent(34, 34);
+        for(Scope scope: scopes) {
+            runtimeProperties.add(new RuntimePrecedence(patientGetFirstAidEvent, patientArriveAtBridgeheadEvent, scope));
+        }
 
         // Response
         // Treatment Rate 가 100% 가 되는 사건이 발생한다면, Firefighter 의 Action 이 Halt 인 사건이 발생해야 한다.

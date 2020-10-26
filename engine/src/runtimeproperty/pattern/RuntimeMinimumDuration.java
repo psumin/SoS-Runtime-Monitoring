@@ -22,32 +22,9 @@ public class RuntimeMinimumDuration extends RuntimeProperty {
         this.targetCount = targetCount;
         this.name = event.getName() + " remains at least " + targetCount;
         this.currentCount = new HashMap<>(0);
-        this.exception = new ArrayList<>(0);
-        this.needsException = false;
-        this.firstTick = true;
-    }
-
-    private void firstWork(Snapshot snapshot) {
-        StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
-
-        for (String target = ""; st.hasMoreTokens();) {
-            target = st.nextToken();
-
-            if (target.equals("Frame:")) {
-                int currentTick = Integer.parseInt(st.nextToken());
-                if (currentTick != 0) {
-                    this.needsException = true;
-                }
-            }
-        }
     }
 
     protected void evaluateState(Snapshot snapshot) {
-        if (this.firstTick) {
-            this.firstWork(snapshot);
-            this.firstTick = false;
-        }
-
         if (targetEvent instanceof SoSEvent){
             boolean isHolding = ((SoSEvent) targetEvent).checkHold(snapshot);
             if (isHolding) {
@@ -60,11 +37,7 @@ public class RuntimeMinimumDuration extends RuntimeProperty {
                 if (this.currentCount.containsKey("main")) {
                     int cur = this.currentCount.get(name);
 
-                    if (this.needsException && cur != 0 && cur < targetCount) {
-                        this.needsException = false;
-                    }
-
-                    else if (cur != 0 && cur < targetCount){
+                    if (cur != 0 && cur < targetCount){
                         this.isHolding = false;
                         this.beConfirmed(snapshot);
                     }
@@ -76,16 +49,8 @@ public class RuntimeMinimumDuration extends RuntimeProperty {
         else {
             HashMap<String, Boolean> holdingResult = ((AgentEvent) targetEvent).checkMultipleHold(snapshot);
 
-            if (this.firstTick) {
-                this.firstWork(snapshot);
-                this.firstTick = false;
-            }
-
             for(String name: holdingResult.keySet()){
                 boolean result = holdingResult.get(name);
-                if (needsException) {
-                    this.exception.add(name);
-                }
 
                 if (result) {
                     if (this.currentCount.containsKey(name))
@@ -97,12 +62,7 @@ public class RuntimeMinimumDuration extends RuntimeProperty {
                     if (this.currentCount.containsKey(name)) {
                         int cur = this.currentCount.get(name);
 
-                        if (this.needsException && this.exception.contains(name)) {
-                            this.exception.remove(name);
-                            if (this.exception.size() == 0)
-                                this.needsException = false;
-                        }
-                        else if (cur != 0 && cur < targetCount){
+                        if (cur != 0 && cur < targetCount){
                             this.isHolding = false;
                             this.beConfirmed(snapshot);
                         }
