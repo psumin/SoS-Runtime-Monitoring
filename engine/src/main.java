@@ -83,6 +83,10 @@ public class main {
 
         // Maximum Duration
         // Ambulance 의 Action 이 Free State 인 사건이 지속되는 최대 시간이 1 이어야 한다.
+        AmbulanceFreeEvent ambulanceFreeEvent = new AmbulanceFreeEvent();
+        for(Scope scope: scopes) {
+            runtimeProperties.add(new RuntimeMaximumDuration(ambulanceFreeEvent, scope, 1));
+        }
 
         // Recurrence
         // 환자가 병원에 도착하는 사건이 시간 10 간격으로 반복적으로 발생해야 한다.

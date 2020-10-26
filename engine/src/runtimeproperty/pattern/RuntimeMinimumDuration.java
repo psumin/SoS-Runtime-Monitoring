@@ -10,9 +10,10 @@ import java.util.StringTokenizer;
 public class RuntimeMinimumDuration extends RuntimeProperty {
     Event targetEvent;
     int targetCount;
+    HashMap<String, Integer> currentCount;
+
     boolean firstTick;
     boolean needsException;
-    HashMap<String, Integer> currentCount;
     ArrayList<String> exception;
 
     public RuntimeMinimumDuration(Event event, Scope scope, int targetCount) {
