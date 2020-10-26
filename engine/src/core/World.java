@@ -387,14 +387,15 @@ public class World extends SoSObject {
             hospital.setCapacity(10);
 //            }
         }
-        //Buggy Model code START type: Hospital(s) out of world map boundary//
+        //Buggy Model code START type: Hospital(s) spawn at points(0,0)//
         /*
         hospitals.get(0).setPosition(0, 0);
-        hospitals.get(1).setPosition(Map.mapSize.width + 1, 0);
-        hospitals.get(2).setPosition(0, Map.mapSize.height - 1);
-        hospitals.get(3).setPosition(Map.mapSize.width + 1, Map.mapSize.height + 1);
+        hospitals.get(1).setPosition(0, 0);
+        hospitals.get(2).setPosition(0, 0);
+        hospitals.get(3).setPosition(0, 0);
+
         */
-        //Buggy Model code END type: Hospital(s) out of world map boundary//
+        //Buggy Model code END type: Hospital(s) spawn at points(0,0)//
 
         //Original Model code Start type: Hospital(s) out of world map boundary//
 
@@ -403,7 +404,8 @@ public class World extends SoSObject {
         hospitals.get(2).setPosition(0, Map.mapSize.height - 1);
         hospitals.get(3).setPosition(Map.mapSize.width - 1, Map.mapSize.height - 1);
 
-        //Original Model code End type: Hospital(s) out of world map boundary//
+        //Original Model code End type: Hospital(s) spawn at points(0,0)//
+
 //        hospitals.get(4).setPosition(0, (Map.mapSize.height - 1) / 2);
 //        hospitals.get(5).setPosition(Map.mapSize.width - 1, (Map.mapSize.height - 1) / 2);
     }
@@ -416,15 +418,21 @@ public class World extends SoSObject {
             addChild(bridgehead);
         }
 
-//        bridgeheads.get(0).setPosition(new Position(Map.mapSize.width / 4, Map.mapSize.height / 4));
-//        bridgeheads.get(1).setPosition(new Position(3 * Map.mapSize.width / 4, Map.mapSize.height / 4));
-//        bridgeheads.get(2).setPosition(new Position(3 * Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
-//        bridgeheads.get(3).setPosition(new Position(Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
+        //Buggy Model code START type: Bridgehead(s) spawn at points(0,0)//
+        /*
+        bridgeheads.get(0).setPosition(0,0);
+        bridgeheads.get(1).setPosition(0,0);
+        bridgeheads.get(2).setPosition(0,0);
+        bridgeheads.get(3).setPosition(0,0);
+        */
+        //Buggy Model code END type: Bridgehead(s) spawn at points(0,0)//
+
+        //Original Model code START type: Bridgehead(s) spawn at points(0,0)//
         bridgeheads.get(0).setPosition(new Position(Map.mapSize.width / 8, Map.mapSize.height / 8));
         bridgeheads.get(1).setPosition(new Position(7 * Map.mapSize.width / 8, Map.mapSize.height / 8));
         bridgeheads.get(2).setPosition(new Position(7 * Map.mapSize.width / 8, 7 * Map.mapSize.height / 8));
         bridgeheads.get(3).setPosition(new Position(Map.mapSize.width / 8, 7 * Map.mapSize.height / 8));
-
+        //Original Model code END type: Bridgehead(s) spawn at points(0,0)//
     }
 
     int ambulancePositionIndex = 0;
