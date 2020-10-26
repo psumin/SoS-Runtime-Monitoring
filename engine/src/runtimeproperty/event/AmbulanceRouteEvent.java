@@ -52,12 +52,6 @@ public class AmbulanceRouteEvent extends Event {
 
         for (String target = ""; st.hasMoreTokens();) {
             target = st.nextToken();
-            if (target.equals("Frame:")) {
-                int currentTick = Integer.parseInt(st.nextToken());
-                if (currentTick == 300){
-                    continue;
-                }
-            }
 
             if (target.equals("CurrentAmb:")) {
                 numberOfAmbulance = Integer.parseInt(st.nextToken());

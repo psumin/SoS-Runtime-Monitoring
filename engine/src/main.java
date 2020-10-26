@@ -1,10 +1,12 @@
 import log.Log;
 import runtimeproperty.RuntimeProperty;
 import runtimeproperty.Scope;
+import runtimeproperty.event.AmbulanceMoveEvent;
 import runtimeproperty.event.AmbulanceRouteEvent;
 import runtimeproperty.event.RescuedRateEvent;
 import runtimeproperty.event.TreatmentRescuedRateEvent;
 import runtimeproperty.pattern.RuntimeAbsence;
+import runtimeproperty.pattern.RuntimeBoundedExistence;
 import runtimeproperty.pattern.RuntimeExistence;
 import runtimeproperty.pattern.RuntimeUniversality;
 import runtimeproperty.scope.*;
@@ -68,6 +70,13 @@ public class main {
         RescuedRateEvent rescuedRateEvent = new RescuedRateEvent(0.25);
         for(Scope scope: scopes) {
             runtimeProperties.add(new RuntimeExistence(rescuedRateEvent, scope));
+        }
+
+        // Bounded Existence
+        // 설명: 최소한 하나의 Ambulance 가 단 한 칸만 움직이는 사건이 최대 500번 발생한다.
+        AmbulanceMoveEvent ambulanceMoveEvent = new AmbulanceMoveEvent();
+        for(Scope scope: scopes) {
+            runtimeProperties.add(new RuntimeBoundedExistence(ambulanceMoveEvent, scope, 500, true));
         }
 
         RuntimeVerifier runtimeVerifier = new RuntimeVerifier(runtimeProperties);

@@ -48,8 +48,13 @@ public abstract class RuntimeProperty {
             else
                 System.out.println(base + isHolding);
         } else if (scope instanceof BeforeScope || scope instanceof IntervalScope || scope instanceof BetweenScope) {
-            if (scope.isPassed)
+            if (scope.isPassed) {
                 this.beConfirmed(snapshot);
+                System.out.println(base + isHolding + " (Confirmed at " + this.confirmedAt + ")");
+            }
+            else {
+                System.out.println(base + isHolding);
+            }
         } else
             System.out.println(base + isHolding);
     }

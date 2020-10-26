@@ -521,7 +521,8 @@ public class World extends SoSObject {
         // Current Ambulance Pos & Action
         ret += "Amb: ";
         for(int i = 0; i < ambulances.size(); i++) {
-            ret += ambulances.get(i).position.toString() + "/" + ambulances.get(i).currentAction.name + " ";
+            ret += ambulances.get(i).position.toString() + "/" + ambulances.get(i).currentAction.name + "/" + ambulances.get(i).currentDistance + " ";
+            ambulances.get(i).currentDistance = 0;
         }
         
         return ret;

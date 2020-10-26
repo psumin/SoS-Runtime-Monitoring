@@ -20,6 +20,7 @@ public class CS extends SoSObject {
 
     public Action currentAction;
 
+    public int currentDistance = 0;
     public int totalDistance = 0;
 
     public CS(World world, String name) {
@@ -81,6 +82,7 @@ public class CS extends SoSObject {
             if(nextPosition != null) {
                 if(!isArrivedAt(nextPosition)) {
                     totalDistance++;
+                    currentDistance++;
                 }
                 setPosition(nextPosition);
 
