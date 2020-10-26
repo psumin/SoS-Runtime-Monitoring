@@ -19,8 +19,8 @@ public class IntervalScope extends Scope {
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
         int currentTick = -1;
 
-        for (String target = ""; st.hasMoreTokens(); target = st.nextToken()){
-            if (target.equals("Frame:")){
+        for (String target = ""; st.hasMoreTokens(); target = st.nextToken()) {
+            if (target.equals("Frame:")) {
                 currentTick = Integer.parseInt(st.nextToken());
             }
         }

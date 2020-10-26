@@ -10,6 +10,7 @@ import java.util.StringTokenizer;
 
 public class RuntimeVerifier extends Verifier {
     protected ArrayList<RuntimeProperty> runtimeProperties;
+    int currentTick;
 
     public RuntimeVerifier(ArrayList<RuntimeProperty> runtimeProperties) {
         this.runtimeProperties = runtimeProperties;
@@ -18,21 +19,20 @@ public class RuntimeVerifier extends Verifier {
     public void runtimeVerificationResult(Log log) {
         Snapshot snapshot = log.getSnapshotMap().get(log.getSnapshotMap().size());
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
-        int currentTick = -1;
 
-        for (String target = ""; st.hasMoreTokens(); target = st.nextToken()){
-            if (target.equals("Frame:")){
-                currentTick = Integer.parseInt(st.nextToken());
+        for (String target = ""; st.hasMoreTokens(); target = st.nextToken()) {
+            if (target.equals("Frame:")) {
+                this.currentTick = Integer.parseInt(st.nextToken());
             }
         }
 
-        System.out.println("Tick: " + currentTick);
+        System.out.println("Tick: " + this.currentTick);
 
         for (RuntimeProperty runtimeProperty : this.runtimeProperties) {
             runtimeProperty.check(snapshot);
         }
 
-        System.out.println("");
+        System.out.println();
     }
 
     public void printFinalResult() {
@@ -43,6 +43,6 @@ public class RuntimeVerifier extends Verifier {
         for (RuntimeProperty runtimeProperty : this.runtimeProperties) {
             runtimeProperty.printFinalResult();
         }
-        System.out.println("");
+        System.out.println();
     }
 }

@@ -5,21 +5,19 @@ import runtimeproperty.Event;
 import runtimeproperty.RuntimeProperty;
 import runtimeproperty.Scope;
 
-import java.util.StringTokenizer;
-
-public class RuntimeExistence extends RuntimeProperty {
+public class RuntimeAbsence extends RuntimeProperty {
     Event targetEvent;
 
-    public RuntimeExistence(Event event, Scope scope) {
+    public RuntimeAbsence(Event event, Scope scope) {
         super(scope);
         this.targetEvent = event;
-        this.name = event.getName() + " holds eventually";
+        this.name = "It is never the case that " + event.getName() + " holds";
     }
 
     protected void evaluateState(Snapshot snapshot) {
-        this.isHolding = targetEvent.checkHold(snapshot);
+        this.isHolding = !targetEvent.checkHold(snapshot);
 
-        if (isHolding) {
+        if (!isHolding) {
             this.beConfirmed(snapshot);
         }
     }

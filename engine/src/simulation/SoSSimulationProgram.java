@@ -5,15 +5,12 @@ import log.Log;
 import misc.Time;
 import verifier.RuntimeVerifier;
 
-
+import javax.swing.*;
 import java.awt.*;
-import java.awt.Color;
-import java.awt.event.*;
-// Add parts of key
-
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.util.Scanner;
-import javax.swing.*;
 
 
 //import org.apache.poi.ss.usermodel.*;
@@ -32,15 +29,13 @@ import javax.swing.*;
  */
 
 public class SoSSimulationProgram implements KeyListener {
-    String filePath;
-    int super_counter = 1;
     final int MAX_SIMULATION_COUNT = 1;                          // 시뮬레이션 반복 횟수
     final int MAX_FRAME_COUNT = 500;                                // 각 시뮬레이션마다 최대 frame의 수
-
     final int SIMULATION_WIDTH = 910;                               // 시뮬레이션 GUI의 너비
     final int SIMULATION_HEIGHT = 910;                              // 시뮬레이션 GUI의 높이
-//    final int CONSOLE_WIDTH = 200;
-
+    String filePath;
+    int super_counter = 1;
+    //    final int CONSOLE_WIDTH = 200;
     JFrame frame;
     Canvas canvas;
     BufferStrategy bufferStrategy;
@@ -49,14 +44,34 @@ public class SoSSimulationProgram implements KeyListener {
 
     long programStartTime;                                          // 프로그램 시작 시간
     long programEndTime;                                            // 프로그램 종료 시간
+    boolean pause = false;
+    long desiredFPS = 60;
+    long desiredDeltaLoop = (1000 * 1000 * 1000) / desiredFPS;
+    boolean running = true;
+    boolean stop = false;
+    TimeImpl timeImpl = new TimeImpl();
+    // World 초기화
+    World world;
+    /**
+     * Rewrite this method for your game
+     */
+    // deltaTime 단위: 밀리초
+    int time = 0;
 
+    // 현재 마우스 event는 사용하지 않음
+//    private class MouseControl extends MouseAdapter{
+//        public void mouseClicked(MouseEvent e) {
+//            int a = 10;
+//        }
+//    }
+    int simulation_count = 1;
 
-    public SoSSimulationProgram(){
+    public SoSSimulationProgram() {
         frame = new JFrame("SimulationEngine");
 
         JPanel panel = (JPanel) frame.getContentPane();
 //        panel.setPreferredSize(new Dimension(SIMULATION_WIDTH + CONSOLE_WIDTH, SIMULATION_HEIGHT));
-        panel.setPreferredSize(new Dimension(SIMULATION_WIDTH , SIMULATION_HEIGHT));
+        panel.setPreferredSize(new Dimension(SIMULATION_WIDTH, SIMULATION_HEIGHT));
         //panel.setLayout(null);
         panel.setLayout(new FlowLayout());
 
@@ -110,16 +125,18 @@ public class SoSSimulationProgram implements KeyListener {
         return this.running;
     }
 
+//    XSSFWorkbook workbook = new XSSFWorkbook();
+//    XSSFSheet statisticsSheet;
+//    XSSFSheet inputScenarioSheet;
+//    CellStyle headerStyle;
+
     public void setSuper_counter() {
         this.super_counter++;
     }
 
-    boolean pause = false;
-
-    public void keyPressed(KeyEvent e)
-    {
+    public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_S) {                          // 첫번째 시뮬레이션에서 "S" key 가 눌리면 pause 의 value 를 true 로!
-            if(isFirstSimulation) {
+            if (isFirstSimulation) {
                 //System.out.println("Stop button pressed!");
                 pause = true;
             }
@@ -133,31 +150,14 @@ public class SoSSimulationProgram implements KeyListener {
 //            init();
 //        }
     }
-    public void keyReleased(KeyEvent e)
-    {}
-    public void keyTyped(KeyEvent e)
-    {}
 
-    // 현재 마우스 event는 사용하지 않음
-//    private class MouseControl extends MouseAdapter{
-//        public void mouseClicked(MouseEvent e) {
-//            int a = 10;
-//        }
-//    }
+    public void keyReleased(KeyEvent e) {
+    }
 
-    long desiredFPS = 60;
-    long desiredDeltaLoop = (1000*1000*1000)/desiredFPS;
+    public void keyTyped(KeyEvent e) {
+    }
 
-    boolean running = true;
-
-    boolean stop = false;
-
-//    XSSFWorkbook workbook = new XSSFWorkbook();
-//    XSSFSheet statisticsSheet;
-//    XSSFSheet inputScenarioSheet;
-//    CellStyle headerStyle;
-
-    public Log run(){
+    public Log run() {
 //        Scanner scan = new Scanner();
 //        RuntimeMonitoring runtimeMonitoring = new RuntimeMonitoring();
 //        String className = "core.World";
@@ -189,7 +189,7 @@ public class SoSSimulationProgram implements KeyListener {
         init();                                                         // World 초기화
 
 //        programStartTime = System.nanoTime();
-        while(running) {
+        while (running) {
             if (isFirstSimulation) {                                    // 첫 번째 시뮬레이션에만 적용
                 beginLoopTime = System.nanoTime();
                 render();                                               // 첫 번째 시뮬레이션에서만 GUI 를 rendering 한다.
@@ -233,7 +233,7 @@ public class SoSSimulationProgram implements KeyListener {
         return log;
     }
 
-    public Log runtimeVerificationRun(RuntimeVerifier verifier){
+    public Log runtimeVerificationRun(RuntimeVerifier verifier) {
 //        Scanner scan = new Scanner();
 //        RuntimeMonitoring runtimeMonitoring = new RuntimeMonitoring();
 //        String className = "core.World";
@@ -248,47 +248,41 @@ public class SoSSimulationProgram implements KeyListener {
         init();                                                         // World 초기화
 
 //        programStartTime = System.nanoTime();
-        while(running) {
-                beginLoopTime = System.nanoTime();
-                render();
+        while (running) {
+            beginLoopTime = System.nanoTime();
+            render();
 
-                lastUpdateTime = currentUpdateTime;
-                currentUpdateTime = System.nanoTime();
-                if (!pause) {
-                    update((int) ((currentUpdateTime - lastUpdateTime) / (1000 * 1000)), log);
-                    verifier.runtimeVerificationResult(log);
-                } else {                                                // 키보드 입력을 통한 pause 는 첫 번째 시뮬레이션에서만!
-                    frame.setVisible(true);                            // pause 상태에서는 GUI 를 숨긴다.
-                    if (isExpert) {                                     // Expert 모드와 Beginner 모드가 존재함
-                        expertMode();                                   // String 으로 stimulus 입력 가능
-                    } else {
-                        beginnerMode();                                 // 메뉴에 따라서 stimulus 입력 가능
-                    }
-                }
-
-                endLoopTime = System.nanoTime();
-                deltaLoop = endLoopTime - beginLoopTime;
-
-                if (deltaLoop > desiredDeltaLoop) {
-                    //Do nothing. We are already late.
+            lastUpdateTime = currentUpdateTime;
+            currentUpdateTime = System.nanoTime();
+            if (!pause) {
+                update((int) ((currentUpdateTime - lastUpdateTime) / (1000 * 1000)), log);
+                verifier.runtimeVerificationResult(log);
+            } else {                                                // 키보드 입력을 통한 pause 는 첫 번째 시뮬레이션에서만!
+                frame.setVisible(true);                            // pause 상태에서는 GUI 를 숨긴다.
+                if (isExpert) {                                     // Expert 모드와 Beginner 모드가 존재함
+                    expertMode();                                   // String 으로 stimulus 입력 가능
                 } else {
-                    try {
-                        Thread.sleep((desiredDeltaLoop - deltaLoop) / (1000 * 1000));
-                    } catch (InterruptedException e) {
-                        //Do nothing
-                    }
+                    beginnerMode();                                 // 메뉴에 따라서 stimulus 입력 가능
                 }
+            }
+
+            endLoopTime = System.nanoTime();
+            deltaLoop = endLoopTime - beginLoopTime;
+
+            if (deltaLoop > desiredDeltaLoop) {
+                //Do nothing. We are already late.
+            } else {
+                try {
+                    Thread.sleep((desiredDeltaLoop - deltaLoop) / (1000 * 1000));
+                } catch (InterruptedException e) {
+                    //Do nothing
+                }
+            }
         }
 
         verifier.printFinalResult();
         return log;
     }
-
-
-
-
-
-
 
     // Rendering
     private void render() {
@@ -299,64 +293,31 @@ public class SoSSimulationProgram implements KeyListener {
         bufferStrategy.show();
     }
 
-
-
-    // misc.Time class implementation
-    private static final class TimeImpl extends Time {
-        public TimeImpl() {
-            instance = this;
-            deltaTime = 0;
-            time = 0;
-            frameCount = 0;
-        }
-
-        public void reset() {
-            frameCount = 0;
-        }
-
-        public void update(int deltaTime) {
-            this.deltaTime = deltaTime;
-            time += deltaTime;
-            frameCount++;
-        }
-    }
-    TimeImpl timeImpl = new TimeImpl();
-
-    // World 초기화
-    World world;
     protected void init() {
-        if(super_counter == 1)
+        if (super_counter == 1)
             world = new World(MAX_FRAME_COUNT, true);
         else
             world = new World(MAX_FRAME_COUNT, false);
 
     }
 
-    /**
-     * Rewrite this method for your game
-     */
-    // deltaTime 단위: 밀리초
-    int time = 0;
-    int simulation_count = 1;
-
-
     // Upodate 실행하는 함수
-    protected void update(int deltaTime, Log log){
+    protected void update(int deltaTime, Log log) {
 
 //        System.out.println("Simulation repeated: " + simulation_count + " Frame count: " + timeImpl.getFrameCount());
         time += deltaTime;
-        if(time >= Time.fromSecond(0.0f)) {
+        if (time >= Time.fromSecond(0.0f)) {
             timeImpl.update(deltaTime);
             world.update();
-            log.addSnapshot(timeImpl.getFrameCount(), "Frame: " + timeImpl.getFrameCount() + " RescuedRate: " + String.valueOf(world.getRescuedRate()) +
-                    " TreatmentRate: " +  String.valueOf(world.getTreatmentRate()) +
+            log.addSnapshot(Time.getFrameCount(), "Frame: " + Time.getFrameCount() + " RescuedRate: " + world.getRescuedRate() +
+                    " TreatmentRate: " + world.getTreatmentRate() +
                     " CurrentFF: " + world.getFFNumber() + " CurrentAmb: " + world.getAmbNumber() +
-                    " CurrentMsgCount: " + world.router.getRouteCount() +  " " + world.printCSSnapshot());
+                    " CurrentMsgCount: " + world.router.getRouteCount() + " " + world.printCSSnapshot());
 
 //            System.out.println("rescuedrate :" + String.valueOf(world.getRescuedRate()));
 //            System.out.println("treatmentrate : " + String.valueOf(world.getTreatmentRate()));
 //            System.out.println(timeImpl.getFrameCount());
-            if(world.isFinished()) {                        //Maximum frame 지나면 true로 들어올 수 있음
+            if (world.isFinished()) {                        //Maximum frame 지나면 true로 들어올 수 있음
 //                System.out.println("isFinished is true!!!!!!!!!!!!!!!!!!!!!!!!!");
 //                System.out.println(timeImpl.getFrameCount());
 //                System.out.println("getRescuedRate: " + world.getRescuedRate());
@@ -370,7 +331,7 @@ public class SoSSimulationProgram implements KeyListener {
 //                Row row = sheet.createRow(simulation_count);
 //                ExcelHelper.getCell(row, 0).setCellValue("" + world.getRescuedRate());
 //                ExcelHelper.getCell(row, 0).setCellValue("" + world.getTreatmentRate());
-                if(isFirstSimulation) {                                                 // 첫 번째 시뮬레이션일 때 초기 정보 저장
+                if (isFirstSimulation) {                                                 // 첫 번째 시뮬레이션일 때 초기 정보 저장
 //                    sheet = inputScenarioSheet;
 //                    int rowNum = 0;
 //
@@ -556,7 +517,7 @@ public class SoSSimulationProgram implements KeyListener {
     /**
      * Rewrite this method for your game
      */
-    protected void render(Graphics2D g){
+    protected void render(Graphics2D g) {
         g.setColor(new Color(255, 255, 255));
         g.fillRect(0, 0, SIMULATION_WIDTH, SIMULATION_HEIGHT);
         world.render(g);
@@ -572,21 +533,11 @@ public class SoSSimulationProgram implements KeyListener {
 //        ExcelHelper.save(workbook, filePath);
     }
 
-    /*public static void main(String [] args){
-
-        simulation.SoSSimulationProgram simulationEngine = new simulation.SoSSimulationProgram();
-        for (int i = 0; i < 5; i++) {
-            simulationEngine.running = true;
-            simulationEngine.run();
-            simulationEngine.super_counter++;
-        }
-//        new Thread(simulationEngine).start();
-    }*/
     /**
      * Insertion parts
      */
     private void expertMode() {
-        System.out.println("현재 시뮬레이션 Frame: " + timeImpl.getFrameCount());
+        System.out.println("현재 시뮬레이션 Frame: " + Time.getFrameCount());
         System.out.print("Input command here: ");
         Scanner input = new Scanner(System.in);
         String command = input.next().toLowerCase();
@@ -710,8 +661,19 @@ public class SoSSimulationProgram implements KeyListener {
         }
     }
 
+    /*public static void main(String [] args){
+
+        simulation.SoSSimulationProgram simulationEngine = new simulation.SoSSimulationProgram();
+        for (int i = 0; i < 5; i++) {
+            simulationEngine.running = true;
+            simulationEngine.run();
+            simulationEngine.super_counter++;
+        }
+//        new Thread(simulationEngine).start();
+    }*/
+
     private void beginnerMode() {
-        System.out.println("현재 시뮬레이션 Frame: " + timeImpl.getFrameCount());
+        System.out.println("현재 시뮬레이션 Frame: " + Time.getFrameCount());
         String menu = "===== Menu\n" +
                 "  1. Speed\n" +
                 "  2. Range\n" +
@@ -752,7 +714,6 @@ public class SoSSimulationProgram implements KeyListener {
                             }
                         }
                         break;
-
 
 
                     case 2: {
@@ -966,7 +927,7 @@ public class SoSSimulationProgram implements KeyListener {
     int getCommandOnBeginnerMode(String menu) {
         System.out.print(menu);
         Scanner input = new Scanner(System.in);
-        while(true) {
+        while (true) {
             if (input.hasNextInt()) {
                 break;
             } else {
@@ -981,7 +942,7 @@ public class SoSSimulationProgram implements KeyListener {
     float getCommandOnBeginnerModeF(String menu) {
         System.out.print(menu);
         Scanner input = new Scanner(System.in);
-        while(true) {
+        while (true) {
             if (input.hasNextFloat()) {
                 break;
             } else {
@@ -997,7 +958,7 @@ public class SoSSimulationProgram implements KeyListener {
         System.out.print(menu);
         Scanner input = new Scanner(System.in);
 //        String command = input.next();
-        while(true) {
+        while (true) {
             if (input.hasNext()) {
                 break;
             } else {
@@ -1007,5 +968,25 @@ public class SoSSimulationProgram implements KeyListener {
             }
         }
         return input.next();
+    }
+
+    // misc.Time class implementation
+    private static final class TimeImpl extends Time {
+        public TimeImpl() {
+            instance = this;
+            deltaTime = 0;
+            time = 0;
+            frameCount = 0;
+        }
+
+        public void reset() {
+            frameCount = 0;
+        }
+
+        public void update(int deltaTime) {
+            this.deltaTime = deltaTime;
+            time += deltaTime;
+            frameCount++;
+        }
     }
 }

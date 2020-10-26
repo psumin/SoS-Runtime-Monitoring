@@ -17,8 +17,9 @@ public class BetweenScope extends Scope {
     }
 
     public boolean checkScope(Snapshot snapshot) {
-        if (!this.isHappened && this.startEvent.checkHold(snapshot)) {
+        if (!this.isHappened && !this.isPassed && this.startEvent.checkHold(snapshot)) {
             this.isHappened = true;
+            this.isPassed = true;
             return true;
         }
 

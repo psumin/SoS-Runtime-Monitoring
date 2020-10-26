@@ -20,7 +20,7 @@ public class AmbulanceTransferToHospital extends AmbulanceAction {
 
         this.hospital = hospital;
         this.patient = targetPatient;
-        name = "Transfer To Hospital";
+        name = "TransferToHospital";
         ambulance.transferImage.visible(true);
         ambulance.defaultImage.visible(false);
     }

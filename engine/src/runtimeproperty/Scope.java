@@ -7,6 +7,7 @@ public abstract class Scope {
     protected boolean isPassed;
 
     public abstract boolean checkScope(Snapshot snapshot);
+
     public String getName() {
         return this.name;
     }

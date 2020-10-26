@@ -1,9 +1,12 @@
 package runtimeproperty;
 
 import log.Snapshot;
-import property.Property;
 import runtimeproperty.scope.AfterScope;
 import runtimeproperty.scope.BeforeScope;
+import runtimeproperty.scope.BetweenScope;
+import runtimeproperty.scope.IntervalScope;
+
+import java.util.StringTokenizer;
 
 public abstract class RuntimeProperty {
     protected Scope scope;
@@ -19,27 +22,35 @@ public abstract class RuntimeProperty {
     }
 
     protected abstract void evaluateState(Snapshot snapshot);
-    protected abstract void endScope(Snapshot snapshot);
+
+    protected void beConfirmed(Snapshot snapshot) {
+        this.isConfirmed = true;
+
+        StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
+        int currentTick = -1;
+
+        for (String target = ""; st.hasMoreTokens(); target = st.nextToken()) {
+            if (target.equals("Frame:")) {
+                currentTick = Integer.parseInt(st.nextToken());
+            }
+        }
+        this.confirmedAt = currentTick;
+    }
+
     public void check(Snapshot snapshot) {
         String base = this.name + " in scope " + scope.getName() + ": ";
         if (isConfirmed) {
             System.out.println(base + isHolding + " (Confirmed at " + this.confirmedAt + ")");
-        }
-
-        else if (scope.checkScope(snapshot)) {
+        } else if (scope.checkScope(snapshot)) {
             this.evaluateState(snapshot);
             if (isConfirmed)
                 System.out.println(base + isHolding + " (Confirmed at " + this.confirmedAt + ")");
             else
                 System.out.println(base + isHolding);
-        }
-
-        else if (scope instanceof BeforeScope || scope instanceof AfterScope) {
+        } else if (scope instanceof BeforeScope || scope instanceof IntervalScope || scope instanceof BetweenScope) {
             if (scope.isPassed)
-                this.endScope(snapshot);
-        }
-
-        else
+                this.beConfirmed(snapshot);
+        } else
             System.out.println(base + isHolding);
     }
 
@@ -47,6 +58,6 @@ public abstract class RuntimeProperty {
         if (this.isConfirmed)
             System.out.println(this.name + " in scope " + scope.getName() + ": " + isHolding + " (Confirmed at " + this.confirmedAt + ")");
         else
-            System.out.println(this.name + " in scope " + scope.getName() + ": " + isHolding + " (Confirmed at " + this.confirmedAt + ")");
+            System.out.println(this.name + " in scope " + scope.getName() + ": " + isHolding + " (Confirmed at simulation ends)");
     }
 }

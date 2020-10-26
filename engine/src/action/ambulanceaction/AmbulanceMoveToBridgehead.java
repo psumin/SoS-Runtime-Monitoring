@@ -22,7 +22,7 @@ public class AmbulanceMoveToBridgehead extends AmbulanceAction {
         super(target);
 
         this.bridgehead = bridgehead;
-        name = "Move To Bridgehead";
+        name = "MoveToBridgehead";
     }
 
     @Override

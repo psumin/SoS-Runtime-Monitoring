@@ -1,7 +1,9 @@
 import log.Log;
-import runtimeproperty.Event;
 import runtimeproperty.RuntimeProperty;
+import runtimeproperty.Scope;
+import runtimeproperty.event.AmbulanceRouteEvent;
 import runtimeproperty.event.RescuedRateEvent;
+import runtimeproperty.pattern.RuntimeAbsence;
 import runtimeproperty.pattern.RuntimeExistence;
 import runtimeproperty.scope.*;
 import simulation.SoSSimulationProgram;
@@ -20,7 +22,8 @@ import java.util.ArrayList;
 public class main {
 
     Log log = new Log();
-    public static void main(String [] args) {
+
+    public static void main(String[] args) {
         long programStartTime;                                          // 프로그램 시작 시간
         long programEndTime;                                            // 프로그램 종료 시간
         long thetaStartTime;                                            // 한 사이클 시작 시간
@@ -33,31 +36,30 @@ public class main {
         programStartTime = System.nanoTime();           // 첫번째 시뮬레이션까지 포함할려면 여기에 정의
 //        simulationEngine.run();                       // 통계적 검증을 위한 run
 
-        ArrayList<RuntimeProperty> runtimeProperties = new ArrayList<RuntimeProperty>(0);
+        ArrayList<RuntimeProperty> runtimeProperties = new ArrayList<>(0);
 
         // Scopes
-        GloballyScope globallyScope = new GloballyScope();
-        BeforeScope beforeScope = new BeforeScope(new RescuedRateEvent(0.1));
-        AfterScope afterScope = new AfterScope(new RescuedRateEvent(0.1));
-        BetweenScope betweenScope = new BetweenScope(new RescuedRateEvent(0.1), new RescuedRateEvent(0.5));
-        IntervalScope intervalScope = new IntervalScope(50, 500);
-        DuringScope duringScope = new DuringScope(new RescuedRateEvent(0.1));
+        ArrayList<Scope> scopes = new ArrayList<>(0);
+        scopes.add(new GloballyScope());
+        scopes.add(new BeforeScope(new RescuedRateEvent(0.5)));
+        scopes.add(new AfterScope(new RescuedRateEvent(0.1)));
+        scopes.add(new BetweenScope(new RescuedRateEvent(0.1), new RescuedRateEvent(0.5)));
+        scopes.add(new IntervalScope(50, 500));
+        scopes.add(new DuringScope(new RescuedRateEvent(0.25)));
+
+        // Absence
+        // 설명: Ambulance 가 특정 route 밖으로 나가는 사건이 절대로 일어나지 않아야 한다.
+        AmbulanceRouteEvent ambulanceRouteEvent = new AmbulanceRouteEvent(34, 34);
+        for(Scope scope: scopes) {
+            runtimeProperties.add(new RuntimeAbsence(ambulanceRouteEvent, scope));
+        }
 
         // Existence
-        // 설명: '시뮬레이션 종료 시점'까지, [누적된 발생 환자의 수가 '전체 기대 환자 수'와 같아지는 사건]이 언젠가 만족될 확률이 '기대 확률' 이상이다.
+        // 설명: RescuedRate 이 0.25 이상이 되는 사건이 발생해야 한다.
         RescuedRateEvent rescuedRateEvent = new RescuedRateEvent(0.25);
-        RuntimeExistence runtimeExistenceGlobally = new RuntimeExistence(rescuedRateEvent, globallyScope);
-        runtimeProperties.add(runtimeExistenceGlobally);
-        RuntimeExistence runtimeExistenceBefore = new RuntimeExistence(rescuedRateEvent, beforeScope);
-        runtimeProperties.add(runtimeExistenceBefore);
-        RuntimeExistence runtimeExistenceAfter = new RuntimeExistence(rescuedRateEvent, afterScope);
-        runtimeProperties.add(runtimeExistenceAfter);
-        RuntimeExistence runtimeExistenceBetween = new RuntimeExistence(rescuedRateEvent, betweenScope);
-        runtimeProperties.add(runtimeExistenceBetween);
-        RuntimeExistence runtimeExistenceInterval = new RuntimeExistence(rescuedRateEvent, intervalScope);
-        runtimeProperties.add(runtimeExistenceInterval);
-        RuntimeExistence runtimeExistenceDuring = new RuntimeExistence(rescuedRateEvent, duringScope);
-        runtimeProperties.add(runtimeExistenceDuring);
+        for(Scope scope: scopes) {
+            runtimeProperties.add(new RuntimeExistence(rescuedRateEvent, scope));
+        }
 
         RuntimeVerifier runtimeVerifier = new RuntimeVerifier(runtimeProperties);
 
@@ -65,7 +67,7 @@ public class main {
 //        simulationEngine.run();
         simulationEngine.setSuper_counter();
         programEndTime = System.nanoTime();
-        System.out.println("=== Total Program running time: " + (programEndTime - programStartTime) / (float)1000_000_000 + " sec");
+        System.out.println("=== Total Program running time: " + (programEndTime - programStartTime) / (float) 1000_000_000 + " sec");
 //        double satisfactionProb = 0;
 //        Boolean satisfaction = true;
 
