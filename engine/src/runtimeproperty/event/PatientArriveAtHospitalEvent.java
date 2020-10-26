@@ -5,39 +5,27 @@ import runtimeproperty.SoSEvent;
 
 import java.util.StringTokenizer;
 
-public class AmbulanceRouteEvent extends SoSEvent {
+public class PatientArriveAtHospitalEvent extends SoSEvent {
     int xSize;
     int ySize;
 
-    public AmbulanceRouteEvent(int xSize, int ySize) {
-        this.name = "Event that ambulance go out of the route";
+    public PatientArriveAtHospitalEvent(int xSize, int ySize) {
+        this.name = "Event that at least one patient arrived at hospital";
         this.xSize = xSize;
         this.ySize = ySize;
     }
 
     protected boolean checkPosition(int xPos, int yPos) {
-        if (xPos <= 5 && yPos <= 5)
+        if (xPos == 0 && yPos == 0)
             return true;
 
-        if (xPos >= xSize - 5 && yPos >= ySize - 5)
+        if (xPos == 0 && yPos == this.ySize)
             return true;
 
-        if (xPos <= 5 && yPos >= ySize - 5)
+        if (xPos == this.xSize && yPos == 0)
             return true;
 
-        if (xPos >= xSize - 5 && yPos <= 5)
-            return true;
-
-        if (xPos == 4)
-            return true;
-
-        if (yPos == 4)
-            return true;
-
-        if (xPos == xSize - 4)
-            return true;
-
-        if (yPos == ySize - 4)
+        if (xPos == this.xSize && yPos == this.ySize)
             return true;
 
         return false;
@@ -45,25 +33,24 @@ public class AmbulanceRouteEvent extends SoSEvent {
 
     public boolean checkHold(Snapshot snapshot) {
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
-        int numberOfAmbulance = 0;
+        int numberOfPatients = 0;
 
         for (String target = ""; st.hasMoreTokens();) {
             target = st.nextToken();
 
-            if (target.equals("CurrentAmb:")) {
-                numberOfAmbulance = Integer.parseInt(st.nextToken());
+            if (target.equals("CurrentPat:")) {
+                numberOfPatients = Integer.parseInt(st.nextToken());
             }
 
-            if (target.equals("Amb:")) {
-                for (int i = 0; i < numberOfAmbulance; i++) {
+            if (target.equals("Pat:")) {
+                for (int i = 0; i < numberOfPatients; i++) {
                     String[] position = st.nextToken().split("/")[1].split(",");
                     int xPos = Integer.parseInt(position[0]);
                     int yPos = Integer.parseInt(position[1]);
 
-                    if (!checkPosition(xPos, yPos))
+                    if (checkPosition(xPos, yPos))
                         return true;
                 }
-
             }
         }
 

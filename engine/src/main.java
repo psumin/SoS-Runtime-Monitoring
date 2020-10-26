@@ -89,7 +89,11 @@ public class main {
         }
 
         // Recurrence
-        // 환자가 병원에 도착하는 사건이 시간 10 간격으로 반복적으로 발생해야 한다.
+        // 환자가 병원에 도착하는 사건이 시간 10 간격 이내로 반복적으로 발생해야 한다.
+        PatientArriveAtHospitalEvent patientArriveAtHospitalEvent = new PatientArriveAtHospitalEvent(34, 34);
+        for(Scope scope: scopes) {
+            runtimeProperties.add(new RuntimeRecurrence(patientArriveAtHospitalEvent, scope, 10));
+        }
 
         // Precedence
         // 환자가 Bridgehead 에 도착하는 사건이 발생했다면, 그 이전에 해당 환자가 First Aid 를 받는 사건이 발생했어야 한다.
