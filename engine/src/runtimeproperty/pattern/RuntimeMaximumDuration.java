@@ -3,7 +3,6 @@ package runtimeproperty.pattern;
 import log.Snapshot;
 import runtimeproperty.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RuntimeMaximumDuration extends RuntimeProperty {
@@ -15,6 +14,7 @@ public class RuntimeMaximumDuration extends RuntimeProperty {
         super(scope);
         this.targetEvent = event;
         this.targetCount = targetCount;
+        this.prefix = "Maximum Duration";
         this.name = event.getName() + " remains at most " + targetCount;
         this.currentCount = new HashMap<>(0);
     }

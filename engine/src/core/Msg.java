@@ -38,10 +38,12 @@ public class Msg {
         this.to = to;
         return this;
     }
+
     public Msg setTitle(String title) {
         this.title = title;
         return this;
     }
+
     public Msg setData(Object data) {
         this.data = data;
         return this;

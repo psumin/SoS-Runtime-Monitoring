@@ -28,15 +28,19 @@ public abstract class Time {
     public static int getDeltaTime() {
         return instance.deltaTime;
     }
+
     public static int getTime() {
         return instance.time;
     }
+
     public static int getFrameCount() {
         return instance.frameCount;
     }
 
     // 단위가 밀리 세컨드가 맞으면 수정 안해도 됨
-    public static int fromSecond(float second) { return (int)(second * 1000); }
+    public static int fromSecond(float second) {
+        return (int) (second * 1000);
+    }
 
     public static void clear() {
         instance.time = 0;

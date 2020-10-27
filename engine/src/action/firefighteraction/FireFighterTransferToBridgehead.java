@@ -13,9 +13,8 @@ import agents.Patient;
 
 public class FireFighterTransferToBridgehead extends FireFighterAction {
 
-    Bridgehead bridgehead;
     public Patient targetPatient;
-
+    Bridgehead bridgehead;
     int prevMoveDelay;
 
     public FireFighterTransferToBridgehead(FireFighter target, Bridgehead bridgehead, Patient targetPatient) {
@@ -39,7 +38,7 @@ public class FireFighterTransferToBridgehead extends FireFighterAction {
         fireFighter.observe();
         fireFighter.moveTo(bridgehead.position);              // Transfer the patient to the Bridgehead
         fireFighter.markVisitedTiles();
-        if(fireFighter.isArrivedAt(bridgehead.position)) {    // When the Firefighter arrived at the Bridgehead
+        if (fireFighter.isArrivedAt(bridgehead.position)) {    // When the Firefighter arrived at the Bridgehead
             bridgehead.arrivedPatient(targetPatient);
 
             fireFighter.moveDelay = prevMoveDelay;

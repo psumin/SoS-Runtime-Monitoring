@@ -1,6 +1,5 @@
 package runtimeproperty.pattern;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import log.Snapshot;
 import runtimeproperty.*;
 
@@ -12,6 +11,7 @@ public class RuntimeUniversality extends RuntimeProperty {
     public RuntimeUniversality(Event event, Scope scope) {
         super(scope);
         this.targetEvent = event;
+        this.prefix = "Universality";
         this.name = "It is always the case that " + event.getName() + " holds";
     }
 

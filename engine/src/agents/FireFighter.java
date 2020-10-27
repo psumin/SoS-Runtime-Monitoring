@@ -2,12 +2,13 @@ package agents;
 
 import action.firefighteraction.FireFighterSearch;
 import core.*;
-import core.Map;
 import misc.Position;
-import misc.Time;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Project: NewSimulator
@@ -19,13 +20,10 @@ import java.util.*;
 public class FireFighter extends CS {
 
 
-
+    public final ArrayList<Patient> patientsMemory = new ArrayList<>();
     public World world;
     public Map individualMap;
-
     public Queue<Tile> unvisitedTiles;
-    public final ArrayList<Patient> patientsMemory = new ArrayList<>();
-
     public ImageObject transferImage;
     public ImageObject defaultImage;
     public ImageObject moveToPatient;
@@ -35,6 +33,7 @@ public class FireFighter extends CS {
     public int defaultSightRange = 5;               // Fire fighter's sight range
     public int sightRange = defaultSightRange;
     public int communicationRange = 5;             // Communication range between firefighters
+
     public FireFighter(World world, String name) {
         super(world, name);
         this.world = world;
@@ -72,13 +71,13 @@ public class FireFighter extends CS {
     }
 
 
-
     @Override
     public void setPosition(int x, int y) {
         worldMap.remove(this);
         super.setPosition(x, y);
         worldMap.add(this);
     }
+
     @Override
     public void setPosition(Position position) {
         worldMap.remove(this);
@@ -90,9 +89,11 @@ public class FireFighter extends CS {
     public void clear() {
         world = null;
     }
+
     public int getSightRange() {
         return sightRange;
     }
+
     public World getWorld() {
         return world;
     }
@@ -109,7 +110,7 @@ public class FireFighter extends CS {
     public void onUpdate() {
         super.onUpdate();
 
-        if(patientsMemory.isEmpty() && unvisitedTiles.isEmpty()) {
+        if (patientsMemory.isEmpty() && unvisitedTiles.isEmpty()) {
             return;
         }
 
@@ -119,20 +120,20 @@ public class FireFighter extends CS {
                         .setTitle("individual map")
                         .setTo("broadcast in range")
                         .setData(individualMap),
-                position, (int)(communicationRange * worldMap.getTile(position).communicationRangeFactor));
+                position, (int) (communicationRange * worldMap.getTile(position).communicationRangeFactor));
         router.broadcast(this,
                 new Msg()
                         .setFrom(name)
                         .setTitle("patientsMemory")
                         .setTo("broadcast in range")
                         .setData(patientsMemory),
-                position, (int)(communicationRange * worldMap.getTile(position).communicationRangeFactor));
+                position, (int) (communicationRange * worldMap.getTile(position).communicationRangeFactor));
 
 
     }
 
     public ArrayList<Patient> observe() {
-        sightRange = (int)(worldMap.getTile(position).sightRangeFactor * defaultSightRange);
+        sightRange = (int) (worldMap.getTile(position).sightRangeFactor * defaultSightRange);
 //        if(worldMap.getTile(position).applySightRange) {
 //            sightRange = worldMap.getTile(position).sightRange;
 //        } else {
@@ -141,10 +142,10 @@ public class FireFighter extends CS {
 
         ArrayList<Patient> foundPatient = new ArrayList<>();
 
-        for(int y = position.y - (sightRange / 2); y <= position.y + (sightRange / 2); ++y) {
-            for(int x = position.x - (sightRange / 2); x <= position.x + (sightRange / 2); ++x) {
+        for (int y = position.y - (sightRange / 2); y <= position.y + (sightRange / 2); ++y) {
+            for (int x = position.x - (sightRange / 2); x <= position.x + (sightRange / 2); ++x) {
                 Tile worldTile = worldMap.getTile(x, y);
-                if(worldTile != null) {
+                if (worldTile != null) {
                     foundPatient.addAll(worldTile.patients);
                 }
             }
@@ -157,8 +158,8 @@ public class FireFighter extends CS {
     }
 
     public void markVisitedTiles() {
-        for(int y = position.y - (sightRange / 2); y <= position.y + (sightRange / 2); ++y) {
-            for(int x = position.x - (sightRange / 2); x <= position.x + (sightRange / 2); ++x) {
+        for (int y = position.y - (sightRange / 2); y <= position.y + (sightRange / 2); ++y) {
+            for (int x = position.x - (sightRange / 2); x <= position.x + (sightRange / 2); ++x) {
                 worldMap.visited(x, y, true);
                 individualMap.visited(x, y, true);
             }
@@ -169,15 +170,15 @@ public class FireFighter extends CS {
 
         ArrayList<SoSObject> seriousPatients = new ArrayList<>();
         patients.forEach(patient -> {
-            if(patient.isSerious()) {
+            if (patient.isSerious()) {
                 seriousPatients.add(patient);
             }
         });
-        if(!seriousPatients.isEmpty()) {
-            return (Patient)nearestObject(seriousPatients);
+        if (!seriousPatients.isEmpty()) {
+            return (Patient) nearestObject(seriousPatients);
 
         } else {
-            return (Patient)nearestObject(new ArrayList<>(patients));
+            return (Patient) nearestObject(new ArrayList<>(patients));
         }
     }
 
@@ -199,24 +200,23 @@ public class FireFighter extends CS {
 
     @Override
     public void recvMsg(Msg msg) {
-        if(msg.from.startsWith(World.fireFighterPrefix)) {
-            if(msg.title == "individual map") {
-                Map othersMap = (Map)msg.data;
+        if (msg.from.startsWith(World.fireFighterPrefix)) {
+            if (msg.title == "individual map") {
+                Map othersMap = (Map) msg.data;
 
                 // 방문 정보 업데이트
                 othersMap.getTiles().forEach(tile -> {
-                    if(tile.isVisited()) {
+                    if (tile.isVisited()) {
                         individualMap.getTile(tile.position.x, tile.position.y).visited(true);
                     }
                 });
-            }
-            else if(msg.title == "patientsMemory") {
-                ArrayList<Patient> othersMemory = (ArrayList<Patient>)msg.data;
+            } else if (msg.title == "patientsMemory") {
+                ArrayList<Patient> othersMemory = (ArrayList<Patient>) msg.data;
                 patientsMemory.removeAll(othersMemory);
                 othersMemory.forEach(patient -> {
 
 //                    patientsMemory.add(patient);
-                    if(patient.isSaved == false) {
+                    if (patient.isSaved == false) {
                         patientsMemory.add(patient);
                     }
                 });

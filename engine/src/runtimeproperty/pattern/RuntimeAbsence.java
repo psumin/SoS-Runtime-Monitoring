@@ -11,6 +11,7 @@ public class RuntimeAbsence extends RuntimeProperty {
     public RuntimeAbsence(Event event, Scope scope) {
         super(scope);
         this.targetEvent = event;
+        this.prefix = "Absence";
         this.name = "It is never the case that " + event.getName() + " holds";
     }
 

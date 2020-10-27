@@ -18,6 +18,7 @@ public class RuntimeBoundedExistence extends RuntimeProperty {
         this.targetCount = targetCount;
         this.currentCount = 0;
         this.isAtMost = isAtMost;
+        this.prefix = "Bounded Existence";
         if (isAtMost)
             this.name = event.getName() + " holds at most " + targetCount + " times";
         else

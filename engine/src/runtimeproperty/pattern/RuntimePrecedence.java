@@ -13,6 +13,7 @@ public class RuntimePrecedence extends RuntimeProperty {
 
     public RuntimePrecedence(Event causeEvent, Event effectEvent, Scope scope) {
         super(scope);
+        this.prefix = "Precedence";
         this.name = "If " + effectEvent.getName() + " has occurred, then it must have been " + causeEvent.getName() + " has occurred before";
         this.causeEvent = causeEvent;
         this.effectEvent = effectEvent;

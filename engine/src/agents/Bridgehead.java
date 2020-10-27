@@ -1,6 +1,9 @@
 package agents;
 
-import core.*;
+import core.ImageObject;
+import core.Msg;
+import core.TextObject;
+import core.World;
 import misc.Position;
 
 import java.awt.*;
@@ -15,10 +18,11 @@ import java.util.ArrayList;
 
 public class Bridgehead extends CS {
 
-    private ArrayList<Patient> patients = new ArrayList<>();
+    private final ArrayList<Patient> patients = new ArrayList<>();
 
-    private TextObject textObject = new TextObject();
-    private int scale = 3;
+    private final TextObject textObject = new TextObject();
+    private final int scale = 3;
+
     public Bridgehead(World world, String name) {
         super(world, name);
         addChild(new ImageObject("engine/resources/bridgehead.png", scale));
@@ -51,8 +55,8 @@ public class Bridgehead extends CS {
 
     public void arrivedPatient(Patient patient) {
 
-        for(Patient p: patients) {
-            if(p == patient) return;
+        for (Patient p : patients) {
+            if (p == patient) return;
         }
 
         world.addChild(patient);
@@ -60,7 +64,7 @@ public class Bridgehead extends CS {
         patients.add(patient);
 
         String title = "";
-        if(patient.isSerious()) {
+        if (patient.isSerious()) {
             title = "serious patient arrived";                                  // Serious patient arrived at the Bridgehead
         } else {
             title = "wounded patient arrived";                                  // Wounded patient arrived at the Bridgehead
@@ -72,6 +76,7 @@ public class Bridgehead extends CS {
                 .setTitle(title)
                 .setData(this));
     }
+
     public void leavePatient(Patient patient) {
         world.removeChild(patient);
         patients.remove(patient);

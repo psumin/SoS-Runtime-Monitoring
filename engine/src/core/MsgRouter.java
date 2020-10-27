@@ -1,12 +1,9 @@
 package core;
 
 //import misc.ExcelHelper;
+
 import misc.Position;
 import misc.Time;
-//import org.apache.poi.ss.usermodel.*;
-//import org.apache.poi.ss.util.CellRangeAddress;
-//import org.apache.poi.xssf.usermodel.XSSFSheet;
-//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import stimulus.MessageStimulus.Delay;
 import stimulus.MessageStimulus.Loss;
 
@@ -25,69 +22,39 @@ public class MsgRouter extends SoSObject {
 
     private final ArrayList<Delay> delayConditions = new ArrayList<>();
     private final ArrayList<Loss> lossConditions = new ArrayList<>();
-
-    private int FF_TO_FF_SEND = 0;
-    private int FF_TO_FF_RECV = 0;
-
-    private int FF_TO_ORG_SEND = 0;
-    private int FF_TO_ORG_RECV = 0;
-
-    private int ORG_TO_FF_SEND = 0;
-    private int ORG_TO_FF_RECV = 0;
-
-    private int AMB_TO_ORG_SEND = 0;
-    private int AMB_TO_ORG_RECV = 0;
-
-    private int ORG_TO_AMB_SEND = 0;
-    private int ORG_TO_AMB_RECV = 0;
-
-    private int BRIDGE_TO_ORG_SEND = 0;
-    private int BRIDGE_TO_ORG_RECV = 0;
-
-    private int ORG_TO_BRIDGE_SEND = 0;
-    private int ORG_TO_BRIDGE_RECV = 0;
-
-
-    private int TOTAL_FF_TO_FF_SEND = 0;
-    private int TOTAL_FF_TO_FF_RECV = 0;
-
-    private int TOTAL_FF_TO_ORG_SEND = 0;
-    private int TOTAL_FF_TO_ORG_RECV = 0;
-
-    private int TOTAL_ORG_TO_FF_SEND = 0;
-    private int TOTAL_ORG_TO_FF_RECV = 0;
-
-    private int TOTAL_AMB_TO_ORG_SEND = 0;
-    private int TOTAL_AMB_TO_ORG_RECV = 0;
-
-    private int TOTAL_ORG_TO_AMB_SEND = 0;
-    private int TOTAL_ORG_TO_AMB_RECV = 0;
-
-    private int TOTAL_BRIDGE_TO_ORG_SEND = 0;
-    private int TOTAL_BRIDGE_TO_ORG_RECV = 0;
-
-    private int TOTAL_ORG_TO_BRIDGE_SEND = 0;
-    private int TOTAL_ORG_TO_BRIDGE_RECV = 0;
-
-    private int routeCount = 0;
-
-    private class DelayedMsg {
-        public Msg source;
-        public int delayedTime;
-
-        public DelayedMsg() {
-
-        }
-        public DelayedMsg(Msg src, int delayedTime) {
-            this.source = src;
-            this.delayedTime = delayedTime;
-        }
-    }
-
     private final Queue<DelayedMsg> delayedMsgs = new LinkedList<>();
-
     World world;
     Map worldMap;
+    boolean isFirstUpdate = true;
+    private int FF_TO_FF_SEND = 0;
+    private int FF_TO_FF_RECV = 0;
+    private int FF_TO_ORG_SEND = 0;
+    private int FF_TO_ORG_RECV = 0;
+    private int ORG_TO_FF_SEND = 0;
+    private int ORG_TO_FF_RECV = 0;
+    private int AMB_TO_ORG_SEND = 0;
+    private int AMB_TO_ORG_RECV = 0;
+    private int ORG_TO_AMB_SEND = 0;
+    private int ORG_TO_AMB_RECV = 0;
+    private int BRIDGE_TO_ORG_SEND = 0;
+    private int BRIDGE_TO_ORG_RECV = 0;
+    private int ORG_TO_BRIDGE_SEND = 0;
+    private int ORG_TO_BRIDGE_RECV = 0;
+    private int TOTAL_FF_TO_FF_SEND = 0;
+    private int TOTAL_FF_TO_FF_RECV = 0;
+    private int TOTAL_FF_TO_ORG_SEND = 0;
+    private int TOTAL_FF_TO_ORG_RECV = 0;
+    private int TOTAL_ORG_TO_FF_SEND = 0;
+    private int TOTAL_ORG_TO_FF_RECV = 0;
+    private int TOTAL_AMB_TO_ORG_SEND = 0;
+    private int TOTAL_AMB_TO_ORG_RECV = 0;
+    private int TOTAL_ORG_TO_AMB_SEND = 0;
+    private int TOTAL_ORG_TO_AMB_RECV = 0;
+    private int TOTAL_BRIDGE_TO_ORG_SEND = 0;
+    private int TOTAL_BRIDGE_TO_ORG_RECV = 0;
+    private int TOTAL_ORG_TO_BRIDGE_SEND = 0;
+    private int TOTAL_ORG_TO_BRIDGE_RECV = 0;
+    private int routeCount = 0;
 
 //    private XSSFWorkbook workbook;
 //    private XSSFSheet sheet;
@@ -173,7 +140,6 @@ public class MsgRouter extends SoSObject {
 //        }
     }
 
-    boolean isFirstUpdate = true;
     @Override
     public void onUpdate() {
 //        currentRow = sheet.createRow(sheet.getPhysicalNumberOfRows());
@@ -217,11 +183,11 @@ public class MsgRouter extends SoSObject {
         ORG_TO_BRIDGE_RECV = 0;
 
         delayedMsgs.add(null);
-        while(true) {
+        while (true) {
             DelayedMsg delayedMsg = delayedMsgs.poll();
-            if(delayedMsg == null) break;
+            if (delayedMsg == null) break;
 
-            if(Time.getFrameCount() == delayedMsg.delayedTime) {
+            if (Time.getFrameCount() == delayedMsg.delayedTime) {
                 _route(delayedMsg.source);
             } else {
                 delayedMsgs.add(delayedMsg);
@@ -229,34 +195,34 @@ public class MsgRouter extends SoSObject {
         }
     }
 
-//    CellStyle recvColorStyle;
+    //    CellStyle recvColorStyle;
     private void _route(Msg msg) {
         // recv log
-        if(msg.from.startsWith("FF") && msg.to.startsWith("FF")) {
+        if (msg.from.startsWith("FF") && msg.to.startsWith("FF")) {
             FF_TO_FF_RECV++;
             TOTAL_FF_TO_FF_RECV++;
-        } else if(msg.from.startsWith("FF") && msg.to.startsWith("Org")) {
+        } else if (msg.from.startsWith("FF") && msg.to.startsWith("Org")) {
             FF_TO_ORG_RECV++;
             TOTAL_FF_TO_ORG_RECV++;
-        } else if(msg.from.startsWith("Org") && msg.to.startsWith("FF")) {
+        } else if (msg.from.startsWith("Org") && msg.to.startsWith("FF")) {
             ORG_TO_FF_RECV++;
             TOTAL_ORG_TO_FF_RECV++;
-        } else if(msg.from.startsWith("Amb") && msg.to.startsWith("Org")) {
+        } else if (msg.from.startsWith("Amb") && msg.to.startsWith("Org")) {
             AMB_TO_ORG_RECV++;
             TOTAL_AMB_TO_ORG_RECV++;
-        } else if(msg.from.startsWith("Org") && msg.to.startsWith("Amb")) {
+        } else if (msg.from.startsWith("Org") && msg.to.startsWith("Amb")) {
             ORG_TO_AMB_RECV++;
             TOTAL_ORG_TO_AMB_RECV++;
-        } else if(msg.from.startsWith("Bri") && msg.to.startsWith("Org")) {
+        } else if (msg.from.startsWith("Bri") && msg.to.startsWith("Org")) {
             BRIDGE_TO_ORG_RECV++;
             TOTAL_BRIDGE_TO_ORG_RECV++;
-        } else if(msg.from.startsWith("Org") && msg.to.startsWith("Bri")) {
+        } else if (msg.from.startsWith("Org") && msg.to.startsWith("Bri")) {
             ORG_TO_BRIDGE_RECV++;
             TOTAL_ORG_TO_BRIDGE_RECV++;
         }
 
         SoSObject target = world.findObject(msg.to);
-        if(target != null) {
+        if (target != null) {
             target.recvMsg(msg);
             routeCount++;
         }
@@ -266,28 +232,28 @@ public class MsgRouter extends SoSObject {
         return str.matches(".*\\d+.*");
     }
 
-//    CellStyle sendColorStyle;
+    //    CellStyle sendColorStyle;
     public void route(Msg msg) {
         // send log
-        if(msg.from.startsWith("FF") && msg.to.startsWith("FF")) {
+        if (msg.from.startsWith("FF") && msg.to.startsWith("FF")) {
             FF_TO_FF_SEND++;
             TOTAL_FF_TO_FF_SEND++;
-        } else if(msg.from.startsWith("FF") && msg.to.startsWith("Org")) {
+        } else if (msg.from.startsWith("FF") && msg.to.startsWith("Org")) {
             FF_TO_ORG_SEND++;
             TOTAL_FF_TO_ORG_SEND++;
-        } else if(msg.from.startsWith("Org") && msg.to.startsWith("FF")) {
+        } else if (msg.from.startsWith("Org") && msg.to.startsWith("FF")) {
             ORG_TO_FF_SEND++;
             TOTAL_ORG_TO_FF_SEND++;
-        } else if(msg.from.startsWith("Amb") && msg.to.startsWith("Org")) {
+        } else if (msg.from.startsWith("Amb") && msg.to.startsWith("Org")) {
             AMB_TO_ORG_SEND++;
             TOTAL_AMB_TO_ORG_SEND++;
-        } else if(msg.from.startsWith("Org") && msg.to.startsWith("Amb")) {
+        } else if (msg.from.startsWith("Org") && msg.to.startsWith("Amb")) {
             ORG_TO_AMB_SEND++;
             TOTAL_ORG_TO_AMB_SEND++;
-        } else if(msg.from.startsWith("Bri") && msg.to.startsWith("Org")) {
+        } else if (msg.from.startsWith("Bri") && msg.to.startsWith("Org")) {
             BRIDGE_TO_ORG_SEND++;
             TOTAL_BRIDGE_TO_ORG_SEND++;
-        } else if(msg.from.startsWith("Org") && msg.to.startsWith("Bri")) {
+        } else if (msg.from.startsWith("Org") && msg.to.startsWith("Bri")) {
             ORG_TO_BRIDGE_SEND++;
             TOTAL_ORG_TO_BRIDGE_SEND++;
         }
@@ -314,8 +280,8 @@ public class MsgRouter extends SoSObject {
             lossConditions.removeAll(removes);
         }
 
-        for(Loss condition: lossConditions) {
-            if(condition.frame> Time.getFrameCount() + 1) {
+        for (Loss condition : lossConditions) {
+            if (condition.frame > Time.getFrameCount() + 1) {
                 continue;
             }
 
@@ -325,66 +291,66 @@ public class MsgRouter extends SoSObject {
             boolean senderHasDigit = containDigit(condition.sender);
             boolean receiverHasDigit = containDigit(condition.receiver);
 
-            if(senderIsAll && receiverIsAll) {
+            if (senderIsAll && receiverIsAll) {
                 // ALL && ALL
                 return;
-            } else if(senderIsAll) {
+            } else if (senderIsAll) {
                 // ALL && Not ALL
-                if(receiverHasDigit) {
+                if (receiverHasDigit) {
                     // ALL && FF1
-                    if(msg.to.equals(condition.receiver)) {
+                    if (msg.to.equals(condition.receiver)) {
                         return;
                     }
                 } else {
                     // ALL && FF
-                    if(msg.to.startsWith(condition.receiver)) {
+                    if (msg.to.startsWith(condition.receiver)) {
                         return;
                     }
                 }
 
-            } else if(receiverIsAll) {
+            } else if (receiverIsAll) {
                 // Not ALL && ALL
 
-                if(senderHasDigit) {
+                if (senderHasDigit) {
                     // FF1 && ALL
-                    if(msg.from.equals(condition.sender)) {
+                    if (msg.from.equals(condition.sender)) {
                         return;
                     }
                 } else {
                     // FF && ALL
-                    if(msg.from.startsWith(condition.sender)) {
+                    if (msg.from.startsWith(condition.sender)) {
                         return;
                     }
                 }
             } else {
                 // Not ALL && Not ALL
 
-                if(senderHasDigit && receiverHasDigit) {
+                if (senderHasDigit && receiverHasDigit) {
                     // FF1 && FF2
-                    if(msg.from.equals(condition.sender) && msg.to.equals(condition.receiver)) {
+                    if (msg.from.equals(condition.sender) && msg.to.equals(condition.receiver)) {
                         return;
                     }
-                } else if(senderHasDigit) {
+                } else if (senderHasDigit) {
                     // FF1 && FF
-                    if(msg.from.equals(condition.sender) && msg.to.startsWith(condition.receiver)) {
+                    if (msg.from.equals(condition.sender) && msg.to.startsWith(condition.receiver)) {
                         return;
                     }
-                } else if(receiverHasDigit) {
+                } else if (receiverHasDigit) {
                     // FF && FF1
-                    if(msg.from.startsWith(condition.sender) && msg.to.startsWith(condition.receiver)) {
+                    if (msg.from.startsWith(condition.sender) && msg.to.startsWith(condition.receiver)) {
                         return;
                     }
                 } else {
                     // FF && FF
-                    if(msg.from.startsWith(condition.sender) && msg.to.startsWith(condition.receiver)) {
+                    if (msg.from.startsWith(condition.sender) && msg.to.startsWith(condition.receiver)) {
                         return;
                     }
                 }
             }
         }
 
-        for(Delay condition: delayConditions) {
-            if(condition.frame > Time.getFrameCount() + 1) {
+        for (Delay condition : delayConditions) {
+            if (condition.frame > Time.getFrameCount() + 1) {
                 continue;
             }
 
@@ -394,38 +360,38 @@ public class MsgRouter extends SoSObject {
             boolean senderHasDigit = containDigit(condition.sender);
             boolean receiverHasDigit = containDigit(condition.receiver);
 
-            if(senderIsAll && receiverIsAll) {
+            if (senderIsAll && receiverIsAll) {
                 // ALL && ALL
                 delayedMsgs.add(new DelayedMsg(msg, condition.delay + Time.getFrameCount()));
                 return;
-            } else if(senderIsAll) {
+            } else if (senderIsAll) {
                 // ALL && Not ALL
-                if(receiverHasDigit) {
+                if (receiverHasDigit) {
                     // ALL && FF1
-                    if(msg.to.equals(condition.receiver)) {
+                    if (msg.to.equals(condition.receiver)) {
                         delayedMsgs.add(new DelayedMsg(msg, condition.delay + Time.getFrameCount()));
                         return;
                     }
                 } else {
                     // ALL && FF
-                    if(msg.to.startsWith(condition.receiver)) {
+                    if (msg.to.startsWith(condition.receiver)) {
                         delayedMsgs.add(new DelayedMsg(msg, condition.delay + Time.getFrameCount()));
                         return;
                     }
                 }
 
-            } else if(receiverIsAll) {
+            } else if (receiverIsAll) {
                 // Not ALL && ALL
 
-                if(senderHasDigit) {
+                if (senderHasDigit) {
                     // FF1 && ALL
-                    if(msg.from.equals(condition.sender)) {
+                    if (msg.from.equals(condition.sender)) {
                         delayedMsgs.add(new DelayedMsg(msg, condition.delay + Time.getFrameCount()));
                         return;
                     }
                 } else {
                     // FF && ALL
-                    if(msg.from.startsWith(condition.sender)) {
+                    if (msg.from.startsWith(condition.sender)) {
                         delayedMsgs.add(new DelayedMsg(msg, condition.delay + Time.getFrameCount()));
                         return;
                     }
@@ -433,27 +399,27 @@ public class MsgRouter extends SoSObject {
             } else {
                 // Not ALL && Not ALL
 
-                if(senderHasDigit && receiverHasDigit) {
+                if (senderHasDigit && receiverHasDigit) {
                     // FF1 && FF2
-                    if(msg.from.equals(condition.sender) && msg.to.equals(condition.receiver)) {
+                    if (msg.from.equals(condition.sender) && msg.to.equals(condition.receiver)) {
                         delayedMsgs.add(new DelayedMsg(msg, condition.delay + Time.getFrameCount()));
                         return;
                     }
-                } else if(senderHasDigit) {
+                } else if (senderHasDigit) {
                     // FF1 && FF
-                    if(msg.from.equals(condition.sender) && msg.to.startsWith(condition.receiver)) {
+                    if (msg.from.equals(condition.sender) && msg.to.startsWith(condition.receiver)) {
                         delayedMsgs.add(new DelayedMsg(msg, condition.delay + Time.getFrameCount()));
                         return;
                     }
-                } else if(receiverHasDigit) {
+                } else if (receiverHasDigit) {
                     // FF && FF1
-                    if(msg.from.startsWith(condition.sender) && msg.to.startsWith(condition.receiver)) {
+                    if (msg.from.startsWith(condition.sender) && msg.to.startsWith(condition.receiver)) {
                         delayedMsgs.add(new DelayedMsg(msg, condition.delay + Time.getFrameCount()));
                         return;
                     }
                 } else {
                     // FF && FF
-                    if(msg.from.startsWith(condition.sender) && msg.to.startsWith(condition.receiver)) {
+                    if (msg.from.startsWith(condition.sender) && msg.to.startsWith(condition.receiver)) {
                         delayedMsgs.add(new DelayedMsg(msg, condition.delay + Time.getFrameCount()));
                         return;
                     }
@@ -464,7 +430,7 @@ public class MsgRouter extends SoSObject {
     }
 
     // Broadcast the message only for the firefighter. (share the local map and the knowledge about the patients)
-    public void broadcast(SoSObject sender,  Msg msg, Position center, int range) {
+    public void broadcast(SoSObject sender, Msg msg, Position center, int range) {
 
         ArrayList<Tile> tiles = new ArrayList<>();
 
@@ -473,20 +439,20 @@ public class MsgRouter extends SoSObject {
         int top = center.y - range / 2;
         int bottom = center.y + range / 2;
 
-        for(int y = top; y <= bottom; ++y) {
-            for(int x = left; x <= right; ++x) {
+        for (int y = top; y <= bottom; ++y) {
+            for (int x = left; x <= right; ++x) {
                 Tile tile = worldMap.getTile(x, y);
-                if(tile != null) {
+                if (tile != null) {
                     tiles.add(tile);
                 }
             }
         }
 
-        for(Tile tile: tiles) {
+        for (Tile tile : tiles) {
             tile.fireFighters.forEach(fireFighter -> {
-                if(fireFighter.currentAction.name.startsWith("Removed") || fireFighter.currentAction.name.startsWith("Dead")) {
+                if (fireFighter.currentAction.name.startsWith("Removed") || fireFighter.currentAction.name.startsWith("Dead")) {
 
-                } else if(fireFighter != sender) {
+                } else if (fireFighter != sender) {
 
                     Msg copiedMsg = new Msg()
                             .setFrom(msg.from)
@@ -494,7 +460,7 @@ public class MsgRouter extends SoSObject {
                             .setTitle(msg.title)
                             .setData(msg.data);
                     copiedMsg.id--;
-                    copiedMsg.idCounter--;
+                    Msg.idCounter--;
 
                     route(copiedMsg);
                     //
@@ -505,7 +471,7 @@ public class MsgRouter extends SoSObject {
     }
 
     public int getRouteCount() {
-       return routeCount;
+        return routeCount;
     }
 
     public void add(Delay condition) {
@@ -542,5 +508,19 @@ public class MsgRouter extends SoSObject {
 //        ExcelHelper.getCell(currentRow, 19).setCellValue(TOTAL_ORG_TO_BRIDGE_SEND);
 //        ExcelHelper.getCell(currentRow, 20).setCellValue(TOTAL_ORG_TO_BRIDGE_RECV);
         super.clear();
+    }
+
+    private class DelayedMsg {
+        public Msg source;
+        public int delayedTime;
+
+        public DelayedMsg() {
+
+        }
+
+        public DelayedMsg(Msg src, int delayedTime) {
+            this.source = src;
+            this.delayedTime = delayedTime;
+        }
     }
 }

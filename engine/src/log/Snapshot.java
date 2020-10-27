@@ -5,13 +5,13 @@ package log;
  * includes a snapshot string
  */
 public class Snapshot {
-    private String snapshotString;
+    private final String snapshotString;
 
     public Snapshot(String str) {
         this.snapshotString = str;
     }
 
-    public String getSnapshotString(){
+    public String getSnapshotString() {
         return this.snapshotString;
     }
   /*

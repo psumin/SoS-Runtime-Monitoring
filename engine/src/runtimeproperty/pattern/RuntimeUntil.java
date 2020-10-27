@@ -14,6 +14,7 @@ public class RuntimeUntil extends RuntimeProperty {
 
     public RuntimeUntil(Event targetEvent, Event untilEvent, Scope scope) {
         super(scope);
+        this.prefix = "Until";
         this.name = targetEvent.getName() + " holds without interruption until " + untilEvent.getName() + " holds";
         this.targetEvent = targetEvent;
         this.untilEvent = untilEvent;

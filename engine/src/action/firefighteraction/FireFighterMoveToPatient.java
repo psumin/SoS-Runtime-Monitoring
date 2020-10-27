@@ -2,10 +2,8 @@ package action.firefighteraction;
 
 import agents.FireFighter;
 import agents.Patient;
-import core.Tile;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Project: NewSimulator
@@ -43,16 +41,16 @@ public class FireFighterMoveToPatient extends FireFighterAction {
     @Override
     public void onUpdate() {
 
-        if(targetPatient != null) {
+        if (targetPatient != null) {
             fireFighter.observe();
             //ArrayList<Patient> foundPatient = fireFighter.observe();
             //Patient newPatient = fireFighter.selectTargetPatient(foundPatient);
 
             Patient newPatient = fireFighter.selectTargetPatient(patientsMemory);       // Select the patient from the memory
-            if(newPatient != null) {
+            if (newPatient != null) {
                 // New patient is Serious patient
                 if (newPatient.isSerious()) {                                           // Change the target to the Serious patient
-                    if(targetPatient.isWounded()) {
+                    if (targetPatient.isWounded()) {
                         patientsMemory.add(targetPatient);
                         changeTargetPatient(newPatient);
                         return;
@@ -78,17 +76,17 @@ public class FireFighterMoveToPatient extends FireFighterAction {
 
             // TODO: 시야 내에 타겟 환자 존재 X
             // No target patient at the sight range of the firefighter
-            if(targetPatient.position.x - fireFighter.sightRange / 2 <= fireFighter.position.x
-                && fireFighter.position.x <= targetPatient.position.x + fireFighter.sightRange / 2) {
-                if(targetPatient.position.y - fireFighter.sightRange / 2 <= fireFighter.position.y
+            if (targetPatient.position.x - fireFighter.sightRange / 2 <= fireFighter.position.x
+                    && fireFighter.position.x <= targetPatient.position.x + fireFighter.sightRange / 2) {
+                if (targetPatient.position.y - fireFighter.sightRange / 2 <= fireFighter.position.y
                         && fireFighter.position.y <= targetPatient.position.y + fireFighter.sightRange / 2) {
-                    if(!world.contains(targetPatient)) {                                    // No target patient at world
+                    if (!world.contains(targetPatient)) {                                    // No target patient at world
                         fireFighter.changeAction(new FireFighterSearch(fireFighter));       // change the action to "Search"
                         fireFighter.defaultImage.visible(true);
                         fireFighter.moveToPatient.visible(false);
                         return;
                     }
-                    if(targetPatient.assignedFireFighter != null) {                         // There is a patient and other assigned firefighter
+                    if (targetPatient.assignedFireFighter != null) {                         // There is a patient and other assigned firefighter
                         fireFighter.changeAction(new FireFighterSearch(fireFighter));       // change the action to "Search"
                         fireFighter.defaultImage.visible(true);
                         fireFighter.moveToPatient.visible(false);
@@ -97,7 +95,7 @@ public class FireFighterMoveToPatient extends FireFighterAction {
                 }
             }
 
-            if(fireFighter.isArrivedAt(targetPatient.position)) {                           // When the firefighter arrived at the target patient's position
+            if (fireFighter.isArrivedAt(targetPatient.position)) {                           // When the firefighter arrived at the target patient's position
                 fireFighter.changeAction(new FireFighterFirstAid(fireFighter, targetPatient));      // Change the action to "First Aid"
                 fireFighter.defaultImage.visible(true);
                 fireFighter.moveToPatient.visible(false);

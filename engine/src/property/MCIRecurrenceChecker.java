@@ -4,7 +4,10 @@ import log.Log;
 import log.Snapshot;
 import property.pattern.RecurrenceChecker;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.StringTokenizer;
 
 public class MCIRecurrenceChecker extends RecurrenceChecker {
 
@@ -25,31 +28,31 @@ public class MCIRecurrenceChecker extends RecurrenceChecker {
         ArrayList<ArrayList<Integer>> stateList = new ArrayList<>();
 
         ArrayList<Integer> tempA;
-        for(int i = 1; i < logSize; i++) {
+        for (int i = 1; i < logSize; i++) {
             temp = snapshots.get(i).getSnapshotString();
 
             StringTokenizer st = new StringTokenizer(temp, " ");
             counter = 0;
-            tempA = new ArrayList<>(Collections.nCopies(40,0));     // 소방관 수를 늘리면 arraylist의 크기도 늘려줘야 함. (현재 고정 크기이므로)
-            while(st.hasMoreTokens()) {
+            tempA = new ArrayList<>(Collections.nCopies(40, 0));     // 소방관 수를 늘리면 arraylist의 크기도 늘려줘야 함. (현재 고정 크기이므로)
+            while (st.hasMoreTokens()) {
                 String tokens = st.nextToken();
-                if(tokens.equals("Amb:")) break;
-                if(tokens.equals("CurrentFF:")) {
+                if (tokens.equals("Amb:")) break;
+                if (tokens.equals("CurrentFF:")) {
                     int tmpFF = Integer.parseInt(st.nextToken());
-                    if(tmpFF > numFF)
+                    if (tmpFF > numFF)
                         numFF = tmpFF;
                 }
-                if(tokens.equals("FF:")) {
-                    while(counter < numFF) {
+                if (tokens.equals("FF:")) {
+                    while (counter < numFF) {
                         String fflog = st.nextToken();
-                        if(fflog.contains(prev)) {
+                        if (fflog.contains(prev)) {
                             tempA.set(counter, i);
                             flagFF = true;
                         }
                         counter++;
                     }
-                    if(flagFF) {
-                        stateList.add((ArrayList<Integer>)tempA.clone());
+                    if (flagFF) {
+                        stateList.add((ArrayList<Integer>) tempA.clone());
 //                        System.out.println("tempA : " +tempA);
                         flagFF = false;
                         tempA.clear();
@@ -63,26 +66,25 @@ public class MCIRecurrenceChecker extends RecurrenceChecker {
 //        }
 
         int sub = -1;
-        ArrayList<Boolean> periodFlags = new ArrayList<>(Collections.nCopies(12,false));
-        ArrayList<Integer> startingValues= new ArrayList<>(Collections.nCopies(12,0));
-        for(int i = 0; i < stateList.size(); i++) { // 12 == # of FFs
-            for(int j = 0; j < 12; j++) {
-                if(stateList.get(i).get(j) == 0) { // 주기가 바뀌는 경우
-                    if(startingValues.get(j) != 0 && !periodFlags.get(j)) periodFlags.set(j,true);
+        ArrayList<Boolean> periodFlags = new ArrayList<>(Collections.nCopies(12, false));
+        ArrayList<Integer> startingValues = new ArrayList<>(Collections.nCopies(12, 0));
+        for (int i = 0; i < stateList.size(); i++) { // 12 == # of FFs
+            for (int j = 0; j < 12; j++) {
+                if (stateList.get(i).get(j) == 0) { // 주기가 바뀌는 경우
+                    if (startingValues.get(j) != 0 && !periodFlags.get(j)) periodFlags.set(j, true);
+                    continue;
+                } else if (startingValues.get(j) == 0) { // 처음에 해당 FF 자리에 0이 아닌 값이 나오는 경우
+                    startingValues.set(j, stateList.get(i).get(j));
                     continue;
                 }
-                else if (startingValues.get(j) == 0) { // 처음에 해당 FF 자리에 0이 아닌 값이 나오는 경우
-                    startingValues.set(j,stateList.get(i).get(j));
-                    continue;
-                }
-                
-                if(periodFlags.get(j)) {
+
+                if (periodFlags.get(j)) {
                     sub = stateList.get(i).get(j) - startingValues.get(j);
 //                    System.out.println(j + "th FF: " + sub);
                     if (sub > verificationProperty.getThresholdValue()) { // 구조 주기의 차이가 value보다 크면 return false
                         return false;
                     }
-                    startingValues.set(j,stateList.get(i).get(j));
+                    startingValues.set(j, stateList.get(i).get(j));
                     periodFlags.set(j, false);
                 }
             }
@@ -111,5 +113,7 @@ public class MCIRecurrenceChecker extends RecurrenceChecker {
     }
 
     @Override
-    protected boolean evaluateState(Snapshot snapshot, Property verificationProperty) {return false; }
+    protected boolean evaluateState(Snapshot snapshot, Property verificationProperty) {
+        return false;
+    }
 }

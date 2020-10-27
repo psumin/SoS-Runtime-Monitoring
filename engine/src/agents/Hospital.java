@@ -2,11 +2,7 @@ package agents;
 
 import core.ImageObject;
 import core.Msg;
-import core.MsgRouter;
 import core.World;
-import misc.Time;
-//import org.apache.poi.ss.usermodel.Row;
-//import org.apache.poi.ss.usermodel.Sheet;
 
 import java.util.ArrayList;
 
@@ -19,12 +15,10 @@ import java.util.ArrayList;
 
 public class Hospital extends CS {
 
-    private int capacity = 10;
-
     private final ArrayList<Patient> treatmentPatients = new ArrayList<>();
-
     // 대기열
     private final ArrayList<Patient> patients = new ArrayList<>();
+    private int capacity = 10;
 
     public Hospital(World world, String name) {
         super(world, name);
@@ -72,7 +66,7 @@ public class Hospital extends CS {
         patient.position.set(position);
         //patient.setPosition(position);
 
-        if(isAvailable()) {
+        if (isAvailable()) {
             treatmentPatients.add(patient);
             patient.treatmentStart(this);
             world.addChild(patient);
@@ -86,16 +80,16 @@ public class Hospital extends CS {
     // 환자 퇴원
     public void leavePatient(Patient patient) {
         treatmentPatients.remove(patient);
-        if(isAvailable() && !patients.isEmpty()) {
+        if (isAvailable() && !patients.isEmpty()) {
             Patient treatmentTarget = null;
-            for(Patient p: patients) {
-                if(p.isSerious()) {
+            for (Patient p : patients) {
+                if (p.isSerious()) {
                     treatmentTarget = p;
                     break;
                 }
             }
 
-            if(treatmentTarget != null) {
+            if (treatmentTarget != null) {
                 patients.remove(treatmentTarget);
             } else {
                 treatmentTarget = patients.get(0);
@@ -115,9 +109,9 @@ public class Hospital extends CS {
 
     @Override
     public void recvMsg(Msg msg) {
-        if(msg.title == "is available") {
+        if (msg.title == "is available") {
             String title = "";
-            if(isAvailable()) {
+            if (isAvailable()) {
                 title = "available true";
             } else {
                 title = "available false";
@@ -127,8 +121,8 @@ public class Hospital extends CS {
                     .setTo(msg.from)
                     .setTitle(title)
                     .setData(this));
-        } else if(msg.title == "reserve") {
-            Patient patient = (Patient)msg.data;
+        } else if (msg.title == "reserve") {
+            Patient patient = (Patient) msg.data;
             reserve(patient);
         }
     }

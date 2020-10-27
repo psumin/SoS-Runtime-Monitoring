@@ -16,85 +16,95 @@ import java.util.Queue;
 
 public abstract class SoSObject {
 
+    // << Field: position >>
+    public final Position position = new Position();
+    public String name = "";
+    SoSObject parent;
+    Queue<SoSObject> children = new LinkedList<>();
+    // << Field: currentImage >>
+    SoSImage currentImage;
+    // << Field: canUpdate >>
+    // SoSObject Update when the field value is true
+    boolean _canUpdate = true;
+    // << Field: canRender >>
+    // SoSObject Render when the field value is true
+    boolean _visible = true;
+
     public SoSObject() {
 
     }
+
     public SoSObject(String name) {
         this.name = name;
     }
 
-    SoSObject parent;
+    // Calculate the distance
+    public static int distanceBetween(SoSObject left, SoSObject right) {
+        return Math.abs(left.position.x - right.position.x) + Math.abs(left.position.y - right.position.y);
+    }
+
     public void setParent(SoSObject parent) {
         this.parent = parent;
     }
 
-    Queue<SoSObject> children = new LinkedList<>();
     public void addChild(SoSObject child) {
         child.setParent(this);
         children.remove(child);
         children.add(child);
     }
+
     public void removeChild(SoSObject child) {
         child.parent = null;
         children.remove(child);
     }
 
-    // << Field: position >>
-    public final Position position = new Position();
-    public void setPosition(Position position) {
-        //this.position = position;
-        this.position.set(position);
-    }
     public void setPosition(int x, int y) {
         this.position.set(x, y);
     }
+
     public Position getPosition() {
         return position;
     }
 
-
-    // << Field: currentImage >>
-    SoSImage currentImage;
-    public void setCurrentImage(SoSImage currentImage) {
-        this.currentImage = currentImage;
+    public void setPosition(Position position) {
+        //this.position = position;
+        this.position.set(position);
     }
+
     public SoSImage getCurrentImage() {
         return currentImage;
     }
 
-    // << Field: canUpdate >>
-    // SoSObject Update when the field value is true
-    boolean _canUpdate = true;
+    public void setCurrentImage(SoSImage currentImage) {
+        this.currentImage = currentImage;
+    }
+
     public void canUpdate(boolean _canUpdate) {
         this._canUpdate = _canUpdate;
     }
 
-
-    // << Field: canRender >>
-    // SoSObject Render when the field value is true
-    boolean _visible = true;
     public void visible(boolean _visible) {
         this._visible = _visible;
     }
 
     // << Method: start >>
     // 초기화 이후(init) update 이전 동작 코드 작성
-    public void start() { }
-
+    public void start() {
+    }
 
     // << Method: update >>
     // Call this method for every frames
     // No inheritance allowed. For external use
     public final void update() {
-        if(_canUpdate) {
+        if (_canUpdate) {
             onUpdate();
 
-            if(!_canUpdate) return;
+            if (!_canUpdate) return;
 
             children.add(null);
-            while(true) {
+            while (true) {
                 SoSObject child = children.poll();
-                if(child == null) break;
+                if (child == null) break;
                 children.add(child);
                 child.update();
             }
@@ -110,16 +120,16 @@ public abstract class SoSObject {
     // Call this method for every frames
     // No inheritance allowed. For external use
     public final void render(Graphics2D g) {
-        if(_visible) {
+        if (_visible) {
 
-            Graphics2D localGraphic = (Graphics2D)g.create();
+            Graphics2D localGraphic = (Graphics2D) g.create();
             localGraphic.translate(position.x * Map.tileSize.width, position.y * Map.tileSize.height);
             onRender(localGraphic);
 
             children.add(null);
-            while(true) {
+            while (true) {
                 SoSObject child = children.poll();
-                if(child == null) break;
+                if (child == null) break;
                 children.add(child);
                 child.render(localGraphic);
             }
@@ -130,36 +140,31 @@ public abstract class SoSObject {
     protected void onRender(Graphics2D g) {
     }
 
-
     // << Method: clear >>
     public void clear() {
-        if(parent != null) {
+        if (parent != null) {
             parent.removeChild(this);
             parent = null;
         }
         children.forEach(child -> {
-            if(child != null) {
+            if (child != null) {
                 child.clear();
             }
         });
     }
-
 
     // Remove itself
     public void remove() {
         clear();
     }
 
-
-    public String name = "";
-
     public SoSObject findObject(String targetName) {
-        if(name.equalsIgnoreCase(targetName)) {
+        if (name.equalsIgnoreCase(targetName)) {
 //        if(name == targetName) {
             return this;
         } else {
             for (SoSObject child : children) {
-                if(child != null) {
+                if (child != null) {
                     SoSObject object = child.findObject(targetName);
                     if (object != null) {
                         return object;
@@ -171,7 +176,7 @@ public abstract class SoSObject {
     }
 
     public void recvMsg(Msg msg) {
-        
+
     }
 
     // Calculate the distance
@@ -179,19 +184,14 @@ public abstract class SoSObject {
         return Math.abs(position.x - target.position.x) + Math.abs(position.y - target.position.y);
     }
 
-    // Calculate the distance
-    public static int distanceBetween(SoSObject left, SoSObject right) {
-        return Math.abs(left.position.x - right.position.x) + Math.abs(left.position.y - right.position.y);
-    }
-
     // Get nearest Object
     public SoSObject nearestObject(ArrayList<SoSObject> targets) {
         SoSObject minObject = null;
-        for(SoSObject object: targets) {
-            if(minObject == null) {
+        for (SoSObject object : targets) {
+            if (minObject == null) {
                 minObject = object;
             } else {
-                if(distanceBetween(this, minObject) >= distanceBetween(this, object)) {
+                if (distanceBetween(this, minObject) >= distanceBetween(this, object)) {
                     minObject = object;
                 }
             }

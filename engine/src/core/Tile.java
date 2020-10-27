@@ -3,7 +3,6 @@ package core;
 import agents.FireFighter;
 import agents.Patient;
 import misc.Position;
-import misc.Size;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,28 +16,16 @@ import java.util.ArrayList;
 
 public class Tile extends SoSObject {
 
-    ImageObject light;        // For visited tiles
-    ImageObject dark;         // For unvisited tiles
-
+    public final ArrayList<Patient> patients = new ArrayList<>();
+    public final ArrayList<FireFighter> fireFighters = new ArrayList<>();
     // Initial values
     public float moveDelayFactor = 1;
     public float sightRangeFactor = 1;
     public float communicationRangeFactor = 1;
-
-    public final ArrayList<Patient> patients = new ArrayList<>();
-    public final ArrayList<FireFighter> fireFighters = new ArrayList<>();
+    ImageObject light;        // For visited tiles
+    ImageObject dark;         // For unvisited tiles
     //ArrayList<SoSObject> objects = new ArrayList<>();
-
     boolean _visited = false;
-    public void visited(boolean _visited) {
-        this._visited = _visited;
-
-        light.visible(_visited);
-        dark.visible(!_visited);
-    }
-    public boolean isVisited() {
-        return _visited;
-    }
 
     public Tile(Position position) {
 
@@ -53,6 +40,16 @@ public class Tile extends SoSObject {
         addChild(dark);
     }
 
+    public void visited(boolean _visited) {
+        this._visited = _visited;
+
+        light.visible(_visited);
+        dark.visible(!_visited);
+    }
+
+    public boolean isVisited() {
+        return _visited;
+    }
 
     public void add(Patient patient) {                      // Add patient at tile
 
@@ -61,16 +58,18 @@ public class Tile extends SoSObject {
         //objects.remove(object);
         //objects.add(object);
     }
+
     public void add(FireFighter fireFighter) {             // Add Fire fighter at tile
 
         fireFighters.remove(fireFighter);
         fireFighters.add(fireFighter);
     }
 
-    public void remove(Patient patient)  {                  // Remove patient at tile
+    public void remove(Patient patient) {                  // Remove patient at tile
 
         patients.remove(patient);
     }
+
     public void remove(FireFighter fireFighter) {            // Remove Fire fighter at tile
         fireFighters.remove(fireFighter);
     }
@@ -89,6 +88,6 @@ public class Tile extends SoSObject {
     // float 값은 9까지 가능.
     @Override
     public void onUpdate() {
-        light.setColor(new Color(255, 255 - (int)(255 * (moveDelayFactor - 1) / 10), 255 - (int)(255 * (moveDelayFactor - 1)/ 10)));        // 색깔 변경을 위한 method
+        light.setColor(new Color(255, 255 - (int) (255 * (moveDelayFactor - 1) / 10), 255 - (int) (255 * (moveDelayFactor - 1) / 10)));        // 색깔 변경을 위한 method
     }
 }

@@ -7,14 +7,16 @@ import property.pattern.NumberofEventsChecker;
 import java.util.StringTokenizer;
 
 public class MCINumberofEventsChecker extends NumberofEventsChecker {
-    public MCINumberofEventsChecker() { super(); }
+    public MCINumberofEventsChecker() {
+        super();
+    }
 
     @Override
     protected boolean evaluateState(Snapshot snapshot, Property verificationProperty) {
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
-        while(st.hasMoreTokens()) {
+        while (st.hasMoreTokens()) {
             String target = st.nextToken();
-            if(target.equals("CurrentMsgCount:"))
+            if (target.equals("CurrentMsgCount:"))
                 break;
         }
 
@@ -38,12 +40,7 @@ public class MCINumberofEventsChecker extends NumberofEventsChecker {
         int routeCount = Integer.parseInt(st.nextToken());
 //        System.out.println("ROUTEMSGCOUNT: " + routeCount);
 
-        if (routeCount <= (int) verificationProperty.getThresholdValue()) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        return routeCount > (int) verificationProperty.getThresholdValue();
 
     }
 

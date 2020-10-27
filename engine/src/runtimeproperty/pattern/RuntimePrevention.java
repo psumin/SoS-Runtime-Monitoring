@@ -14,6 +14,7 @@ public class RuntimePrevention extends RuntimeProperty {
 
     public RuntimePrevention(Event causeEvent, Event effectEvent, Scope scope) {
         super(scope);
+        this.prefix = "Prevention";
         this.name = "If " + causeEvent.getName() + " has occurred, as in response " + effectEvent.getName() + " never holds";
         this.causeEvent = causeEvent;
         this.preventedEvent = effectEvent;

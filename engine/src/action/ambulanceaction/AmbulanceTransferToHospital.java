@@ -15,6 +15,7 @@ public class AmbulanceTransferToHospital extends AmbulanceAction {
 
     public Hospital hospital;
     public Patient patient;
+
     public AmbulanceTransferToHospital(Ambulance target, Hospital hospital, Patient targetPatient) {
         super(target);
 
@@ -29,7 +30,7 @@ public class AmbulanceTransferToHospital extends AmbulanceAction {
     // Transfer the patient to the hospital
     public void onUpdate() {
         ambulance.moveTo(hospital.position);
-        if(ambulance.isArrivedAt(hospital.position)) {
+        if (ambulance.isArrivedAt(hospital.position)) {
             hospital.hospitalize(patient);
             world.transferCounter++;
             ambulance.transferImage.visible(false);

@@ -15,15 +15,22 @@ import java.util.HashMap;
 
 public class SoSImage {
 
+    private static final HashMap<String, SoSImage> strToImage = new HashMap<>();
+    // << Field: image >>
+    private BufferedImage image;
+    // FilePath
+    private String filePath;
+    // The number of the objects which refer to the image
+    private int refCount = 0;
+
     private SoSImage() {
 
     }
 
-    private static HashMap<String, SoSImage> strToImage = new HashMap<>();
     public static SoSImage create(String filePath) {
         SoSImage image = null;
 
-        if(strToImage.containsKey(filePath)) {
+        if (strToImage.containsKey(filePath)) {
             image = strToImage.get(filePath);
         } else {
             image = new SoSImage();
@@ -36,7 +43,7 @@ public class SoSImage {
             strToImage.put(filePath, image);
         }
 
-        if(image != null) {
+        if (image != null) {
             image.refCount++;
         }
 
@@ -45,31 +52,27 @@ public class SoSImage {
 
     public void clear() {
         refCount--;
-        if(refCount <= 0) {
+        if (refCount <= 0) {
             strToImage.remove(this);
         }
     }
 
-    // << Field: image >>
-    private BufferedImage image;
-    public void setImage(BufferedImage image) {
-        this.image = image;
-    }
     public BufferedImage getImage() {
         return image;
     }
 
-    // FilePath
-    private String filePath;
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setImage(BufferedImage image) {
+        this.image = image;
     }
+
     public String getFilePath() {
         return filePath;
     }
 
-    // The number of the objects which refer to the image
-    private int refCount = 0;
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
     public int getRefCount() {
         return refCount;
     }

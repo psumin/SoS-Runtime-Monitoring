@@ -14,6 +14,7 @@ public class RuntimeResponse extends RuntimeProperty {
 
     public RuntimeResponse(Event causeEvent, Event effectEvent, Scope scope) {
         super(scope);
+        this.prefix = "Response";
         this.name = "If " + causeEvent.getName() + " has occurred, as in response " + effectEvent.getName() + " eventually holds";
         this.causeEvent = causeEvent;
         this.effectEvent = effectEvent;

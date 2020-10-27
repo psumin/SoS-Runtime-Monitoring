@@ -3,23 +3,18 @@ package runtimeproperty.pattern;
 import log.Snapshot;
 import runtimeproperty.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.StringTokenizer;
 
 public class RuntimeMinimumDuration extends RuntimeProperty {
     Event targetEvent;
     int targetCount;
     HashMap<String, Integer> currentCount;
 
-    boolean firstTick;
-    boolean needsException;
-    ArrayList<String> exception;
-
     public RuntimeMinimumDuration(Event event, Scope scope, int targetCount) {
         super(scope);
         this.targetEvent = event;
         this.targetCount = targetCount;
+        this.prefix = "Minimum Duration";
         this.name = event.getName() + " remains at least " + targetCount;
         this.currentCount = new HashMap<>(0);
     }

@@ -13,20 +13,19 @@ import core.Msg;
 
 public class AmbulanceFree extends AmbulanceAction {
 
-    public AmbulanceFree(Ambulance target) {
-        super(target);
-        name = "Free";
-    }
-
     boolean isFirstUpdate = true;
     int mobilize = 8;
     int frameCounter = mobilize;
     int mobilize_delay_repeat = 0;             // counter, number of mobilize
     int counter = mobilize_delay_repeat;
+    public AmbulanceFree(Ambulance target) {
+        super(target);
+        name = "Free";
+    }
 
     @Override
     public void onUpdate() {
-        if(isFirstUpdate) {
+        if (isFirstUpdate) {
             isFirstUpdate = false;
             router.route(new Msg()
                     .setFrom(ambulance.name)
@@ -34,9 +33,9 @@ public class AmbulanceFree extends AmbulanceAction {
                     .setTitle("free state start")                           // announce to the organization "Free"
                     .setData(ambulance));
         }
-        if(frameCounter <= 0) {
+        if (frameCounter <= 0) {
             frameCounter = mobilize;
-            if(counter <= 0) {
+            if (counter <= 0) {
                 counter = mobilize_delay_repeat;
                 ambulance.changeAction(new AmbulanceSearch(ambulance));     // Search at Bridgehead
             }
@@ -48,8 +47,8 @@ public class AmbulanceFree extends AmbulanceAction {
     @Override
     // When Ambulance receive the message
     public void recvMsg(Msg msg) {
-        if(msg.title == "move to bridgehead") {
-            Bridgehead bridgehead = (Bridgehead)msg.data;
+        if (msg.title == "move to bridgehead") {
+            Bridgehead bridgehead = (Bridgehead) msg.data;
             ambulance.changeAction(new AmbulanceMoveToBridgehead(ambulance, bridgehead));
         }
     }

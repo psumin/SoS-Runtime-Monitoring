@@ -5,7 +5,6 @@ import log.Snapshot;
 import property.Property;
 import property.PropertyChecker;
 
-
 import java.util.HashMap;
 
 /**
@@ -15,7 +14,7 @@ import java.util.HashMap;
 public abstract class AbsenceChecker extends PropertyChecker {
     @Override
     protected abstract boolean evaluateState(Snapshot snapshot, Property verificationProperty);
-    
+
     @Override
     public boolean check(Log log, Property verificationProperty) {
         HashMap<Integer, Snapshot> snapshots = log.getSnapshotMap();

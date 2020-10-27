@@ -30,27 +30,27 @@ public class AmbulanceSearch extends AmbulanceAction {
     // When timeout occurred, ambulance change the action to "Search"
     public void onUpdate() {
 
-        if(targetBridgehead == null) {
-            targetBridgehead = (Bridgehead)ambulance.nearestObject(new ArrayList<>(bridgeheads));
+        if (targetBridgehead == null) {
+            targetBridgehead = (Bridgehead) ambulance.nearestObject(new ArrayList<>(bridgeheads));
             bridgeheads.remove(targetBridgehead);
         }
 
         ambulance.moveTo(targetBridgehead.position);
-        if(ambulance.isArrivedAt(targetBridgehead.position)) {
+        if (ambulance.isArrivedAt(targetBridgehead.position)) {
 
-            Hospital nearestHospital = (Hospital)ambulance.nearestObject(new ArrayList<>(world.hospitals));
+            Hospital nearestHospital = (Hospital) ambulance.nearestObject(new ArrayList<>(world.hospitals));
             Patient patient = targetBridgehead.getPatient(Patient.Status.Serious);          // Serious patient first
-            if(patient == null) {
+            if (patient == null) {
                 patient = targetBridgehead.getPatient(Patient.Status.Wounded);              // Wounded patient next
             }
-            if(patient == null) {
+            if (patient == null) {
 
-                if(bridgeheads.isEmpty()) {
+                if (bridgeheads.isEmpty()) {
                     bridgeheads = new ArrayList<>(world.bridgeheads);
                 }
 
                 // 다른 Bridgehead 찾기
-                targetBridgehead = (Bridgehead)ambulance.nearestObject(new ArrayList<>(bridgeheads));
+                targetBridgehead = (Bridgehead) ambulance.nearestObject(new ArrayList<>(bridgeheads));
                 bridgeheads.remove(targetBridgehead);
 
                 return;
@@ -62,8 +62,8 @@ public class AmbulanceSearch extends AmbulanceAction {
 
     @Override
     public void recvMsg(Msg msg) {
-        if(msg.title == "move to bridgehead") {
-            Bridgehead bridgehead = (Bridgehead)msg.data;
+        if (msg.title == "move to bridgehead") {
+            Bridgehead bridgehead = (Bridgehead) msg.data;
             ambulance.changeAction(new AmbulanceMoveToBridgehead(ambulance, bridgehead));
         }
     }

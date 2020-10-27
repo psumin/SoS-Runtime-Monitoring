@@ -4,7 +4,6 @@ import log.Snapshot;
 import runtimeproperty.*;
 
 import java.util.HashMap;
-import java.util.StringTokenizer;
 
 public class RuntimeExistence extends RuntimeProperty {
     Event targetEvent;
@@ -12,6 +11,7 @@ public class RuntimeExistence extends RuntimeProperty {
     public RuntimeExistence(Event event, Scope scope) {
         super(scope);
         this.targetEvent = event;
+        this.prefix = "Existence";
         this.name = event.getName() + " holds eventually";
     }
 

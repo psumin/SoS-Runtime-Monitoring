@@ -11,7 +11,6 @@ public abstract class PreventionChecker extends PropertyChecker {
 
     @Override
     public boolean check(Log log, Property verificationProperty) {
-        if (evaluateState(log, verificationProperty)) return true;
-        else return false;
+        return evaluateState(log, verificationProperty);
     }
 }
