@@ -119,7 +119,7 @@ public class World extends SoSObject {
 //    public static final int maxPatient = 65;
     public static final int maxFireFighter = 4;            // 4
     public static final int maxHospital = 4;
-    public static final int maxAmbulance = 16;              // 16
+    public static final int maxAmbulance = 8;              // 16
     public static final int maxBridgehead = 4;
 
     public Map map;
@@ -1235,7 +1235,7 @@ public class World extends SoSObject {
 //        stimuli.add(new RemoveEntity(this, 140, "Ambulance4", this::removeCS));
 //
 //        // TODO: add FireFighter
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             stimuli.add(new AddEntity(this, 100, this::addFireFighter));
             stimuli.add(new AddEntity(this, 150, this::addFireFighter));
             stimuli.add(new AddEntity(this, 200, this::addFireFighter));
@@ -1243,7 +1243,7 @@ public class World extends SoSObject {
             stimuli.add(new AddEntity(this, 300, this::addFireFighter));
             stimuli.add(new AddEntity(this, 400, this::addFireFighter));
         }
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 2; i++) {
             stimuli.add(new AddEntity(this, 300, this::addFireFighter));
             stimuli.add(new AddEntity(this, 350, this::addFireFighter));
             stimuli.add(new AddEntity(this, 400, this::addFireFighter));

@@ -123,20 +123,30 @@ public class main {
 
         programStartTime = System.nanoTime();
         SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
+
+
         simulationEngine.setRunning();
         simulationEngine.runtimeVerificationRun(runtimeVerifier);                         // 런타임 검증을 위한 run
         programEndTime = System.nanoTime();
-        System.out.println("=== Program running time with verification: " + (programEndTime - programStartTime) / (float) 1000_000_000 + " sec");
+        System.out.println("=== Total simulation running time including runtime verification: " + (programEndTime - programStartTime) / (float) 1000_000_000 + " sec");
         long timeWithVerification = programEndTime - programStartTime;
 
         programStartTime = System.nanoTime();
         simulationEngine = new SoSSimulationProgram();
+
+
         simulationEngine.setRunning();
         simulationEngine.run();
         programEndTime = System.nanoTime();
-        System.out.println("=== Program running time without verification: " + (programEndTime - programStartTime) / (float) 1000_000_000 + " sec");
+        System.out.println("=== Total simulation running time: " + (programEndTime - programStartTime) / (float) 1000_000_000 + " sec");
+
+
         long timeWithoutVerification = programEndTime - programStartTime;
         System.out.println("=== Runtime Verification Overhead: " + (timeWithVerification - timeWithoutVerification) / (float) timeWithoutVerification * 100 + "%");
+
+
+
+
 
 
 //        double satisfactionProb = 0;

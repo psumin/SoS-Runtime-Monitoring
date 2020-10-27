@@ -30,7 +30,7 @@ import java.util.Scanner;
 
 public class SoSSimulationProgram implements KeyListener {
     final int MAX_SIMULATION_COUNT = 1;                          // 시뮬레이션 반복 횟수
-    final int MAX_FRAME_COUNT = 500;                                // 각 시뮬레이션마다 최대 frame의 수
+    final int MAX_FRAME_COUNT = 1500;                                // 각 시뮬레이션마다 최대 frame의 수
     final int SIMULATION_WIDTH = 910;                               // 시뮬레이션 GUI의 너비
     final int SIMULATION_HEIGHT = 910;                              // 시뮬레이션 GUI의 높이
     String filePath;
