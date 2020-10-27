@@ -1,5 +1,4 @@
 import log.Log;
-import property.pattern.MinimumDurationChecker;
 import runtimeproperty.RuntimeProperty;
 import runtimeproperty.Scope;
 import runtimeproperty.event.*;
@@ -48,9 +47,9 @@ public class main {
 
         // Absence
         // 설명: Ambulance 가 특정 route 밖으로 나가는 사건이 절대로 일어나지 않아야 한다.
-        AmbulanceRouteEvent ambulanceRouteEvent = new AmbulanceRouteEvent(34, 34);
+        AllAmbulanceRouteEvent allAmbulanceRouteEvent = new AllAmbulanceRouteEvent(34, 34);
         for(Scope scope: scopes) {
-            runtimeProperties.add(new RuntimeAbsence(ambulanceRouteEvent, scope));
+            runtimeProperties.add(new RuntimeAbsence(allAmbulanceRouteEvent, scope));
         }
 
         // Universality
@@ -90,9 +89,9 @@ public class main {
 
         // Recurrence
         // 환자가 병원에 도착하는 사건이 시간 10 간격 이내로 반복적으로 발생해야 한다.
-        PatientArriveAtHospitalEvent patientArriveAtHospitalEvent = new PatientArriveAtHospitalEvent(34, 34);
+        AllPatientArriveAtHospitalEvent allPatientArriveAtHospitalEvent = new AllPatientArriveAtHospitalEvent(34, 34);
         for(Scope scope: scopes) {
-            runtimeProperties.add(new RuntimeRecurrence(patientArriveAtHospitalEvent, scope, 10));
+            runtimeProperties.add(new RuntimeRecurrence(allPatientArriveAtHospitalEvent, scope, 10));
         }
 
         // Precedence
@@ -105,9 +104,19 @@ public class main {
 
         // Response
         // Treatment Rate 가 100% 가 되는 사건이 발생한다면, Firefighter 의 Action 이 Halt 인 사건이 발생해야 한다.
+        TreatmentRate100Event treatmentRate100Event = new TreatmentRate100Event();
+        AllFirefighterHaltEvent allFirefighterHaltEvent = new AllFirefighterHaltEvent();
+        for(Scope scope: scopes) {
+            runtimeProperties.add(new RuntimeResponse(treatmentRate100Event, allFirefighterHaltEvent, scope));
+        }
 
         // Until
         // Firefighter 의 Action 이 Halt 가 아닌 사건이 Unvisited Tile 이 없어지는 사건이 일어날 때까지 지속되어야 한다.
+        AllFirefighterNotHaltEvent allFirefighterNotHaltEvent = new AllFirefighterNotHaltEvent();
+        UnvisitedTileEvent unvisitedTileEvent = new UnvisitedTileEvent();
+        for(Scope scope: scopes) {
+            runtimeProperties.add(new RuntimeUntil(allFirefighterNotHaltEvent, unvisitedTileEvent, scope));
+        }
 
         // Prevention
         // 한 환자가 First Aid 를 받는 사건이 발생한다면, 그 이후에 해당 환자가 First Aid 를 받는 사건이 다시 발생하지 않아야 한다.

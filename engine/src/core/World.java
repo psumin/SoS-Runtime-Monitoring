@@ -1828,4 +1828,12 @@ public class World extends SoSObject {
     public int getAmbNumber() {
         return ambulanceCounter;
     }
+
+    public int getPatientNumber() {
+        return patientCounter;
+    }
+
+    public int getUnvisitedTileCount() {
+        return map.getUnvisitedTileCount();
+    }
 }

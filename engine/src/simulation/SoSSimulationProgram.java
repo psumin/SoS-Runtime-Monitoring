@@ -311,9 +311,9 @@ public class SoSSimulationProgram implements KeyListener {
             world.update();
             log.addSnapshot(Time.getFrameCount(),
                     "Frame: " + Time.getFrameCount() + " RescuedRate: " + world.getRescuedRate() +
-                    " TreatmentRate: " + world.getTreatmentRate() +
+                    " TreatmentRate: " + world.getTreatmentRate() + " UnvisitedTiles: " + world.getUnvisitedTileCount() +
                     " CurrentFF: " + world.getFFNumber() + " CurrentAmb: " + world.getAmbNumber() +
-                    " CurrentPat: " + world.getPatientCount() +
+                    " CurrentPat: " + world.getPatientNumber() +
                     " CurrentMsgCount: " + world.router.getRouteCount() + " " + world.printCSSnapshot());
 
 //            System.out.println("rescuedrate :" + String.valueOf(world.getRescuedRate()));
