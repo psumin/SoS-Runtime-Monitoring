@@ -3,6 +3,7 @@ package action.firefighteraction;
 import agents.FireFighter;
 import agents.Patient;
 import core.Tile;
+
 import java.util.ArrayList;
 import java.util.Queue;
 
@@ -15,8 +16,8 @@ import java.util.Queue;
 
 public class FireFighterSearch extends FireFighterAction {
 
-    private Queue<Tile> unvisitedTiles;
-    private ArrayList<Patient> patientsMemory;
+    private final Queue<Tile> unvisitedTiles;
+    private final ArrayList<Patient> patientsMemory;
     private Tile unvisitedTile;
 
     public FireFighterSearch(FireFighter target) {
@@ -40,8 +41,8 @@ public class FireFighterSearch extends FireFighterAction {
         // Select target patient
         targetPatient = fireFighter.selectTargetPatient(patientsMemory);
         //patientsMemory.remove(targetPatient);
-        while(targetPatient != null) {
-            if(targetPatient.isSaved) {
+        while (targetPatient != null) {
+            if (targetPatient.isSaved) {
                 patientsMemory.remove(targetPatient);
                 targetPatient = fireFighter.selectTargetPatient(patientsMemory);
             } else {
@@ -49,21 +50,21 @@ public class FireFighterSearch extends FireFighterAction {
             }
         }
 
-        if(targetPatient != null) {
+        if (targetPatient != null) {
             fireFighter.changeAction(new FireFighterMoveToPatient(fireFighter, targetPatient));
         } else {
             // If there is no target patient, move to the unvisited tile
             // Select unvisited tile
-            if(unvisitedTile == null) {
+            if (unvisitedTile == null) {
                 unvisitedTile = selectUnvisitedTile();
             }
             // Move to unvisited tile
-            if(unvisitedTile != null) {
+            if (unvisitedTile != null) {
                 fireFighter.moveTo(unvisitedTile.position);
                 //fireFighter.markVisitedTiles();
             }
 
-            if(unvisitedTile != null && fireFighter.isArrivedAt(unvisitedTile.position)) {
+            if (unvisitedTile != null && fireFighter.isArrivedAt(unvisitedTile.position)) {
                 unvisitedTile = null;
             }
         }
@@ -76,9 +77,9 @@ public class FireFighterSearch extends FireFighterAction {
 
     // Select the unvisited tile randomly
     private Tile selectUnvisitedTile() {
-        while(unvisitedTiles.isEmpty() == false) {
+        while (unvisitedTiles.isEmpty() == false) {
             Tile tile = unvisitedTiles.poll();
-            if(tile.isVisited() == false) {
+            if (tile.isVisited() == false) {
                 return tile;
             }
         }

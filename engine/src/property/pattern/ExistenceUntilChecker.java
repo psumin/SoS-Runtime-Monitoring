@@ -4,10 +4,9 @@ import log.Log;
 import log.Snapshot;
 import property.Property;
 
-
 import java.util.HashMap;
 
-public abstract class ExistenceUntilChecker extends ExistenceChecker{
+public abstract class ExistenceUntilChecker extends ExistenceChecker {
     @Override
     protected abstract boolean evaluateState(Snapshot state, Property verificationProperty);
 

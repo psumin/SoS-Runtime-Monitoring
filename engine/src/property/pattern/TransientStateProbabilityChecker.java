@@ -23,16 +23,13 @@ public abstract class TransientStateProbabilityChecker extends PropertyChecker {
         double prob = verificationProperty.getProb();
         int t = verificationProperty.getT();
         int T = verificationProperty.getTT();
-        
+
         for (int i = t; i < logSize; i++) {
             if (evaluateState(snapshots.get(i), verificationProperty)) {
                 satisfiedCount++;
             }
         }
 
-        if ((double)satisfiedCount/(double)(T-t) >= prob){
-            return true;
-        }
-        return false;
+        return (double) satisfiedCount / (double) (T - t) >= prob;
     }
 }

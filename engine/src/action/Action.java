@@ -14,11 +14,11 @@ import core.World;
 
 public class Action extends SoSObject {
 
+    public Func onComplete;
     protected World world;
     protected CS target;
     protected Action parentAction;
     protected MsgRouter router;
-    public Func onComplete;
 
     public Action(CS target) {
         this.target = target;
@@ -33,12 +33,13 @@ public class Action extends SoSObject {
     public void start() {
         target.addChild(this);
     }
+
     public void stop() {
         target.removeChild(this);
     }
 
     public void complete() {
-        if(onComplete != null) {
+        if (onComplete != null) {
             onComplete.invoke();
         }
         stop();

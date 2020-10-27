@@ -16,7 +16,7 @@ public class MCIPrecedenceChecker extends PrecedenceChecker {
 
         super();
     }
-    
+
     @Override
     protected boolean evaluateState(Log log, Property verificationProperty) {
         System.out.println("Precedence Checker");
@@ -28,9 +28,9 @@ public class MCIPrecedenceChecker extends PrecedenceChecker {
         int counter = 0;
         HashMap<Integer, Snapshot> snapshots = log.getSnapshotMap();
         int logSize = snapshots.size(); // 0 ... 10 => size: 11, endTime: 10
-        ArrayList<Integer> prevList = new ArrayList<>(Collections.nCopies(50,-1));
-        ArrayList<Integer> latterList = new ArrayList<>(Collections.nCopies(50,-1));
-        ArrayList<Integer> indexCounter = new ArrayList<>(Collections.nCopies(15,0));
+        ArrayList<Integer> prevList = new ArrayList<>(Collections.nCopies(50, -1));
+        ArrayList<Integer> latterList = new ArrayList<>(Collections.nCopies(50, -1));
+        ArrayList<Integer> indexCounter = new ArrayList<>(Collections.nCopies(15, 0));
 
 
         for (int i = 1; i < logSize; i++) {
@@ -68,27 +68,29 @@ public class MCIPrecedenceChecker extends PrecedenceChecker {
         System.out.println(latterList);
         return false;
     }
-    
+
     @Override
     public boolean check(Log log, Property verificationProperty, int until) {
         return false;
     }
-    
+
     @Override
     public boolean check(Log log, Property verificationProperty, double prob, int T) {
         return false;
     }
-    
+
     @Override
     public boolean check(Log log, Property verificationProperty, double prob, int t, int T) {
         return false;
     }
-    
+
     @Override
     public boolean check(Log log, Property verificationProperty, int t, int T) {
         return false;
     }
-    
+
     @Override
-    protected boolean evaluateState(Snapshot snapshot, Property verificationProperty) {return false; }
+    protected boolean evaluateState(Snapshot snapshot, Property verificationProperty) {
+        return false;
+    }
 }

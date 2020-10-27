@@ -51,7 +51,7 @@ public class DataStructure {
 
         public Range(String command, int frame, int left, int top, int right, int bottom, Object value) {
             this.command = command;
-            this. frame = frame;
+            this.frame = frame;
             this.left = left;
             this.top = top;
             this.right = right;

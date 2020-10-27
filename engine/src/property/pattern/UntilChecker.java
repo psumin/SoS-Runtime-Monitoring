@@ -8,10 +8,9 @@ import property.PropertyChecker;
 public abstract class UntilChecker extends PropertyChecker {
     @Override
     protected abstract boolean evaluateState(Snapshot state, Property verificationProperty);
-    
+
     @Override
     public boolean check(Log log, Property verificationProperty) {
-        if (evaluateState(log, verificationProperty)) return true;
-        else return false;
+        return evaluateState(log, verificationProperty);
     }
 }

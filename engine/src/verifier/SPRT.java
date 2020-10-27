@@ -9,6 +9,7 @@ import simulation.SoSSimulationProgram;
 //import simulation.Simulation;
 
 public class SPRT extends Verifier {
+    PropertyChecker propertychecker;
     double alpha;
     double beta;
     double delta;
@@ -20,32 +21,33 @@ public class SPRT extends Verifier {
      * @param checker the checker
      */
     public SPRT(PropertyChecker checker) {
-    super(checker);
-    this.alpha = 0.05;
-    this.beta = 0.05;
-    this.delta = 0.01;
-    this.minimumSample = 2;
-  }
+        this.propertychecker = checker;
+        this.alpha = 0.05;
+        this.beta = 0.05;
+        this.delta = 0.01;
+        this.minimumSample = 2;
+    }
 
     /**
      * Verify input simulation in GUI (Existence, Absence, Universality Checker).
-     *
+     * <p>
      * //@param simulation           the simulation
+     *
      * @param verificationProperty the verification property
      * @param maxRepeat            the max repeat
      * @param theta                the theta
      * @return the pair
      */
-    public Pair<Pair<Integer,Boolean>, String> verifyWithSimulationGUI(//Simulation simulation
-                                                                       SoSSimulationProgram simulation,
-                                                                       Property verificationProperty, int maxRepeat, double theta) {
+    public Pair<Pair<Integer, Boolean>, String> verifyWithSimulationGUI(//Simulation simulation
+                                                                        SoSSimulationProgram simulation,
+                                                                        Property verificationProperty, int maxRepeat, double theta) {
         int maxNumSamples = maxRepeat;
         boolean ret = true;
         int numSamples;
         int numTrue;
         numSamples = 0;
         numTrue = 0;
-        
+
         while (this.isSampleNeeded(numSamples, numTrue, theta)) {
             if (!(numSamples < maxNumSamples)) {
                 System.out.println("Over maximum repeat: " + maxNumSamples);
@@ -61,19 +63,19 @@ public class SPRT extends Verifier {
             }
             numSamples += 1;
         }
-        
+
         ret = this.isSatisfied(numSamples, numTrue, theta);
-        
+
         // TODO Theta가 1일때 true 나오는 이유 확인
-        if(theta == 1.00) ret = false;
-        
+        if (theta == 1.00) ret = false;
+
         String verificationResult = "theta: " + Double.parseDouble(String.format("%.2f", theta)) +
-            " numSamples: " + numSamples + " numTrue: " + numTrue + " result: " + ret;
-        
-        
+                " numSamples: " + numSamples + " numTrue: " + numTrue + " result: " + ret;
+
+
         return new Pair(new Pair(numSamples, ret), verificationResult);
     }
-    
+
     /**
      * Verify input simulation in GUI (Minimum Duration Checker).
      *
@@ -206,7 +208,7 @@ public class SPRT extends Verifier {
         
         return new Pair(new Pair(numSamples, ret), verificationResult);
     }*/
-    
+
     /**
      * @param numSample
      * @param numTrue
@@ -215,23 +217,21 @@ public class SPRT extends Verifier {
      */
     private boolean isSampleNeeded(int numSample, int numTrue, double theta) {
         if (numSample < this.minimumSample) return true;
-        
-        double h0Threshold = this.beta / (1-this.alpha);
-        double h1Threshold = (1-this.beta) / this.alpha;
-        
+
+        double h0Threshold = this.beta / (1 - this.alpha);
+        double h1Threshold = (1 - this.beta) / this.alpha;
+
         double v = this.getV(numSample, numTrue, theta);
-        
+
         if (v <= h0Threshold) {
             return false;
-        }
-        else if (v >= h1Threshold) {
+        } else if (v >= h1Threshold) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
-    
+
     /**
      * @param numSamples
      * @param numTrue
@@ -239,17 +239,17 @@ public class SPRT extends Verifier {
      * @return true/false
      */
     private boolean isSatisfied(int numSamples, int numTrue, double theta) {
-        double h0Threshold = this.beta/(1-this.alpha);
-        
+        double h0Threshold = this.beta / (1 - this.alpha);
+
         double v = this.getV(numSamples, numTrue, theta);
-        
+
         if (v <= h0Threshold) {
             return true;
-        } else  {
+        } else {
             return false;
         }
     }
-    
+
     /**
      * @param numSample
      * @param numTrue
@@ -259,20 +259,20 @@ public class SPRT extends Verifier {
     private double getV(int numSample, int numTrue, double theta) {
         double p0 = theta + this.delta;
         double p1 = theta - this.delta;
-        
+
         int numFalse = numSample - numTrue;
-        
-        double p1m = Math.pow(p1, numTrue) * Math.pow((1-p1), numFalse);
-        double p0m = Math.pow(p0, numTrue) * Math.pow((1-p0), numFalse);
-        
+
+        double p1m = Math.pow(p1, numTrue) * Math.pow((1 - p1), numFalse);
+        double p0m = Math.pow(p0, numTrue) * Math.pow((1 - p0), numFalse);
+
         if (p0m == 0) {
             p1m = p1m + Double.MIN_VALUE;
             p0m = p0m + Double.MIN_VALUE;
         }
-        
+
         return p1m / p0m;
     }
-    
+
 }
 
 

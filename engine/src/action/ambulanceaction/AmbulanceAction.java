@@ -2,7 +2,6 @@ package action.ambulanceaction;
 
 import action.Action;
 import agents.Ambulance;
-import agents.CS;
 
 /**
  * Project: NewSimulator

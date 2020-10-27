@@ -25,45 +25,44 @@ public class MCIPreventionChecker extends PreventionChecker {
         int counter = 0;
         HashMap<Integer, Snapshot> snapshots = log.getSnapshotMap();
         int logSize = snapshots.size(); // 0 ... 10 => size: 11, endTime: 10
-        ArrayList<Integer> prevList = new ArrayList<>(Collections.nCopies(50,-1));
+        ArrayList<Integer> prevList = new ArrayList<>(Collections.nCopies(50, -1));
         //ArrayList<Integer> latterList = new ArrayList<>(Collections.nCopies(50,-1));
         //ArrayList<Integer> indexCounter = new ArrayList<>(Collections.nCopies(15,0));
         boolean occurrence = false;
         double rescueRate = -1;
 
-        for(int i = 1; i < logSize; i++) {
+        for (int i = 1; i < logSize; i++) {
             temp = snapshots.get(i).getSnapshotString();
             //System.out.println(temp);
 
             StringTokenizer st = new StringTokenizer(temp, " ");
             counter = 0;
-            while(st.hasMoreTokens()) {
+            while (st.hasMoreTokens()) {
                 String tokens = st.nextToken();
-                if(occurrence){
-                    if(tokens.equals("RescuedRate:")) {
+                if (occurrence) {
+                    if (tokens.equals("RescuedRate:")) {
                         rescueRate = Double.parseDouble(st.nextToken());
                         //System.out.println(temp);
-                        if(rescueRate <= verificationProperty.getThresholdValue()){
+                        if (rescueRate <= verificationProperty.getThresholdValue()) {
                             return false;
                         }
                         break;
                     }
                 }
-                if(tokens.equals("Amb:")) break;
-                if(tokens.equals("CurrentFF:")) {
+                if (tokens.equals("Amb:")) break;
+                if (tokens.equals("CurrentFF:")) {
                     int tmpFF = Integer.parseInt(st.nextToken());
-                    if(tmpFF > numFF) numFF = tmpFF;
+                    if (tmpFF > numFF) numFF = tmpFF;
                 }
-                if(tokens.equals("FF:")) {
-                    while(counter < numFF) {
+                if (tokens.equals("FF:")) {
+                    while (counter < numFF) {
                         String fflog = st.nextToken();
-                        if(fflog.contains(prev)) { // 마지막으로 prev state가 관찰될때
+                        if (fflog.contains(prev)) { // 마지막으로 prev state가 관찰될때
                             //System.out.println(temp);
                             //occurrence = true;
                             prevList.set(counter, 1);
-                        }
-                        else{
-                            if(prevList.get(counter)==1) {
+                        } else {
+                            if (prevList.get(counter) == 1) {
 //                                System.out.println(temp);
                                 occurrence = true;
                                 break;
@@ -100,5 +99,7 @@ public class MCIPreventionChecker extends PreventionChecker {
     }
 
     @Override
-    protected boolean evaluateState(Snapshot snapshot, Property verificationProperty) {return false; }
+    protected boolean evaluateState(Snapshot snapshot, Property verificationProperty) {
+        return false;
+    }
 }

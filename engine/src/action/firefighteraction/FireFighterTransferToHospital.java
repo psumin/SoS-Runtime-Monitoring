@@ -13,9 +13,8 @@ import agents.Patient;
 
 public class FireFighterTransferToHospital extends FireFighterAction {
 
-    Hospital hospital;
     public Patient targetPatient;
-
+    Hospital hospital;
     int prevMoveDelay;
 
     public FireFighterTransferToHospital(FireFighter target, Hospital hospital, Patient targetPatient) {
@@ -39,7 +38,7 @@ public class FireFighterTransferToHospital extends FireFighterAction {
         fireFighter.observe();
         fireFighter.moveTo(hospital.position);              // Transfer the patient to the hospital
         fireFighter.markVisitedTiles();
-        if(fireFighter.isArrivedAt(hospital.position)) {    // When the Firefighter arrived at the hospital
+        if (fireFighter.isArrivedAt(hospital.position)) {    // When the Firefighter arrived at the hospital
             hospital.hospitalize(targetPatient);            // Patient is hospitalized at the hospital
             //world.addChild(targetPatient);
 

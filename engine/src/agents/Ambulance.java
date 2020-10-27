@@ -1,7 +1,9 @@
 package agents;
 
 import action.ambulanceaction.AmbulanceFree;
-import core.*;
+import core.ImageObject;
+import core.Map;
+import core.World;
 import misc.Position;
 
 import java.awt.*;
@@ -13,9 +15,10 @@ import java.awt.*;
  * Github: https://github.com/sumin0407/NewSimulator.git
  */
 
-public class Ambulance extends CS{
+public class Ambulance extends CS {
     public ImageObject transferImage;
     public ImageObject defaultImage;
+
     public Ambulance(World world, String name) {
         super(world, name);
         router = world.router;
@@ -48,28 +51,28 @@ public class Ambulance extends CS{
 
     @Override
     public Position nextPosition(Position destination) {
-        int left = worldMap.mapSize.width;
+        int left = Map.mapSize.width;
         int right = 0;
-        int top = worldMap.mapSize.height;
+        int top = Map.mapSize.height;
         int bottom = 0;
 
-        for(Bridgehead bridgehead : world.bridgeheads) {
-            if(bridgehead.position.x < left) {
+        for (Bridgehead bridgehead : world.bridgeheads) {
+            if (bridgehead.position.x < left) {
                 left = bridgehead.position.x;
             }
-            if(bridgehead.position.x > right) {
+            if (bridgehead.position.x > right) {
                 right = bridgehead.position.x;
             }
-            if(bridgehead.position.y < top) {
+            if (bridgehead.position.y < top) {
                 top = bridgehead.position.y;
             }
-            if(bridgehead.position.y > bottom) {
+            if (bridgehead.position.y > bottom) {
                 bottom = bridgehead.position.y;
             }
         }
 
-        if(position.x < left || position.x > right
-            || position.y < top || position.y > bottom) {
+        if (position.x < left || position.x > right
+                || position.y < top || position.y > bottom) {
             return super.nextPosition(destination);
         }
 
@@ -80,20 +83,20 @@ public class Ambulance extends CS{
         int distanceX = Math.abs(differenceX);
         int distanceY = Math.abs(differenceY);
 
-        if(distanceX + distanceY == 0) {
+        if (distanceX + distanceY == 0) {
             return null;
         }
 
-        if(position.x == left || position.x == right) {
-            if(distanceY > 0) {
+        if (position.x == left || position.x == right) {
+            if (distanceY > 0) {
                 return new Position(position.x, position.y + differenceY / distanceY);
-            } else if(distanceX > 0) {
+            } else if (distanceX > 0) {
                 return new Position(position.x + differenceX / distanceX, position.y);
             }
-        } else if(position.y == top || position.y == bottom) {
-            if(distanceX > 0) {
+        } else if (position.y == top || position.y == bottom) {
+            if (distanceX > 0) {
                 return new Position(position.x + differenceX / distanceX, position.y);
-            } else if(distanceY > 0) {
+            } else if (distanceY > 0) {
                 return new Position(position.x, position.y + differenceY / distanceY);
             }
         }

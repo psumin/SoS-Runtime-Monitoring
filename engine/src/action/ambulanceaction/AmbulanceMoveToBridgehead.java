@@ -22,21 +22,21 @@ public class AmbulanceMoveToBridgehead extends AmbulanceAction {
         super(target);
 
         this.bridgehead = bridgehead;
-        name = "Move To Bridgehead";
+        name = "MoveToBridgehead";
     }
 
     @Override
     // Move to the Bridgehead
     public void onUpdate() {
         ambulance.moveTo(bridgehead.position);
-        if(ambulance.isArrivedAt(bridgehead.position)) {
+        if (ambulance.isArrivedAt(bridgehead.position)) {
 
-            Hospital nearestHospital = (Hospital)ambulance.nearestObject(new ArrayList<>(world.hospitals));
+            Hospital nearestHospital = (Hospital) ambulance.nearestObject(new ArrayList<>(world.hospitals));
             Patient patient = bridgehead.getPatient(Patient.Status.Serious);          // Serious patient first
-            if(patient == null) {
+            if (patient == null) {
                 patient = bridgehead.getPatient(Patient.Status.Wounded);              // Wounded patient next
             }
-            if(patient == null) {
+            if (patient == null) {
                 ambulance.changeAction(new AmbulanceFree(ambulance));               // When there is no patient, "Free"
                 return;
             }

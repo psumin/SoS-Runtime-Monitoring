@@ -4,7 +4,7 @@ import core.Msg;
 import core.SoSObject;
 import core.World;
 
-import java.util.*;
+import java.util.ArrayList;
 
 import static core.World.fireFighterPrefix;
 
@@ -29,27 +29,27 @@ public class Organization extends CS {
 
     // Serious patient priority
     private void ambulanceFreeStateStart(Msg msg) {
-        if(msgsFromBridgehead.isEmpty()) {
+        if (msgsFromBridgehead.isEmpty()) {
             freeStateAmbulances.add((Ambulance) msg.data);
         } else {
-            Ambulance ambulance = (Ambulance)msg.data;
+            Ambulance ambulance = (Ambulance) msg.data;
 
             Msg seriousMsg = null;
-            for(Msg msgFromBridgehead: msgsFromBridgehead) {
-                if(msgFromBridgehead.title == "serious patient arrived") {
+            for (Msg msgFromBridgehead : msgsFromBridgehead) {
+                if (msgFromBridgehead.title == "serious patient arrived") {
                     seriousMsg = msgFromBridgehead;
                     break;
                 }
             }
 
             Bridgehead bridgehead = null;
-            if(seriousMsg != null) {                    // Serious patient first
+            if (seriousMsg != null) {                    // Serious patient first
                 msgsFromBridgehead.remove(seriousMsg);
-                bridgehead = (Bridgehead)seriousMsg.data;
+                bridgehead = (Bridgehead) seriousMsg.data;
             } else {
                 Msg first = msgsFromBridgehead.get(0);    // Wounded patient next
                 msgsFromBridgehead.remove(0);
-                bridgehead = (Bridgehead)first.data;
+                bridgehead = (Bridgehead) first.data;
             }
 
             router.route(new Msg()
@@ -61,14 +61,14 @@ public class Organization extends CS {
     }
 
     private void patientArrivedAtBridgehead(Msg msg) {
-        if(freeStateAmbulances.isEmpty()) {
+        if (freeStateAmbulances.isEmpty()) {
             msgsFromBridgehead.add(msg);
         } else {
-            Bridgehead bridgehead = (Bridgehead)msg.data;
+            Bridgehead bridgehead = (Bridgehead) msg.data;
 
             ArrayList<Ambulance> mustRemove = new ArrayList<Ambulance>();
-            for(Ambulance amb: freeStateAmbulances) {
-                if(amb.currentAction.name.startsWith("Removed")) {
+            for (Ambulance amb : freeStateAmbulances) {
+                if (amb.currentAction.name.startsWith("Removed")) {
                     mustRemove.add(amb);
                 }
             }
@@ -91,25 +91,25 @@ public class Organization extends CS {
 
     @Override
     public void recvMsg(Msg msg) {
-        if(msg.from.startsWith(fireFighterPrefix)) {
-            if(msg.title == "nearest hospital") {                                                                       // Message from the Fire fighter when the firefighter's target patient is Serious patient
-                FireFighter fireFighter = (FireFighter)msg.data;
-                Hospital nearestHospital = (Hospital)fireFighter.nearestObject(new ArrayList<>(world.hospitals));       // Check the nearest hospital from the Fire fighter's position
+        if (msg.from.startsWith(fireFighterPrefix)) {
+            if (msg.title == "nearest hospital") {                                                                       // Message from the Fire fighter when the firefighter's target patient is Serious patient
+                FireFighter fireFighter = (FireFighter) msg.data;
+                Hospital nearestHospital = (Hospital) fireFighter.nearestObject(new ArrayList<>(world.hospitals));       // Check the nearest hospital from the Fire fighter's position
                 router.route(new Msg()
                         .setFrom(name)
                         .setTo(fireFighter.name)
                         .setTitle("nearest hospital")
                         .setData(nearestHospital));
             }
-        } else if(msg.from.startsWith("Bridgehead")) {                                                                    // Message from Bridgehead. Information about the arrived patient
+        } else if (msg.from.startsWith("Bridgehead")) {                                                                    // Message from Bridgehead. Information about the arrived patient
             patientArrivedAtBridgehead(msg);
 //            if(msg.title == "serious patient arrived") {
 //                patientArrivedAtBridgehead(msg);
 //            } else if(msg.title == "wounded patient arrived") {
 //                patientArrivedAtBridgehead(msg);
 //            }
-        } else if(msg.from.startsWith("Ambulance")) {                                                                   // Message from the Ambulance, when Free state
-            if(msg.title == "free state start") {
+        } else if (msg.from.startsWith("Ambulance")) {                                                                   // Message from the Ambulance, when Free state
+            if (msg.title == "free state start") {
                 ambulanceFreeStateStart(msg);
             }
         }

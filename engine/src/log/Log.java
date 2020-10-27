@@ -1,6 +1,5 @@
 package log;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -8,7 +7,7 @@ public class Log {
 
     // Save the whole information of CS Activity & Environment State per EACH TICK
     // This snapshotMap is currently used for Property Verification (11/14)
-    private HashMap<Integer, Snapshot> snapshotMap;
+    private final HashMap<Integer, Snapshot> snapshotMap;
 
     /**
      * Instantiates a new Log.
@@ -19,6 +18,7 @@ public class Log {
     }
 
     //test
+
     /**
      * Add snapshot with its occurred time.
      *
@@ -42,7 +42,7 @@ public class Log {
     public void printSnapshot() {
         Iterator<Integer> keys = snapshotMap.keySet().iterator();
         System.out.println("===================== SNAPSHOT PRINT =====================");
-        while(keys.hasNext()) {
+        while (keys.hasNext()) {
             Integer key = keys.next();
             System.out.println("===================== TICK:" + key.toString() + " " + snapshotMap.get(key).getSnapshotString() + " =====================");
             //snapshotMap.get(key).printSnapshotLog();

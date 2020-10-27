@@ -12,7 +12,7 @@ import java.util.Random;
  */
 
 public class GlobalRandom {
-    private static Random random = new Random(1);
+    private static final Random random = new Random(1);
 
     public static void setSeed(int seed) {
         random.setSeed(seed);

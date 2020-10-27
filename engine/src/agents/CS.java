@@ -1,7 +1,6 @@
 package agents;
 
 import action.Action;
-import action.firefighteraction.FireFighterAction;
 import core.*;
 import misc.Position;
 
@@ -20,7 +19,18 @@ public class CS extends SoSObject {
 
     public Action currentAction;
 
+    public int currentDistance = 0;
     public int totalDistance = 0;
+    public int moveDelay = 0;
+    int frameCounter;
+    boolean isFirstUpdate = true;
+
+//    public void moveTo(Position destination) {
+//        Position nextPosition = nextPosition(destination);
+//        if(nextPosition != null) {
+//            setPosition(nextPosition);
+//        }
+//    }
 
     public CS(World world, String name) {
         this.world = world;
@@ -40,7 +50,7 @@ public class CS extends SoSObject {
         int distanceX = Math.abs(differenceX);
         int distanceY = Math.abs(differenceY);
 
-        if(distanceX + distanceY == 0) {
+        if (distanceX + distanceY == 0) {
             return null;
         }
 
@@ -49,14 +59,14 @@ public class CS extends SoSObject {
 //        } else {
 //            return new Position(position.x, position.y + differenceY / distanceY);
 //        }
-        if(distanceX > 0 && distanceY >0) {
+        if (distanceX > 0 && distanceY > 0) {
             int index = GlobalRandom.nextInt(2);
-            if(index == 0) {
+            if (index == 0) {
                 return new Position(position.x + differenceX / distanceX, position.y);
             } else {
                 return new Position(position.x, position.y + differenceY / distanceY);
             }
-        } else if(distanceX > 0) {
+        } else if (distanceX > 0) {
             return new Position(position.x + differenceX / distanceX, position.y);
         } else {
             return new Position(position.x, position.y + differenceY / distanceY);
@@ -64,27 +74,18 @@ public class CS extends SoSObject {
 
     }
 
-//    public void moveTo(Position destination) {
-//        Position nextPosition = nextPosition(destination);
-//        if(nextPosition != null) {
-//            setPosition(nextPosition);
-//        }
-//    }
-
-    public int moveDelay = 0;
-    int frameCounter;
-
     public void moveTo(Position destination) {
-        if(frameCounter <= 0) {
+        if (frameCounter <= 0) {
             frameCounter = moveDelay;
             Position nextPosition = nextPosition(destination);
-            if(nextPosition != null) {
-                if(!isArrivedAt(nextPosition)) {
+            if (nextPosition != null) {
+                if (!isArrivedAt(nextPosition)) {
                     totalDistance++;
+                    currentDistance++;
                 }
                 setPosition(nextPosition);
 
-                frameCounter = (int)(moveDelay * worldMap.getTile(position).moveDelayFactor);
+                frameCounter = (int) (moveDelay * worldMap.getTile(position).moveDelayFactor);
             }
         }
         frameCounter--;
@@ -100,7 +101,7 @@ public class CS extends SoSObject {
     }
 
     public void changeAction(Action action) {
-        if(currentAction != null) {
+        if (currentAction != null) {
             currentAction.stop();
         }
         currentAction = action;
@@ -108,12 +109,11 @@ public class CS extends SoSObject {
         //currentAction.update();
     }
 
-    boolean isFirstUpdate = true;
     @Override
     public void onUpdate() {
-        if(isFirstUpdate) {
+        if (isFirstUpdate) {
             isFirstUpdate = false;
-            if(currentAction != null) {
+            if (currentAction != null) {
                 currentAction.start();
             }
         }

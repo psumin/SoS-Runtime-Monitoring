@@ -1,7 +1,6 @@
 package action.firefighteraction;
 
 import action.Action;
-import agents.CS;
 import agents.FireFighter;
 
 /**

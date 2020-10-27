@@ -5,30 +5,21 @@ import action.ambulanceaction.AmbulanceMoveToBridgehead;
 import action.ambulanceaction.AmbulanceSearch;
 import action.ambulanceaction.AmbulanceTransferToHospital;
 import action.firefighteraction.*;
-import action.Action;
-
 import agents.*;
-//import misc.ExcelHelper;
 import misc.Position;
-
 import misc.Range;
 import misc.Time;
-//import org.apache.poi.ss.usermodel.*;
-//import org.apache.poi.xssf.usermodel.XSSFSheet;
-//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import stimulus.*;
+import stimulus.EntityStimulus.AddEntity;
 import stimulus.EntityStimulus.RemoveEntity;
 import stimulus.MessageStimulus.Delay;
 import stimulus.MessageStimulus.Loss;
 import stimulus.StateStimulus.Injury;
+import stimulus.Stimulus;
 import stimulus.ValueStimulus.CommunicationRange;
 import stimulus.ValueStimulus.SightRange;
 import stimulus.ValueStimulus.Speed;
-import stimulus.EntityStimulus.AddEntity;
 
 import java.awt.*;
-import java.awt.Color;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -100,28 +91,20 @@ public class World extends SoSObject {
     public static final ArrayList<DataStructure.ChangeAll> changeAll = new ArrayList<>();
     public static final ArrayList<DataStructure.ChangeOne> changeOne = new ArrayList<>();
     public static final ArrayList<DataStructure.RemoveCS> removeCS = new ArrayList<>();
-
+    // Initial Values
+//    public static final int maxPatient = 294;
+//    public static final int maxPatient = 223;                // 223
+    public static final int maxPatient = 100;
+    //    public static final int maxPatient = 65;
+    public static final int maxFireFighter = 4;            // 4
+    public static final int maxHospital = 4;
+    public static final int maxAmbulance = 8;              // 16
+    public static final int maxBridgehead = 4;
+    public static final String fireFighterPrefix = "FF";                            // FireFighter의 이름은 "FF"로 시작
     private final ArrayList<Stimulus> stimuli = new ArrayList<>();
     //    private final ArrayList<MsgRouter> router = new ArrayList<>();
     private final ArrayList<String> firefighterNames = new ArrayList<>();
     private final ArrayList<String> AmbulanceNames = new ArrayList<>();
-
-    // Variables for logs
-    int patientCounter = 0;
-    int fireFighterCounter = 0;
-    int ambulanceCounter = 0;
-    int currentFirefighterCounter = 0;
-
-    // Initial Values
-//    public static final int maxPatient = 294;
-//    public static final int maxPatient = 223;                // 223
-        public static final int maxPatient = 100;
-//    public static final int maxPatient = 65;
-    public static final int maxFireFighter = 4;            // 4
-    public static final int maxHospital = 4;
-    public static final int maxAmbulance = 16;              // 16
-    public static final int maxBridgehead = 4;
-
     public Map map;
     public MsgRouter router;
     public ArrayList<Patient> patients = new ArrayList<>(maxPatient);               // Patient를 위한 arraylist
@@ -129,8 +112,10 @@ public class World extends SoSObject {
     public ArrayList<Hospital> hospitals = new ArrayList<>(maxHospital);            // Hospital를 위한 arraylist
     public ArrayList<Bridgehead> bridgeheads = new ArrayList<>(maxBridgehead);      // Bridgehead를 위한 arraylist
     public ArrayList<Ambulance> ambulances = new ArrayList<>(maxAmbulance);         // Ambulance를 위한 arraylist
-
-    public static final String fireFighterPrefix = "FF";                            // FireFighter의 이름은 "FF"로 시작
+    public int transferCounter = 0;                                                 // Hospital에서 치료를 마친 환자 수
+    public int rescuedPatientCount = 0;                                             // Bridgehead까지 이송 시킨 환자 수
+    public int frameCount = 0;
+    public int savedPatientCount = 0;
 //    public static final String ambulancePrefix = "Amb";
 
 //    XSSFWorkbook workbook = new XSSFWorkbook();
@@ -146,12 +131,15 @@ public class World extends SoSObject {
 //    long startTime;                                                                 // 프로그램 시작 시간
 //    long endTime = 0;                                                               // 프로그램 종료 시간
 //    long endFrame = 0;                                                              // 프로그램 종료의 frame 수
-
+    // Variables for logs
+    int patientCounter = 0;
+    int fireFighterCounter = 0;
+    int ambulanceCounter = 0;
+    int currentFirefighterCounter = 0;
     int maxFrame = 0;                                                               // 시뮬레이션 한 번의 최대 frame 수
-    public int transferCounter = 0;                                                 // Hospital에서 치료를 마친 환자 수
-    public int rescuedPatientCount = 0;                                             // Bridgehead까지 이송 시킨 환자 수
-
     boolean saveInputData = false;
+    int ambulancePositionIndex = 0;
+    int positionIndex = 0;
 
     public World(int maxFrame, boolean saveInputData) {
         this.maxFrame = maxFrame;
@@ -196,11 +184,9 @@ public class World extends SoSObject {
 //        writeScenario2();         // interactive simulation test for evaluation
 
 
-
 //        writeScenario1();            // baseline for SoSE 2020
         writeScenario2();            // good case for SoSE 2020
 //        writeScenario3();            // bad case for SoSE 2020
-
 
 
         //        router.add(new Loss(1, 10000, "FF", "FF"));
@@ -414,8 +400,6 @@ public class World extends SoSObject {
 
     }
 
-    int ambulancePositionIndex = 0;
-
     // Create Ambulances at the edge position
     private void createAmbulances() {
         Position[] positions = new Position[]{
@@ -440,9 +424,6 @@ public class World extends SoSObject {
         Organization organization = new Organization(this, "Organization");
         addChild(organization);
     }
-
-    public int frameCount = 0;
-    public int savedPatientCount = 0;
 
     // Update at every frame
     @Override
@@ -484,7 +465,6 @@ public class World extends SoSObject {
 //        runtimeMonitoring.classLoader(this, className, 0.5);
     }
 
-
     private void printPatientLog(boolean isFinish) {
 
 //        if(frameCount == 0) {
@@ -507,26 +487,7 @@ public class World extends SoSObject {
 //        savedPatientCell.setCellValue(savedPatientCount);
 //        rescuedPatientCell.setCellValue(rescuedPatientCount);
     }
-    
-    public String printCSSnapshot() {
-        String ret = "";
-        String temp = "";
-        
-        // Current FF Pos & Action
-        ret += "FF: ";
-        for (int i = 0; i < fireFighters.size(); i++) {
-            ret += fireFighters.get(i).position.toString() + "/" + fireFighters.get(i).currentAction.name + " ";
-        }
-        
-        // Current Ambulance Pos & Action
-        ret += "Amb: ";
-        for(int i = 0; i < ambulances.size(); i++) {
-            ret += ambulances.get(i).position.toString() + "/" + ambulances.get(i).currentAction.name + " ";
-        }
-        
-        return ret;
-    }
-    
+
 //    private void printFireFighterLog(boolean isFinish) {
 //
 //        ExcelHelper.getCell(fireFighterSheet, 0, 0).setCellValue("frame count");
@@ -606,6 +567,37 @@ public class World extends SoSObject {
 //        }
 //    }
 
+    public String printCSSnapshot() {
+        String ret = "";
+        String temp = "";
+
+        // Current FF Pos & Action
+        ret += "FF: ";
+        for (FireFighter fireFighter : fireFighters) {
+            ret += fireFighter.name + "/";
+            ret += fireFighter.position.toString() + "/";
+            ret += fireFighter.currentAction.name + " ";
+        }
+
+        // Current Ambulance Pos & Action
+        ret += "Amb: ";
+        for (Ambulance ambulance : ambulances) {
+            ret += ambulance.name + "/";
+            ret += ambulance.position.toString() + "/";
+            ret += ambulance.currentAction.name + "/";
+            ret += ambulance.totalDistance + " ";
+        }
+
+        ret += "Pat: ";
+        for (Patient patient : patients) {
+            ret += patient.name + "/";
+            ret += patient.position.toString() + "/";
+            ret += patient.gotFirstAidAt + "/";
+            ret += patient.gotFirstAidCount + " ";
+        }
+
+        return ret;
+    }
 
     @Override
     public void onRender(Graphics2D g) {
@@ -623,7 +615,6 @@ public class World extends SoSObject {
     public Map getMap() {
         return map;
     }
-
 
     // patient의 수를 가져오기 위한 함수. 현재는 사용 안함.
     public int getPatientCount() {
@@ -706,7 +697,6 @@ public class World extends SoSObject {
         router.clear();
 
 
-
 //        long nano = System.currentTimeMillis();
 //        String date = new SimpleDateFormat("yyyy-MM-dd HH_mm_ss").format(nano);
 //        String filePath = "log/RQ1/" + date + ".xlsx";
@@ -715,13 +705,9 @@ public class World extends SoSObject {
 //        ExcelHelper.save(workbook, filePath);
     }
 
-
     public boolean contains(SoSObject object) {
         return children.contains(object);
     }
-
-    int positionIndex = 0;
-
 
     public void addPatient(Position position) {
         Patient patient = new Patient(this, "Patient" + ++patientCounter);
@@ -1222,7 +1208,7 @@ public class World extends SoSObject {
 //        stimuli.add(new RemoveEntity(this, 140, "Ambulance4", this::removeCS));
 //
 //        // TODO: add FireFighter
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             stimuli.add(new AddEntity(this, 100, this::addFireFighter));
             stimuli.add(new AddEntity(this, 150, this::addFireFighter));
             stimuli.add(new AddEntity(this, 200, this::addFireFighter));
@@ -1230,7 +1216,7 @@ public class World extends SoSObject {
             stimuli.add(new AddEntity(this, 300, this::addFireFighter));
             stimuli.add(new AddEntity(this, 400, this::addFireFighter));
         }
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 2; i++) {
             stimuli.add(new AddEntity(this, 300, this::addFireFighter));
             stimuli.add(new AddEntity(this, 350, this::addFireFighter));
             stimuli.add(new AddEntity(this, 400, this::addFireFighter));
@@ -1244,12 +1230,11 @@ public class World extends SoSObject {
 //        }
 
         // TODO: add Ambulance
-        for(int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
 //            stimuli.add(new AddEntity(this, 200, this::addAmbulance));
             stimuli.add(new AddEntity(this, 300, this::addAmbulance));
             stimuli.add(new AddEntity(this, 400, this::addAmbulance));
         }
-
 
 
 //        // TODO: Msg Delay
@@ -1301,7 +1286,6 @@ public class World extends SoSObject {
 
 
     }
-
 
 
     private void writeScenario3() {
@@ -1401,8 +1385,6 @@ public class World extends SoSObject {
         }
 
 
-
-
         stimuli.add(new RemoveEntity(this, 300, "FF1", this::removeCS));
         stimuli.add(new RemoveEntity(this, 400, "FF2", this::removeCS));
 
@@ -1479,17 +1461,17 @@ public class World extends SoSObject {
     // remove CS stimulus를 적용하기 위한 함수
     void removeCS(String csName) {
         SoSObject obj = findObject(csName);
-        if(obj == null) return;
+        if (obj == null) return;
 
 
-        CS cs = (CS)obj;
+        CS cs = (CS) obj;
         cs.visible(false);
         cs.canUpdate(false);
         cs.currentAction.name = "Removed";
 
         // Remove 하려는 CS가 Firefighter인 경우
         // 현재의 action 상태에 따라 다르게 처리한다.
-        if(cs instanceof FireFighter) {
+        if (cs instanceof FireFighter) {
             FireFighter ff = (FireFighter) cs;
             if (cs.currentAction instanceof FireFighterFirstAid) {
                 FireFighterFirstAid action = (FireFighterFirstAid) cs.currentAction;
@@ -1560,22 +1542,22 @@ public class World extends SoSObject {
         }
         // Remove 하려는 CS가 Ambulance인 경우
         // 현재의 action 상태에 따라 다르게 처리한다.
-        else if(cs instanceof Ambulance) {
+        else if (cs instanceof Ambulance) {
             Ambulance ambulance = (Ambulance) cs;
 
-            if(cs.currentAction instanceof AmbulanceFree) {
+            if (cs.currentAction instanceof AmbulanceFree) {
                 AmbulanceFree action = (AmbulanceFree) cs.currentAction;
                 AmbulanceNames.remove(ambulance);
                 ambulanceCounter--;
-            } else if(cs.currentAction instanceof AmbulanceMoveToBridgehead) {
+            } else if (cs.currentAction instanceof AmbulanceMoveToBridgehead) {
                 AmbulanceMoveToBridgehead action = (AmbulanceMoveToBridgehead) cs.currentAction;
                 AmbulanceNames.remove(ambulance);
                 ambulanceCounter--;
-            } else if(cs.currentAction instanceof AmbulanceSearch) {
+            } else if (cs.currentAction instanceof AmbulanceSearch) {
                 AmbulanceSearch action = (AmbulanceSearch) cs.currentAction;
                 AmbulanceNames.remove(ambulance);
                 ambulanceCounter--;
-            } else if(cs.currentAction instanceof AmbulanceTransferToHospital) {
+            } else if (cs.currentAction instanceof AmbulanceTransferToHospital) {
                 AmbulanceTransferToHospital action = (AmbulanceTransferToHospital) cs.currentAction;
 
                 action.patient.assignedFireFighter = null;
@@ -1620,7 +1602,6 @@ public class World extends SoSObject {
     }
 
 
-
     // Ambulance를 추가하는 stimulus를 적용하기 위한 함수
     private void addAmbulance() {
         Position[] positions = new Position[]{
@@ -1642,10 +1623,10 @@ public class World extends SoSObject {
 
     // Interactive simulation에서 firefighter를 추가하는 것을 처리하는 함수
     public void interAddFF(int frame, int count) {
-        if(saveInputData) {
+        if (saveInputData) {
             addCS.add(new DataStructure.AddCS("addFireFighter", frame, count));
         }
-        for(int i = 0; i < count; ++i) {
+        for (int i = 0; i < count; ++i) {
             Stimulus stimulus = new AddEntity(this, frame, this::addFireFighter);
             stimuli.add(stimulus);
         }
@@ -1653,17 +1634,17 @@ public class World extends SoSObject {
 
     // Interactive simulation에서 ambulance를 추가하는 것을 처리하는 함수
     public void interAddAmb(int frame, int count) {
-        if(saveInputData) {
+        if (saveInputData) {
             addCS.add(new DataStructure.AddCS("addAmbulance", frame, count));
         }
-        for(int i = 0; i < count; ++i) {
+        for (int i = 0; i < count; ++i) {
             Stimulus stimulus = new AddEntity(this, frame, this::addAmbulance);
             stimuli.add(stimulus);
         }
     }
 
     public void interMsgDelay(int startFrame, int finishFrame, String sender, String receiver, int duration) {
-        if(saveInputData) {
+        if (saveInputData) {
             message.add(new DataStructure.Message("messageDelay", startFrame, finishFrame, sender, receiver, duration));
         }
         router.add(new Delay(startFrame, finishFrame, sender, receiver, duration));
@@ -1671,15 +1652,15 @@ public class World extends SoSObject {
     }
 
     public void interMsgLoss(int startFrame, int finishFrame, String sender, String receiver) {
-        if(saveInputData) {
-            message.add(new DataStructure.Message("messageLoss", startFrame, finishFrame, sender, receiver,0));
+        if (saveInputData) {
+            message.add(new DataStructure.Message("messageLoss", startFrame, finishFrame, sender, receiver, 0));
         }
         router.add(new Loss(startFrame, finishFrame, sender, receiver));
     }
 
     //Speed
     public void interSpeedRange(int frame, int left, int top, int right, int bottom, Object value) {
-        if(saveInputData) {
+        if (saveInputData) {
             range.add(new DataStructure.Range("speedRange", frame, left, top, right, bottom, value));
         }
         Stimulus stimulus = new Speed(this, frame, new Range(left, top, right, bottom), value);
@@ -1687,7 +1668,7 @@ public class World extends SoSObject {
     }
 
     public void interSpeedAllAmb(int frame, Object value) {
-        if(saveInputData) {
+        if (saveInputData) {
             changeAll.add(new DataStructure.ChangeAll("speedAllAmb", frame, value));
         }
         Stimulus stimulus = new Speed(this, frame, AmbulanceNames, value);
@@ -1695,7 +1676,7 @@ public class World extends SoSObject {
     }
 
     public void interSpeedAllFF(int frame, Object value) {
-        if(saveInputData) {
+        if (saveInputData) {
             changeAll.add(new DataStructure.ChangeAll("speedAllFF", frame, value));
         }
         Stimulus stimulus = new Speed(this, frame, firefighterNames, value);
@@ -1704,7 +1685,7 @@ public class World extends SoSObject {
     }
 
     public void interSpeedOneAmb(int frame, int number, Object value) {
-        if(saveInputData) {
+        if (saveInputData) {
             changeOne.add(new DataStructure.ChangeOne("speedOneAmb", frame, number, value));
         }
         Stimulus stimulus = new Speed(this, frame, "Ambulance" + number, value);
@@ -1713,7 +1694,7 @@ public class World extends SoSObject {
     }
 
     public void interSpeedOneFF(int frame, int number, Object value) {
-        if(saveInputData) {
+        if (saveInputData) {
             changeOne.add(new DataStructure.ChangeOne("speedOneFF", frame, number, value));
         }
         Stimulus stimulus = new Speed(this, frame, "FF" + number, value);
@@ -1722,7 +1703,7 @@ public class World extends SoSObject {
 
     //Sight
     public void interSightRange(int frame, int left, int top, int right, int bottom, Object value) {
-        if(saveInputData) {
+        if (saveInputData) {
             range.add(new DataStructure.Range("sightRange", frame, left, top, right, bottom, value));
         }
         Stimulus stimulus = new SightRange(this, frame, new Range(left, top, right, bottom), value);
@@ -1730,7 +1711,7 @@ public class World extends SoSObject {
     }
 
     public void interSightAllFF(int frame, Object value) {
-        if(saveInputData) {
+        if (saveInputData) {
             changeAll.add(new DataStructure.ChangeAll("sightAllFF", frame, value));
         }
         Stimulus stimulus = new SightRange(this, frame, firefighterNames, value);
@@ -1738,7 +1719,7 @@ public class World extends SoSObject {
     }
 
     public void interSightOneFF(int frame, int number, Object value) {
-        if(saveInputData) {
+        if (saveInputData) {
             changeOne.add(new DataStructure.ChangeOne("sightOneFF", frame, number, value));
         }
         Stimulus stimulus = new SightRange(this, frame, "FF" + number, value);
@@ -1747,7 +1728,7 @@ public class World extends SoSObject {
 
     //Remove
     public void interRemoveFF(int frame, int number) {
-        if(saveInputData) {
+        if (saveInputData) {
             removeCS.add(new DataStructure.RemoveCS("removeFF", frame, number));
         }
         Stimulus stimulus = new RemoveEntity(this, frame, "FF" + number, this::removeCS);
@@ -1755,7 +1736,7 @@ public class World extends SoSObject {
     }
 
     public void interRemoveAmb(int frame, int number) {
-        if(saveInputData) {
+        if (saveInputData) {
             removeCS.add(new DataStructure.RemoveCS("removeAmb", frame, number));
         }
         Stimulus stimulus = new RemoveEntity(this, frame, "Ambulance" + number, this::removeCS);
@@ -1764,7 +1745,7 @@ public class World extends SoSObject {
 
     //Communication Range
     public void interCommunicationRange(int frame, int left, int top, int right, int bottom, Object value) {
-        if(saveInputData) {
+        if (saveInputData) {
             range.add(new DataStructure.Range("communicationRange", frame, left, top, right, bottom, value));
         }
         Stimulus stimulus = new CommunicationRange(this, frame, new Range(left, top, right, bottom), value);
@@ -1772,7 +1753,7 @@ public class World extends SoSObject {
     }
 
     public void interCommunicationRangeAllFF(int frame, Object value) {
-        if(saveInputData) {
+        if (saveInputData) {
             changeAll.add(new DataStructure.ChangeAll("communicationAllFF", frame, value));
         }
         Stimulus stimulus = new CommunicationRange(this, frame, firefighterNames, value);
@@ -1780,7 +1761,7 @@ public class World extends SoSObject {
     }
 
     public void interCommunicationRangeOneFF(int frame, int number, Object value) {
-        if(saveInputData) {
+        if (saveInputData) {
             changeOne.add(new DataStructure.ChangeOne("communicationOneFF", frame, number, value));
         }
         Stimulus stimulus = new CommunicationRange(this, frame, "FF" + number, value);
@@ -1790,7 +1771,7 @@ public class World extends SoSObject {
 
     //Injury
     public void interInjury(int frame, int number) {
-        if(saveInputData) {
+        if (saveInputData) {
             removeCS.add(new DataStructure.RemoveCS("injuryFF", frame, number));
         }
         Stimulus stimulus = new Injury(this, frame, "FF" + number);
@@ -1798,15 +1779,16 @@ public class World extends SoSObject {
     }
 
 
-
     public boolean isFinished() {
         return !_canUpdate;
     }
+
     public double getTreatmentRate() {
-        return savedPatientCount / (float)maxPatient;               // hospital 에서 치료 받은 환자 수 기준
+        return savedPatientCount / (float) maxPatient;               // hospital 에서 치료 받은 환자 수 기준
     }
+
     public double getRescuedRate() {
-        return rescuedPatientCount / (float)maxPatient;         // bridgehead에 도착한 환자 수 기준
+        return rescuedPatientCount / (float) maxPatient;         // bridgehead에 도착한 환자 수 기준
     }
 
     public int getFFNumber() {
@@ -1815,5 +1797,13 @@ public class World extends SoSObject {
 
     public int getAmbNumber() {
         return ambulanceCounter;
+    }
+
+    public int getPatientNumber() {
+        return patientCounter;
+    }
+
+    public int getUnvisitedTileCount() {
+        return map.getUnvisitedTileCount();
     }
 }
