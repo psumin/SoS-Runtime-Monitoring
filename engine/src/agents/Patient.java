@@ -60,7 +60,8 @@ public class Patient extends CS {
 
     SoSObject serious;
     SoSObject wounded;
-    public int gotFirstAid;
+    public int gotFirstAidAt;
+    public int gotFirstAidCount;
 
     public Patient(World world, String name) {
         super(world, name);
@@ -70,7 +71,8 @@ public class Patient extends CS {
 //        wounded = new ImageObject("src/engine/resources/patient_wounded1.png");              // Blue dot
         addChild(serious);
         addChild(wounded);
-        this.gotFirstAid = -1;
+        this.gotFirstAidAt = -1;
+        this.gotFirstAidCount = 0;
     }
 
     @Override

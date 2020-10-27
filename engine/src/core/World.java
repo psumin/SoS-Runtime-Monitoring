@@ -533,7 +533,8 @@ public class World extends SoSObject {
         for (Patient patient: patients){
             ret += patient.name + "/";
             ret += patient.position.toString() + "/";
-            ret += patient.gotFirstAid + " ";
+            ret += patient.gotFirstAidAt + "/";
+            ret += patient.gotFirstAidCount + " ";
         }
         
         return ret;

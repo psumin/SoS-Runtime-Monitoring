@@ -28,12 +28,6 @@ public class main {
         long thetaEndTime;                                              // 한 사이클 종료 시간
         boolean ruuning = true;
 
-        SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
-        simulationEngine.setRunning();
-//        System.out.println("Get Running: "+ simulationEngine.getRunning());
-        programStartTime = System.nanoTime();           // 첫번째 시뮬레이션까지 포함할려면 여기에 정의
-//        simulationEngine.run();                       // 통계적 검증을 위한 run
-
         ArrayList<RuntimeProperty> runtimeProperties = new ArrayList<>(0);
 
         // Scopes
@@ -120,14 +114,31 @@ public class main {
 
         // Prevention
         // 한 환자가 First Aid 를 받는 사건이 발생한다면, 그 이후에 해당 환자가 First Aid 를 받는 사건이 다시 발생하지 않아야 한다.
+        PatientGetFirstAidAgainEvent patientGetFirstAidAgainEvent = new PatientGetFirstAidAgainEvent();
+        for(Scope scope: scopes) {
+            runtimeProperties.add(new RuntimePrevention(patientGetFirstAidEvent, patientGetFirstAidAgainEvent, scope));
+        }
 
         RuntimeVerifier runtimeVerifier = new RuntimeVerifier(runtimeProperties);
 
+        programStartTime = System.nanoTime();
+        SoSSimulationProgram simulationEngine = new SoSSimulationProgram();
+        simulationEngine.setRunning();
         simulationEngine.runtimeVerificationRun(runtimeVerifier);                         // 런타임 검증을 위한 run
-//        simulationEngine.run();
-        simulationEngine.setSuper_counter();
         programEndTime = System.nanoTime();
-        System.out.println("=== Total Program running time: " + (programEndTime - programStartTime) / (float) 1000_000_000 + " sec");
+        System.out.println("=== Program running time with verification: " + (programEndTime - programStartTime) / (float) 1000_000_000 + " sec");
+        long timeWithVerification = programEndTime - programStartTime;
+
+        programStartTime = System.nanoTime();
+        simulationEngine = new SoSSimulationProgram();
+        simulationEngine.setRunning();
+        simulationEngine.run();
+        programEndTime = System.nanoTime();
+        System.out.println("=== Program running time without verification: " + (programEndTime - programStartTime) / (float) 1000_000_000 + " sec");
+        long timeWithoutVerification = programEndTime - programStartTime;
+        System.out.println("=== Runtime Verification Overhead: " + (timeWithVerification - timeWithoutVerification) / (float) timeWithoutVerification * 100 + "%");
+
+
 //        double satisfactionProb = 0;
 //        Boolean satisfaction = true;
 

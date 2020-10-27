@@ -5,21 +5,21 @@ import runtimeproperty.*;
 
 import java.util.HashMap;
 
-public class RuntimeResponse extends RuntimeProperty {
+public class RuntimePrevention extends RuntimeProperty {
     Event causeEvent;
-    Event effectEvent;
+    Event preventedEvent;
     HashMap<String, Boolean> causeCheck;
     HashMap<String, Boolean> progressCheck;
-    HashMap<String, Boolean> effectCheck;
+    HashMap<String, Boolean> preventCheck;
 
-    public RuntimeResponse(Event causeEvent, Event effectEvent, Scope scope) {
+    public RuntimePrevention(Event causeEvent, Event effectEvent, Scope scope) {
         super(scope);
-        this.name = "If " + causeEvent.getName() + " has occurred, as in response " + effectEvent.getName() + " eventually holds";
+        this.name = "If " + causeEvent.getName() + " has occurred, as in response " + effectEvent.getName() + " never holds";
         this.causeEvent = causeEvent;
-        this.effectEvent = effectEvent;
+        this.preventedEvent = effectEvent;
         this.causeCheck = new HashMap<>(0);
         this.progressCheck = new HashMap<>(0);
-        this.effectCheck = new HashMap<>(0);
+        this.preventCheck = new HashMap<>(0);
     }
 
     protected void evaluateState(Snapshot snapshot) {
@@ -29,13 +29,13 @@ public class RuntimeResponse extends RuntimeProperty {
             else
                 this.causeCheck.put("main", ((SoSEvent) causeEvent).checkHold(snapshot));
 
-            this.effectCheck.put("main", ((SoSEvent) effectEvent).checkHold(snapshot));
+            this.preventCheck.put("main", ((SoSEvent) preventedEvent).checkHold(snapshot));
 
-            if (this.causeCheck.get("main")) {
+            if (this.causeCheck.get("main"))
+                this.progressCheck.put("main", true);
+            else if (this.progressCheck.containsKey("main") && this.progressCheck.get("main") && this.preventCheck.get("main")) {
                 this.isHolding = false;
-            }
-            else if (!this.isHolding && this.effectCheck.get("main")) {
-                this.isHolding = true;
+                this.beConfirmed(snapshot);
             }
         }
         else {
@@ -44,30 +44,24 @@ public class RuntimeResponse extends RuntimeProperty {
             for(String name: holdingResult.keySet()){
                 if (this.causeCheck.containsKey(name))
                     this.causeCheck.put(name, this.causeCheck.get(name) || holdingResult.get(name));
-                else {
+                else
                     this.causeCheck.put(name, holdingResult.get(name));
-                    this.progressCheck.put(name, true);
-                }
             }
 
-            holdingResult = ((AgentEvent) effectEvent).checkMultipleHold(snapshot);
+            holdingResult = ((AgentEvent) preventedEvent).checkMultipleHold(snapshot);
 
             for(String name: holdingResult.keySet()){
-                this.effectCheck.put(name, holdingResult.get(name));
+                this.preventCheck.put(name, holdingResult.get(name));
             }
 
             for(String name: causeCheck.keySet()){
                 if (this.causeCheck.get(name)) {
-                    this.progressCheck.put(name, false);
-                }
-                else if (!this.progressCheck.get(name) && this.effectCheck.get(name)) {
                     this.progressCheck.put(name, true);
                 }
-            }
-
-            this.isHolding = true;
-            for (String name: progressCheck.keySet()) {
-                this.isHolding = this.isHolding && progressCheck.get(name);
+                else if (this.progressCheck.containsKey(name) && this.progressCheck.get(name) && this.preventCheck.get(name)) {
+                    this.isHolding = false;
+                    this.beConfirmed(snapshot);
+                }
             }
         }
     }

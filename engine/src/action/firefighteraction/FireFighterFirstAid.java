@@ -51,12 +51,14 @@ public class FireFighterFirstAid extends FireFighterAction {
 
         if(frameCounter <= 0) {                                         // After First Aid, transfer the patient
             world.removeChild(targetPatient);
+            targetPatient.gotFirstAidAt = world.frameCount;
+            targetPatient.gotFirstAidCount++;
             fireFighter.changeAction(new FireFighterSelectTransferDestination(fireFighter, targetPatient));
             fireFighter.transferImage.visible(true);
             fireFighter.firstAid.visible(false);
         }
 
-        targetPatient.gotFirstAid = world.frameCount;
+//        targetPatient.gotFirstAid = world.frameCount;
         frameCounter--;
     }
 }
