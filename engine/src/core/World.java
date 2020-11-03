@@ -373,16 +373,13 @@ public class World extends SoSObject {
             hospital.setCapacity(10);
 //            }
         }
-//        hospitals.get(0).setPosition(0, 0);
-//        hospitals.get(1).setPosition(Map.mapSize.width - 1, 0);
-//        hospitals.get(2).setPosition(0, Map.mapSize.height - 1);
-//        hospitals.get(3).setPosition(Map.mapSize.width - 1, Map.mapSize.height - 1);
+        hospitals.get(0).setPosition(0, 0);
+        hospitals.get(1).setPosition(Map.mapSize.width - 1, 0);
+        hospitals.get(2).setPosition(0, Map.mapSize.height - 1);
+        hospitals.get(3).setPosition(Map.mapSize.width - 1, Map.mapSize.height - 1);
 ////        hospitals.get(4).setPosition(0, (Map.mapSize.height - 1) / 2);
 ////        hospitals.get(5).setPosition(Map.mapSize.width - 1, (Map.mapSize.height - 1) / 2);
-        hospitals.get(0).setPosition(0, 0);
-        hospitals.get(1).setPosition(0, 0);
-        hospitals.get(2).setPosition(0, 0);
-        hospitals.get(3).setPosition(0, 0);
+
     }
 
     // Create the Bridgeheads at the quarter position of the map
@@ -397,14 +394,11 @@ public class World extends SoSObject {
 //        bridgeheads.get(1).setPosition(new Position(3 * Map.mapSize.width / 4, Map.mapSize.height / 4));
 //        bridgeheads.get(2).setPosition(new Position(3 * Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
 //        bridgeheads.get(3).setPosition(new Position(Map.mapSize.width / 4, 3 * Map.mapSize.height / 4));
-//        bridgeheads.get(0).setPosition(new Position(Map.mapSize.width / 8, Map.mapSize.height / 8));
-//        bridgeheads.get(1).setPosition(new Position(7 * Map.mapSize.width / 8, Map.mapSize.height / 8));
-//        bridgeheads.get(2).setPosition(new Position(7 * Map.mapSize.width / 8, 7 * Map.mapSize.height / 8));
-//        bridgeheads.get(3).setPosition(new Position(Map.mapSize.width / 8, 7 * Map.mapSize.height / 8));
-        bridgeheads.get(0).setPosition(0, 0);
-        bridgeheads.get(1).setPosition(0, 0);
-        bridgeheads.get(2).setPosition(0, 0);
-        bridgeheads.get(3).setPosition(0, 0);
+        bridgeheads.get(0).setPosition(new Position(Map.mapSize.width / 8, Map.mapSize.height / 8));
+        bridgeheads.get(1).setPosition(new Position(7 * Map.mapSize.width / 8, Map.mapSize.height / 8));
+        bridgeheads.get(2).setPosition(new Position(7 * Map.mapSize.width / 8, 7 * Map.mapSize.height / 8));
+        bridgeheads.get(3).setPosition(new Position(Map.mapSize.width / 8, 7 * Map.mapSize.height / 8));
+
 
     }
 
