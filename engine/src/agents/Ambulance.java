@@ -38,7 +38,7 @@ public class Ambulance extends CS {
 
         currentAction = new AmbulanceFree(this);        // Start action
 
-        moveDelay = 2;
+        moveDelay = 50;
         frameCounter = moveDelay;
     }
 
