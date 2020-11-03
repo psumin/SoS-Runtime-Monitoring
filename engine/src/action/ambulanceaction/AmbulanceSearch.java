@@ -36,7 +36,7 @@ public class AmbulanceSearch extends AmbulanceAction {
         }
 
         ambulance.moveTo(targetBridgehead.position);
-        if (!ambulance.isArrivedAt(targetBridgehead.position)) {
+        if (ambulance.isArrivedAt(targetBridgehead.position)) {
 
             Hospital nearestHospital = (Hospital) ambulance.nearestObject(new ArrayList<>(world.hospitals));
             Patient patient = targetBridgehead.getPatient(Patient.Status.Serious);          // Serious patient first
