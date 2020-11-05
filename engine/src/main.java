@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class main {
     public static void main(String[] args) {
         int MAX_FRAME_COUNT = 1000;
-        int max_round = 1;
+        int max_round = 20;
 
         ArrayList<Long> timeWithVerification = new ArrayList<>(max_round);
         ArrayList<Long> timeWithoutVerification = new ArrayList<>(max_round);
@@ -121,101 +121,101 @@ public class main {
             programEndTime = System.nanoTime();
             timeWithVerification.add(programEndTime - programStartTime);
 
-//            programStartTime = System.nanoTime();
-//            simulationEngine = new SoSSimulationProgram(MAX_FRAME_COUNT);
-//
-//
-//            simulationEngine.setRunning();
-//            simulationEngine.run();
-//            programEndTime = System.nanoTime();
-//            timeWithoutVerification.add(programEndTime - programStartTime);
+            programStartTime = System.nanoTime();
+            simulationEngine = new SoSSimulationProgram(MAX_FRAME_COUNT);
+
+
+            simulationEngine.setRunning();
+            simulationEngine.run();
+            programEndTime = System.nanoTime();
+            timeWithoutVerification.add(programEndTime - programStartTime);
         }
 
 
-//
-//        // 실행 시간 출력을 위한 부분
-//        // 검증 포함 미포함 실행시간 출력
-//        System.out.println();
-//        System.out.println("=== OVERALL RESULT ===");
-//
-//        long maxTimeWithVerification = 0;
-//        long maxTimeWithoutVerification = 0;
-//        long sumTimeWithVerification = 0;
-//        long sumTimeWithoutVerification = 0;
-//
-//        for(int i = 0; i < max_round; i++) {
-//            maxTimeWithVerification = Math.max(maxTimeWithVerification, timeWithVerification.get(i));
-//            maxTimeWithoutVerification = Math.max(maxTimeWithoutVerification, timeWithoutVerification.get(i));
-//            sumTimeWithVerification += timeWithVerification.get(i);
-//            sumTimeWithoutVerification += timeWithoutVerification.get(i);
-//        }
-//
-//        int indexNumber = String.valueOf(max_round).length();
-//        int lengthNumber = Math.max(10, String.valueOf((int) Math.max(maxTimeWithoutVerification / 1000_000_000, maxTimeWithVerification / 1000_000_000)).length() + 5);
-//
-//        String title = "Simulation Running Time (s)";
-//        int target = title.length();
-//        for(int i = 0; i < indexNumber + lengthNumber * 2 + 6 - target; i++) {
-//            if (i % 2 == 0)
-//                title += " ";
-//            else
-//                title = " " + title;
-//        }
-//        System.out.println("| " + title + " |");
-//
-//        String indexHeader = "#";
-//        target = indexHeader.length();
-//        for(int i = 0; i < indexNumber - target; i++) {
-//            if (i % 2 == 0)
-//                indexHeader += " ";
-//            else
-//                indexHeader = " " + indexHeader;
-//        }
-//
-//        String RV = "With RV";
-//        target = RV.length();
-//        for(int i = 0; i < lengthNumber - target; i++) {
-//            if (i % 2 == 0)
-//                RV += " ";
-//            else
-//                RV = " " + RV;
-//        }
-//
-//        String withoutRV = "Without RV";
-//        target = withoutRV.length();
-//        for(int i = 0; i < lengthNumber - target; i++) {
-//            if (i % 2 == 0)
-//                withoutRV += " ";
-//            else
-//                withoutRV = " " + withoutRV;
-//        }
-//        System.out.println("| " + indexHeader + " | " + RV + " | " + withoutRV + " |");
-//
-//        for(int i = 0; i < max_round; i++){
-//            System.out.print("| ");
-//            for(int j = 0; j < indexNumber - String.valueOf(i).length(); j++) {
-//                System.out.print(" ");
-//            }
-//            System.out.print(i + " | ");
-//
-//            float value = timeWithVerification.get(i) / (float) 1000_000_000;
-//            for(int j = 0; j < lengthNumber - String.valueOf((int) value).length() - 5; j++) {
-//                System.out.print(" ");
-//            }
-//            System.out.printf("%,.4f", timeWithVerification.get(i) / (float) 1000_000_000);
-//            System.out.print(" | ");
-//
-//            value = timeWithoutVerification.get(i) / (float) 1000_000_000;
-//            for(int j = 0; j < lengthNumber - String.valueOf((int) value).length() - 5; j++) {
-//                System.out.print(" ");
-//            }
-//            System.out.printf("%,.4f", timeWithoutVerification.get(i) / (float) 1000_000_000);
-//            System.out.print(" |\n");
-//        }
-//
-//        System.out.print("=== Runtime Verification Overhead: ");
-//        System.out.printf("%,.4f", (sumTimeWithVerification - sumTimeWithoutVerification) / (float) sumTimeWithoutVerification * 100);
-//        System.out.println("% ===");
+
+        // 실행 시간 출력을 위한 부분
+        // 검증 포함 미포함 실행시간 출력
+        System.out.println();
+        System.out.println("=== OVERALL RESULT ===");
+
+        long maxTimeWithVerification = 0;
+        long maxTimeWithoutVerification = 0;
+        long sumTimeWithVerification = 0;
+        long sumTimeWithoutVerification = 0;
+
+        for(int i = 0; i < max_round; i++) {
+            maxTimeWithVerification = Math.max(maxTimeWithVerification, timeWithVerification.get(i));
+            maxTimeWithoutVerification = Math.max(maxTimeWithoutVerification, timeWithoutVerification.get(i));
+            sumTimeWithVerification += timeWithVerification.get(i);
+            sumTimeWithoutVerification += timeWithoutVerification.get(i);
+        }
+
+        int indexNumber = String.valueOf(max_round).length();
+        int lengthNumber = Math.max(10, String.valueOf((int) Math.max(maxTimeWithoutVerification / 1000_000_000, maxTimeWithVerification / 1000_000_000)).length() + 5);
+
+        String title = "Simulation Running Time (s)";
+        int target = title.length();
+        for(int i = 0; i < indexNumber + lengthNumber * 2 + 6 - target; i++) {
+            if (i % 2 == 0)
+                title += " ";
+            else
+                title = " " + title;
+        }
+        System.out.println("| " + title + " |");
+
+        String indexHeader = "#";
+        target = indexHeader.length();
+        for(int i = 0; i < indexNumber - target; i++) {
+            if (i % 2 == 0)
+                indexHeader += " ";
+            else
+                indexHeader = " " + indexHeader;
+        }
+
+        String RV = "With RV";
+        target = RV.length();
+        for(int i = 0; i < lengthNumber - target; i++) {
+            if (i % 2 == 0)
+                RV += " ";
+            else
+                RV = " " + RV;
+        }
+
+        String withoutRV = "Without RV";
+        target = withoutRV.length();
+        for(int i = 0; i < lengthNumber - target; i++) {
+            if (i % 2 == 0)
+                withoutRV += " ";
+            else
+                withoutRV = " " + withoutRV;
+        }
+        System.out.println("| " + indexHeader + " | " + RV + " | " + withoutRV + " |");
+
+        for(int i = 0; i < max_round; i++){
+            System.out.print("| ");
+            for(int j = 0; j < indexNumber - String.valueOf(i).length(); j++) {
+                System.out.print(" ");
+            }
+            System.out.print(i + " | ");
+
+            float value = timeWithVerification.get(i) / (float) 1000_000_000;
+            for(int j = 0; j < lengthNumber - String.valueOf((int) value).length() - 5; j++) {
+                System.out.print(" ");
+            }
+            System.out.printf("%,.4f", timeWithVerification.get(i) / (float) 1000_000_000);
+            System.out.print(" | ");
+
+            value = timeWithoutVerification.get(i) / (float) 1000_000_000;
+            for(int j = 0; j < lengthNumber - String.valueOf((int) value).length() - 5; j++) {
+                System.out.print(" ");
+            }
+            System.out.printf("%,.4f", timeWithoutVerification.get(i) / (float) 1000_000_000);
+            System.out.print(" |\n");
+        }
+
+        System.out.print("=== Runtime Verification Overhead: ");
+        System.out.printf("%,.4f", (sumTimeWithVerification - sumTimeWithoutVerification) / (float) sumTimeWithoutVerification * 100);
+        System.out.println("% ===");
 
     }
 }
