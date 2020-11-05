@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class main {
     public static void main(String[] args) {
         int MAX_FRAME_COUNT = 1000;
-        int max_round = 10;
+        int max_round = 20;
 
         ArrayList<Long> timeWithVerification = new ArrayList<>(max_round);
         ArrayList<Long> timeWithoutVerification = new ArrayList<>(max_round);
@@ -121,16 +121,18 @@ public class main {
             programEndTime = System.nanoTime();
             timeWithVerification.add(programEndTime - programStartTime);
 
-            programStartTime = System.nanoTime();
-            simulationEngine = new SoSSimulationProgram(MAX_FRAME_COUNT);
-
-
-            simulationEngine.setRunning();
-            simulationEngine.run();
-            programEndTime = System.nanoTime();
-            timeWithoutVerification.add(programEndTime - programStartTime);
+//            programStartTime = System.nanoTime();
+//            simulationEngine = new SoSSimulationProgram(MAX_FRAME_COUNT);
+//
+//
+//            simulationEngine.setRunning();
+//            simulationEngine.run();
+//            programEndTime = System.nanoTime();
+//            timeWithoutVerification.add(programEndTime - programStartTime);
         }
 
+        // 실행 시간 출력을 위한 부분
+        // 검증 포함 미포함 실행시간 출력
         System.out.println();
         System.out.println("=== OVERALL RESULT ===");
 
