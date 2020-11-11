@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 
 public class TreatmentRescuedRateEvent extends SoSEvent {
     public TreatmentRescuedRateEvent() {
-        this.name = "Event that treatment rate is less or equal than rescued rate";
+        super("Event that treatment rate is less or equal than rescued rate");
     }
 
     public boolean checkHold(Snapshot snapshot) {
