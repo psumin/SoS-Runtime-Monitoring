@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 public class UnvisitedTileEvent extends SoSEvent {
 
     public UnvisitedTileEvent() {
-        this.name = "Event that there are no more unvisited tiles";
+        super("Event that there are no more unvisited tiles");
     }
 
     public boolean checkHold(Snapshot snapshot) {
