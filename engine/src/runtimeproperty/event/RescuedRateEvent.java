@@ -10,8 +10,8 @@ public class RescuedRateEvent extends SoSEvent {
     double targetRate;
 
     public RescuedRateEvent(double targetRate) {
+        super("Event that rescued rate exceeds " + targetRate);
         this.targetRate = targetRate;
-        this.name = "Event that rescued rate exceeds " + targetRate;
     }
 
     public boolean checkHold(Snapshot snapshot) {
