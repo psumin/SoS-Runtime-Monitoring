@@ -10,8 +10,7 @@ public class AmbulanceMoveEvent extends AgentEvent {
     HashMap<String, Integer> ambulanceMovement;
 
     public AmbulanceMoveEvent() {
-        super();
-        this.name = "Event that ambulance moves a single tile";
+        super("Event that ambulance moves a single tile");
         this.ambulanceMovement = new HashMap<>(0);
     }
 
