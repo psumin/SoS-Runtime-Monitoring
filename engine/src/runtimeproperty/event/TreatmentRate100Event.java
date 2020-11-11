@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 public class TreatmentRate100Event extends SoSEvent {
 
     public TreatmentRate100Event() {
-        this.name = "Event that treatment rate reaches 100%";
+        super("Event that treatment rate reaches 100%");
     }
 
     public boolean checkHold(Snapshot snapshot) {
