@@ -11,8 +11,7 @@ public class PatientArriveAtBridgeheadEvent extends AgentEvent {
     int ySize;
 
     public PatientArriveAtBridgeheadEvent(int xSize, int ySize) {
-        super();
-        this.name = "Event that patient is arrived at bridgehead";
+        super("Event that patient is arrived at bridgehead");
         this.xSize = xSize;
         this.ySize = ySize;
     }
