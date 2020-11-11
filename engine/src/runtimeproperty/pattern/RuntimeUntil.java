@@ -25,7 +25,7 @@ public class RuntimeUntil extends RuntimeProperty {
 
     @Override
     protected void evaluateState(Snapshot snapshot) {
-        if (targetEvent instanceof SoSEvent){
+        if (targetEvent instanceof SoSEvent) {
             if (this.targetCheck.containsKey("main"))
                 this.targetCheck.put("main", this.targetCheck.get("main") || ((SoSEvent) targetEvent).checkHold(snapshot));
             else
@@ -39,16 +39,14 @@ public class RuntimeUntil extends RuntimeProperty {
             if (!this.targetCheck.get("main") && !this.untilCheck.get("main")) {
                 this.isHolding = false;
                 this.beConfirmed(snapshot);
-            }
-            else if (!this.targetCheck.get("main") && this.untilCheck.get("main")) {
+            } else if (!this.targetCheck.get("main") && this.untilCheck.get("main")) {
                 this.isHolding = true;
                 this.beConfirmed(snapshot);
             }
-        }
-        else {
+        } else {
             HashMap<String, Boolean> holdingResult = ((AgentEvent) targetEvent).checkMultipleHold(snapshot);
 
-            for(String name: holdingResult.keySet()){
+            for (String name : holdingResult.keySet()) {
                 if (this.targetCheck.containsKey(name))
                     this.targetCheck.put(name, this.targetCheck.get(name) || holdingResult.get(name));
                 else
@@ -57,21 +55,20 @@ public class RuntimeUntil extends RuntimeProperty {
 
             holdingResult = ((AgentEvent) untilEvent).checkMultipleHold(snapshot);
 
-            for(String name: holdingResult.keySet()){
+            for (String name : holdingResult.keySet()) {
                 if (this.untilCheck.containsKey(name))
                     this.untilCheck.put(name, this.untilCheck.get(name) || holdingResult.get(name));
                 else
                     this.untilCheck.put(name, holdingResult.get(name));
             }
 
-            for(String name: targetCheck.keySet()){
+            for (String name : targetCheck.keySet()) {
                 if (!this.targetCheck.get(name) && !this.untilCheck.get(name)) {
                     if (!this.confirmedCheck.containsKey(name) || !this.confirmedCheck.get(name)) {
                         this.isHolding = false;
                         this.beConfirmed(snapshot);
                     }
-                }
-                else if (!this.targetCheck.get(name) && this.untilCheck.get(name)) {
+                } else if (!this.targetCheck.get(name) && this.untilCheck.get(name)) {
                     this.confirmedCheck.put(name, true);
                 }
             }

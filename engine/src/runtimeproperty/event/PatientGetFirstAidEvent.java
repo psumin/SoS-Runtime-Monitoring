@@ -16,7 +16,7 @@ public class PatientGetFirstAidEvent extends AgentEvent {
         int numberOfPatient = 0;
         int currentTick = 0;
 
-        for (String target = ""; st.hasMoreTokens();) {
+        for (String target = ""; st.hasMoreTokens(); ) {
             target = st.nextToken();
 
             if (target.equals("Frame:"))
@@ -31,10 +31,9 @@ public class PatientGetFirstAidEvent extends AgentEvent {
                     String name = targetToken[0];
                     int gotAid = Integer.parseInt(targetToken[2]);
 
-                    if (gotAid == currentTick){
+                    if (gotAid == currentTick) {
                         currentResult.put(name, true);
-                    }
-                    else {
+                    } else {
                         currentResult.put(name, false);
                     }
                 }

@@ -20,7 +20,7 @@ public class RuntimeRecurrence extends RuntimeProperty {
     }
 
     protected void evaluateState(Snapshot snapshot) {
-        if (targetEvent instanceof SoSEvent){
+        if (targetEvent instanceof SoSEvent) {
             boolean isHolding = ((SoSEvent) targetEvent).checkHold(snapshot);
             if (isHolding)
                 this.currentCount.put("main", 0);
@@ -29,15 +29,14 @@ public class RuntimeRecurrence extends RuntimeProperty {
             else
                 this.currentCount.put("main", 1);
 
-            if (this.currentCount.get("main") > this.duration){
+            if (this.currentCount.get("main") > this.duration) {
                 this.isHolding = false;
                 this.beConfirmed(snapshot);
             }
-        }
-        else {
+        } else {
             HashMap<String, Boolean> holdingResult = ((AgentEvent) targetEvent).checkMultipleHold(snapshot);
 
-            for(String name: holdingResult.keySet()){
+            for (String name : holdingResult.keySet()) {
                 if (isHolding)
                     this.currentCount.put(name, 0);
                 else if (this.currentCount.containsKey(name))
@@ -46,7 +45,7 @@ public class RuntimeRecurrence extends RuntimeProperty {
                     this.currentCount.put(name, 1);
             }
 
-            for (int count: currentCount.values()){
+            for (int count : currentCount.values()) {
                 if (count > duration) {
                     this.isHolding = false;
                     this.beConfirmed(snapshot);

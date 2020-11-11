@@ -1,7 +1,6 @@
 package runtimeproperty.event;
 
 import log.Snapshot;
-import runtimeproperty.Event;
 import runtimeproperty.SoSEvent;
 
 import java.util.StringTokenizer;
@@ -18,7 +17,7 @@ public class RescuedRateEvent extends SoSEvent {
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
         double currentRate = 0;
 
-        for (String target = ""; st.hasMoreTokens();) {
+        for (String target = ""; st.hasMoreTokens(); ) {
             target = st.nextToken();
             if (target.equals("RescuedRate:")) {
                 currentRate = Double.parseDouble(st.nextToken());

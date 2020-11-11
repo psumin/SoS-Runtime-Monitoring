@@ -73,23 +73,23 @@ public class Value extends Stimulus {
     @Override
     public void execute() {
 
-        if(targetName != null) {
+        if (targetName != null) {
             setField(targetName);
             return;
         }
 
-        if(targetNames != null) {
-            for(String name: targetNames) {
+        if (targetNames != null) {
+            for (String name : targetNames) {
                 setField(name);
             }
             return;
         }
 
-        if(tileRange != null) {
-            for(int y = tileRange.top; y <= tileRange.bottom; ++y) {
-                for(int x = tileRange.left; x <= tileRange.right; ++x) {
+        if (tileRange != null) {
+            for (int y = tileRange.top; y <= tileRange.bottom; ++y) {
+                for (int x = tileRange.left; x <= tileRange.right; ++x) {
                     Tile tile = world.map.getTile(x, y);
-                    if(tile != null) {
+                    if (tile != null) {
                         Reflection.setField(tile, fieldName, value);
                     }
                 }
@@ -97,11 +97,12 @@ public class Value extends Stimulus {
             return;
         }
 
-        if(targetObject != null) {
+        if (targetObject != null) {
             Reflection.setField(targetObject, fieldName, value);
             return;
         }
     }
+
     private void setField(String targetName) {
         SoSObject singleTarget = world.findObject(targetName);
         if (singleTarget != null) {

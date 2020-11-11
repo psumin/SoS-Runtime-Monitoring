@@ -24,8 +24,8 @@ public class State extends Stimulus {
 
     @Override
     public void execute() {
-        FireFighter target = (FireFighter)world.findObject(fireFighterName);
-        if(target == null) return;
+        FireFighter target = (FireFighter) world.findObject(fireFighterName);
+        if (target == null) return;
 
         Position position = target.position;
         world.addPatient(position);

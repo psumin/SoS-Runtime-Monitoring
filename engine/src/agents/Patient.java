@@ -15,6 +15,8 @@ import misc.Position;
 
 public class Patient extends CS {
 
+    private final int seriousTreatmentTime = 40;                              // Hospital's treatment time for Serious patient
+    private final int woundedTreatmentTime = 40;                               // Hospital's treatment time for Wounded patient
     public FireFighter assignedFireFighter = null;
     public boolean isSaved = false;
     public int gotFirstAidAt;
@@ -23,8 +25,6 @@ public class Patient extends CS {
     SoSObject wounded;
     private Status status = Status.Wounded;
     private Hospital currentHospital = null;
-    private final int seriousTreatmentTime = 40;                              // Hospital's treatment time for Serious patient
-    private final int woundedTreatmentTime = 40;                               // Hospital's treatment time for Wounded patient
     private boolean isTreatmenting = false;
     private int counter = 0;
 

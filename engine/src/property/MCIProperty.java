@@ -9,6 +9,7 @@ public class MCIProperty extends Property {
     int t;
     int T;
     int duration;
+
     public MCIProperty(String name, String specification, String propertyType) {
         super(name, specification, propertyType);
     }

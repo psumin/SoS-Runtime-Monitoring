@@ -15,7 +15,7 @@ public class TreatmentRescuedRateEvent extends SoSEvent {
         double rescuedRate = 0;
         double treatmentRate = 0;
 
-        for (String target = ""; st.hasMoreTokens();) {
+        for (String target = ""; st.hasMoreTokens(); ) {
             target = st.nextToken();
             if (target.equals("RescuedRate:")) {
                 rescuedRate = Double.parseDouble(st.nextToken());

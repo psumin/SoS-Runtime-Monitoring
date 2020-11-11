@@ -17,8 +17,8 @@ import java.util.ArrayList;
 
 public class FireFighterSelectTransferDestination extends FireFighterAction {
 
-    public Patient targetPatient;
     private final int timeout = 30;           // Timeout duration
+    public Patient targetPatient;
     private int frameCounter = timeout;
 
     public FireFighterSelectTransferDestination(FireFighter target, Patient targetPatient) {

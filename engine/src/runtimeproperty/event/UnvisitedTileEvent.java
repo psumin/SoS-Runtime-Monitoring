@@ -15,7 +15,7 @@ public class UnvisitedTileEvent extends SoSEvent {
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
         int unvisitedTiles = 0;
 
-        for (String target = ""; st.hasMoreTokens();) {
+        for (String target = ""; st.hasMoreTokens(); ) {
             target = st.nextToken();
             if (target.equals("UnvisitedTiles:")) {
                 unvisitedTiles = Integer.parseInt(st.nextToken());

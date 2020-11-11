@@ -13,14 +13,13 @@ import stimulus.Stimulus;
  */
 
 public class Message extends Stimulus {
-    protected Object targetObject;
-    protected String fieldName;
-    protected Object value;
-
     public int frame;
     public int endFrame;
     public String sender;
     public String receiver;
+    protected Object targetObject;
+    protected String fieldName;
+    protected Object value;
 
     public Message() {
 

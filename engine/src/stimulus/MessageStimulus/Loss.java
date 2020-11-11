@@ -1,7 +1,5 @@
 package stimulus.MessageStimulus;
 
-import core.World;
-
 /**
  * Project: NewSimulator
  * Created by IntelliJ IDEA

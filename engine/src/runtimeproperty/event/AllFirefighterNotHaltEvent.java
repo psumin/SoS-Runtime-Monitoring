@@ -15,7 +15,7 @@ public class AllFirefighterNotHaltEvent extends SoSEvent {
         int numberOfFirefighter = 0;
         boolean result = true;
 
-        for (String target = ""; st.hasMoreTokens();) {
+        for (String target = ""; st.hasMoreTokens(); ) {
             target = st.nextToken();
 
             if (target.equals("CurrentFF:")) {

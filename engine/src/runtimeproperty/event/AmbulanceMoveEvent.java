@@ -18,12 +18,12 @@ public class AmbulanceMoveEvent extends AgentEvent {
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
         int numberOfAmbulance = 0;
 
-        for (String target = ""; st.hasMoreTokens();) {
+        for (String target = ""; st.hasMoreTokens(); ) {
             target = st.nextToken();
 
             if (target.equals("Frame:")) {
                 int newTick = Integer.parseInt(st.nextToken());
-                if (newTick == this.currentTick){
+                if (newTick == this.currentTick) {
                     return this.currentResult;
                 }
                 this.currentTick = newTick;
@@ -44,8 +44,7 @@ public class AmbulanceMoveEvent extends AgentEvent {
 
                         if (movedTiles == 1)
                             this.currentResult.put(name, true);
-                    }
-                    else if (totalTiles == 1) {
+                    } else if (totalTiles == 1) {
                         this.currentResult.put(name, true);
                     }
 

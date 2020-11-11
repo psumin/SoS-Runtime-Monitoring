@@ -15,7 +15,7 @@ public class TreatmentRate100Event extends SoSEvent {
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
         double currentRate = 0;
 
-        for (String target = ""; st.hasMoreTokens();) {
+        for (String target = ""; st.hasMoreTokens(); ) {
             target = st.nextToken();
             if (target.equals("TreatmentRate:")) {
                 currentRate = Double.parseDouble(st.nextToken());

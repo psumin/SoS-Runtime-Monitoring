@@ -12,8 +12,8 @@ import agents.Patient;
 
 public class FireFighterFirstAid extends FireFighterAction {
 
-    public Patient targetPatient;
     private final int firstAidTime = 10;
+    public Patient targetPatient;
     private int frameCounter = firstAidTime;
 
     public FireFighterFirstAid(FireFighter target, Patient targetPatient) {

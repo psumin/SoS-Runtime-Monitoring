@@ -132,7 +132,6 @@ public class main {
         }
 
 
-
         // 실행 시간 출력을 위한 부분
         // 검증 포함 미포함 실행시간 출력
         System.out.println();
@@ -143,7 +142,7 @@ public class main {
         long sumTimeWithVerification = 0;
         long sumTimeWithoutVerification = 0;
 
-        for(int i = 0; i < max_round; i++) {
+        for (int i = 0; i < max_round; i++) {
             maxTimeWithVerification = Math.max(maxTimeWithVerification, timeWithVerification.get(i));
             maxTimeWithoutVerification = Math.max(maxTimeWithoutVerification, timeWithoutVerification.get(i));
             sumTimeWithVerification += timeWithVerification.get(i);
@@ -155,7 +154,7 @@ public class main {
 
         String title = "Simulation Running Time (s)";
         int target = title.length();
-        for(int i = 0; i < indexNumber + lengthNumber * 2 + 6 - target; i++) {
+        for (int i = 0; i < indexNumber + lengthNumber * 2 + 6 - target; i++) {
             if (i % 2 == 0)
                 title += " ";
             else
@@ -165,7 +164,7 @@ public class main {
 
         String indexHeader = "#";
         target = indexHeader.length();
-        for(int i = 0; i < indexNumber - target; i++) {
+        for (int i = 0; i < indexNumber - target; i++) {
             if (i % 2 == 0)
                 indexHeader += " ";
             else
@@ -174,7 +173,7 @@ public class main {
 
         String RV = "With RV";
         target = RV.length();
-        for(int i = 0; i < lengthNumber - target; i++) {
+        for (int i = 0; i < lengthNumber - target; i++) {
             if (i % 2 == 0)
                 RV += " ";
             else
@@ -183,7 +182,7 @@ public class main {
 
         String withoutRV = "Without RV";
         target = withoutRV.length();
-        for(int i = 0; i < lengthNumber - target; i++) {
+        for (int i = 0; i < lengthNumber - target; i++) {
             if (i % 2 == 0)
                 withoutRV += " ";
             else
@@ -191,22 +190,22 @@ public class main {
         }
         System.out.println("| " + indexHeader + " | " + RV + " | " + withoutRV + " |");
 
-        for(int i = 0; i < max_round; i++){
+        for (int i = 0; i < max_round; i++) {
             System.out.print("| ");
-            for(int j = 0; j < indexNumber - String.valueOf(i).length(); j++) {
+            for (int j = 0; j < indexNumber - String.valueOf(i).length(); j++) {
                 System.out.print(" ");
             }
             System.out.print(i + " | ");
 
             float value = timeWithVerification.get(i) / (float) 1000_000_000;
-            for(int j = 0; j < lengthNumber - String.valueOf((int) value).length() - 5; j++) {
+            for (int j = 0; j < lengthNumber - String.valueOf((int) value).length() - 5; j++) {
                 System.out.print(" ");
             }
             System.out.printf("%,.4f", timeWithVerification.get(i) / (float) 1000_000_000);
             System.out.print(" | ");
 
             value = timeWithoutVerification.get(i) / (float) 1000_000_000;
-            for(int j = 0; j < lengthNumber - String.valueOf((int) value).length() - 5; j++) {
+            for (int j = 0; j < lengthNumber - String.valueOf((int) value).length() - 5; j++) {
                 System.out.print(" ");
             }
             System.out.printf("%,.4f", timeWithoutVerification.get(i) / (float) 1000_000_000);

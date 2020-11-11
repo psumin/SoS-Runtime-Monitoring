@@ -16,18 +16,17 @@ public class RuntimeUniversality extends RuntimeProperty {
     }
 
     protected void evaluateState(Snapshot snapshot) {
-        if (targetEvent instanceof SoSEvent){
+        if (targetEvent instanceof SoSEvent) {
             this.isHolding = ((SoSEvent) targetEvent).checkHold(snapshot);
 
             if (!isHolding) {
                 this.beConfirmed(snapshot);
             }
-        }
-        else {
+        } else {
             HashMap<String, Boolean> holdingResult = ((AgentEvent) targetEvent).checkMultipleHold(snapshot);
 
-            for(Boolean result: holdingResult.values()){
-                if (!result){
+            for (Boolean result : holdingResult.values()) {
+                if (!result) {
                     this.isHolding = false;
                     this.beConfirmed(snapshot);
                 }

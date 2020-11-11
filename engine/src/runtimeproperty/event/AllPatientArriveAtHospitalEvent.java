@@ -25,17 +25,14 @@ public class AllPatientArriveAtHospitalEvent extends SoSEvent {
         if (xPos == this.xSize && yPos == 0)
             return true;
 
-        if (xPos == this.xSize && yPos == this.ySize)
-            return true;
-
-        return false;
+        return xPos == this.xSize && yPos == this.ySize;
     }
 
     public boolean checkHold(Snapshot snapshot) {
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
         int numberOfPatients = 0;
 
-        for (String target = ""; st.hasMoreTokens();) {
+        for (String target = ""; st.hasMoreTokens(); ) {
             target = st.nextToken();
 
             if (target.equals("CurrentPat:")) {

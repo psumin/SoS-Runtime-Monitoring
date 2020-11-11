@@ -24,7 +24,7 @@ public class RuntimePrevention extends RuntimeProperty {
     }
 
     protected void evaluateState(Snapshot snapshot) {
-        if (causeEvent instanceof SoSEvent){
+        if (causeEvent instanceof SoSEvent) {
             if (this.causeCheck.containsKey("main"))
                 this.causeCheck.put("main", this.causeCheck.get("main") || ((SoSEvent) causeEvent).checkHold(snapshot));
             else
@@ -38,11 +38,10 @@ public class RuntimePrevention extends RuntimeProperty {
                 this.isHolding = false;
                 this.beConfirmed(snapshot);
             }
-        }
-        else {
+        } else {
             HashMap<String, Boolean> holdingResult = ((AgentEvent) causeEvent).checkMultipleHold(snapshot);
 
-            for(String name: holdingResult.keySet()){
+            for (String name : holdingResult.keySet()) {
                 if (this.causeCheck.containsKey(name))
                     this.causeCheck.put(name, this.causeCheck.get(name) || holdingResult.get(name));
                 else
@@ -51,15 +50,14 @@ public class RuntimePrevention extends RuntimeProperty {
 
             holdingResult = ((AgentEvent) preventedEvent).checkMultipleHold(snapshot);
 
-            for(String name: holdingResult.keySet()){
+            for (String name : holdingResult.keySet()) {
                 this.preventCheck.put(name, holdingResult.get(name));
             }
 
-            for(String name: causeCheck.keySet()){
+            for (String name : causeCheck.keySet()) {
                 if (this.causeCheck.get(name)) {
                     this.progressCheck.put(name, true);
-                }
-                else if (this.progressCheck.containsKey(name) && this.progressCheck.get(name) && this.preventCheck.get(name)) {
+                } else if (this.progressCheck.containsKey(name) && this.progressCheck.get(name) && this.preventCheck.get(name)) {
                     this.isHolding = false;
                     this.beConfirmed(snapshot);
                 }

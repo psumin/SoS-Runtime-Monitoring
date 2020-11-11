@@ -20,19 +20,18 @@ public class RuntimeMinimumDuration extends RuntimeProperty {
     }
 
     protected void evaluateState(Snapshot snapshot) {
-        if (targetEvent instanceof SoSEvent){
+        if (targetEvent instanceof SoSEvent) {
             boolean isHolding = ((SoSEvent) targetEvent).checkHold(snapshot);
             if (isHolding) {
                 if (this.currentCount.containsKey("main"))
                     this.currentCount.put("main", this.currentCount.get("main") + 1);
                 else
                     this.currentCount.put("main", 1);
-            }
-            else {
+            } else {
                 if (this.currentCount.containsKey("main")) {
                     int cur = this.currentCount.get(name);
 
-                    if (cur != 0 && cur < targetCount){
+                    if (cur != 0 && cur < targetCount) {
                         this.isHolding = false;
                         this.beConfirmed(snapshot);
                     }
@@ -40,11 +39,10 @@ public class RuntimeMinimumDuration extends RuntimeProperty {
                     this.currentCount.put("main", 0);
                 }
             }
-        }
-        else {
+        } else {
             HashMap<String, Boolean> holdingResult = ((AgentEvent) targetEvent).checkMultipleHold(snapshot);
 
-            for(String name: holdingResult.keySet()){
+            for (String name : holdingResult.keySet()) {
                 boolean result = holdingResult.get(name);
 
                 if (result) {
@@ -52,12 +50,11 @@ public class RuntimeMinimumDuration extends RuntimeProperty {
                         this.currentCount.put(name, this.currentCount.get(name) + 1);
                     else
                         this.currentCount.put(name, 1);
-                }
-                else {
+                } else {
                     if (this.currentCount.containsKey(name)) {
                         int cur = this.currentCount.get(name);
 
-                        if (cur != 0 && cur < targetCount){
+                        if (cur != 0 && cur < targetCount) {
                             this.isHolding = false;
                             this.beConfirmed(snapshot);
                         }

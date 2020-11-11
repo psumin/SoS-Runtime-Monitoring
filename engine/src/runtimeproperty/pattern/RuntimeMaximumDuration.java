@@ -20,7 +20,7 @@ public class RuntimeMaximumDuration extends RuntimeProperty {
     }
 
     protected void evaluateState(Snapshot snapshot) {
-        if (targetEvent instanceof SoSEvent){
+        if (targetEvent instanceof SoSEvent) {
             boolean isHolding = ((SoSEvent) targetEvent).checkHold(snapshot);
             if (isHolding) {
                 if (this.currentCount.containsKey("main"))
@@ -29,19 +29,17 @@ public class RuntimeMaximumDuration extends RuntimeProperty {
                     this.currentCount.put("main", 1);
 
                 int cur = this.currentCount.get("main");
-                if (cur != 0 && cur > targetCount){
+                if (cur != 0 && cur > targetCount) {
                     this.isHolding = false;
                     this.beConfirmed(snapshot);
                 }
 
-            }
-            else if (this.currentCount.containsKey("main"))
+            } else if (this.currentCount.containsKey("main"))
                 this.currentCount.put("main", 0);
-        }
-        else {
+        } else {
             HashMap<String, Boolean> holdingResult = ((AgentEvent) targetEvent).checkMultipleHold(snapshot);
 
-            for(String name: holdingResult.keySet()){
+            for (String name : holdingResult.keySet()) {
                 boolean result = holdingResult.get(name);
                 if (result) {
                     if (this.currentCount.containsKey(name))
@@ -50,12 +48,11 @@ public class RuntimeMaximumDuration extends RuntimeProperty {
                         this.currentCount.put(name, 1);
 
                     int cur = this.currentCount.get(name);
-                    if (cur != 0 && cur > targetCount){
+                    if (cur != 0 && cur > targetCount) {
                         this.isHolding = false;
                         this.beConfirmed(snapshot);
                     }
-                }
-                else if (this.currentCount.containsKey(name))
+                } else if (this.currentCount.containsKey(name))
                     this.currentCount.put(name, 0);
             }
         }

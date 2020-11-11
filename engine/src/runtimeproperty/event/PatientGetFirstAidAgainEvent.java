@@ -16,7 +16,7 @@ public class PatientGetFirstAidAgainEvent extends AgentEvent {
         int numberOfPatient = 0;
         int currentTick = 0;
 
-        for (String target = ""; st.hasMoreTokens();) {
+        for (String target = ""; st.hasMoreTokens(); ) {
             target = st.nextToken();
 
             if (target.equals("Frame:"))
@@ -32,10 +32,9 @@ public class PatientGetFirstAidAgainEvent extends AgentEvent {
                     int gotAidAt = Integer.parseInt(targetToken[2]);
                     int gotAidCount = Integer.parseInt(targetToken[3]);
 
-                    if (gotAidAt == currentTick && gotAidCount >= 2){
+                    if (gotAidAt == currentTick && gotAidCount >= 2) {
                         currentResult.put(name, true);
-                    }
-                    else {
+                    } else {
                         currentResult.put(name, false);
                     }
                 }

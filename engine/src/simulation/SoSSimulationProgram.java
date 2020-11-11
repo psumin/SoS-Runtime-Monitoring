@@ -30,9 +30,9 @@ import java.util.Scanner;
 
 public class SoSSimulationProgram implements KeyListener {
     final int MAX_SIMULATION_COUNT = 1;                          // 시뮬레이션 반복 횟수
-    int MAX_FRAME_COUNT = 1500;                                // 각 시뮬레이션마다 최대 frame의 수
     final int SIMULATION_WIDTH = 910;                               // 시뮬레이션 GUI의 너비
     final int SIMULATION_HEIGHT = 910;                              // 시뮬레이션 GUI의 높이
+    int MAX_FRAME_COUNT = 1500;                                // 각 시뮬레이션마다 최대 frame의 수
     String filePath;
     int super_counter = 1;
     //    final int CONSOLE_WIDTH = 200;
@@ -312,10 +312,10 @@ public class SoSSimulationProgram implements KeyListener {
             world.update();
             log.addSnapshot(Time.getFrameCount(),
                     "Frame: " + Time.getFrameCount() + " RescuedRate: " + world.getRescuedRate() +
-                    " TreatmentRate: " + world.getTreatmentRate() + " UnvisitedTiles: " + world.getUnvisitedTileCount() +
-                    " CurrentFF: " + world.getFFNumber() + " CurrentAmb: " + world.getAmbNumber() +
-                    " CurrentPat: " + world.getPatientNumber() +
-                    " CurrentMsgCount: " + world.router.getRouteCount() + " " + world.printCSSnapshot());
+                            " TreatmentRate: " + world.getTreatmentRate() + " UnvisitedTiles: " + world.getUnvisitedTileCount() +
+                            " CurrentFF: " + world.getFFNumber() + " CurrentAmb: " + world.getAmbNumber() +
+                            " CurrentPat: " + world.getPatientNumber() +
+                            " CurrentMsgCount: " + world.router.getRouteCount() + " " + world.printCSSnapshot());
 
 //            System.out.println("rescuedrate :" + String.valueOf(world.getRescuedRate()));
 //            System.out.println("treatmentrate : " + String.valueOf(world.getTreatmentRate()));

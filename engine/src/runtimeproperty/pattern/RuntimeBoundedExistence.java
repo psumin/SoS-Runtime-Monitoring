@@ -26,36 +26,32 @@ public class RuntimeBoundedExistence extends RuntimeProperty {
     }
 
     protected void evaluateState(Snapshot snapshot) {
-        if (targetEvent instanceof SoSEvent){
-            if(((SoSEvent) targetEvent).checkHold(snapshot))
+        if (targetEvent instanceof SoSEvent) {
+            if (((SoSEvent) targetEvent).checkHold(snapshot))
                 currentCount++;
-        }
-        else {
+        } else {
             HashMap<String, Boolean> holdingResult = ((AgentEvent) targetEvent).checkMultipleHold(snapshot);
 
-            for(Boolean result: holdingResult.values()){
+            for (Boolean result : holdingResult.values()) {
                 if (result)
                     currentCount++;
             }
         }
 
-        if(isAtMost) {
+        if (isAtMost) {
             if (currentCount > targetCount) {
                 this.isHolding = false;
                 this.isConfirmed = true;
                 this.beConfirmed(snapshot);
-            }
-            else {
+            } else {
                 this.isHolding = true;
             }
-        }
-        else {
+        } else {
             if (currentCount >= targetCount) {
                 this.isHolding = true;
                 this.isConfirmed = true;
                 this.beConfirmed(snapshot);
-            }
-            else {
+            } else {
                 this.isHolding = false;
             }
         }

@@ -11,8 +11,8 @@ import core.World;
 
 public abstract class Stimulus {
 
-    protected World world;
     public int frame;
+    protected World world;
 
     public Stimulus() {
 

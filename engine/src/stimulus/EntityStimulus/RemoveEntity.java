@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 
 public class RemoveEntity extends Entity {
     public RemoveEntity(World world, int frame, String param1, Consumer<String> function) {
-        super(world,frame, param1, function);
+        super(world, frame, param1, function);
     }
 }
 

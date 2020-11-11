@@ -18,6 +18,7 @@ public class AmbulanceFree extends AmbulanceAction {
     int frameCounter = mobilize;
     int mobilize_delay_repeat = 0;             // counter, number of mobilize
     int counter = mobilize_delay_repeat;
+
     public AmbulanceFree(Ambulance target) {
         super(target);
         name = "Free";

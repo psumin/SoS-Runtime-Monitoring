@@ -26,10 +26,7 @@ public class PatientArriveAtBridgeheadEvent extends AgentEvent {
         if (xPos == 4 && yPos == this.ySize - 4)
             return true;
 
-        if (xPos == this.xSize - 4 && yPos == this.ySize - 4)
-            return true;
-
-        return false;
+        return xPos == this.xSize - 4 && yPos == this.ySize - 4;
     }
 
     public HashMap<String, Boolean> checkMultipleHold(Snapshot snapshot) {
@@ -37,7 +34,7 @@ public class PatientArriveAtBridgeheadEvent extends AgentEvent {
         int numberOfPatient = 0;
         int currentTick = 0;
 
-        for (String target = ""; st.hasMoreTokens();) {
+        for (String target = ""; st.hasMoreTokens(); ) {
             target = st.nextToken();
 
             if (target.equals("Frame:"))
@@ -55,10 +52,9 @@ public class PatientArriveAtBridgeheadEvent extends AgentEvent {
                     int xPos = Integer.parseInt(position[0]);
                     int yPos = Integer.parseInt(position[1]);
 
-                    if (checkPosition(xPos, yPos)){
+                    if (checkPosition(xPos, yPos)) {
                         currentResult.put(name, true);
-                    }
-                    else {
+                    } else {
                         currentResult.put(name, false);
                     }
                 }

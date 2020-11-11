@@ -225,11 +225,7 @@ public class SPRT extends Verifier {
 
         if (v <= h0Threshold) {
             return false;
-        } else if (v >= h1Threshold) {
-            return false;
-        } else {
-            return true;
-        }
+        } else return !(v >= h1Threshold);
     }
 
     /**
@@ -243,11 +239,7 @@ public class SPRT extends Verifier {
 
         double v = this.getV(numSamples, numTrue, theta);
 
-        if (v <= h0Threshold) {
-            return true;
-        } else {
-            return false;
-        }
+        return v <= h0Threshold;
     }
 
     /**

@@ -22,7 +22,7 @@ public class RuntimePrecedence extends RuntimeProperty {
     }
 
     protected void evaluateState(Snapshot snapshot) {
-        if (causeEvent instanceof SoSEvent){
+        if (causeEvent instanceof SoSEvent) {
             if (this.effectCheck.containsKey("main"))
                 this.effectCheck.put("main", this.effectCheck.get("main") || ((SoSEvent) effectEvent).checkHold(snapshot));
             else
@@ -39,11 +39,10 @@ public class RuntimePrecedence extends RuntimeProperty {
                 this.causeCheck.put("main", this.causeCheck.get("main") || ((SoSEvent) causeEvent).checkHold(snapshot));
             else
                 this.causeCheck.put("main", ((SoSEvent) causeEvent).checkHold(snapshot));
-        }
-        else {
+        } else {
             HashMap<String, Boolean> holdingResult = ((AgentEvent) effectEvent).checkMultipleHold(snapshot);
 
-            for(String name: holdingResult.keySet()){
+            for (String name : holdingResult.keySet()) {
                 if (this.effectCheck.containsKey(name))
                     this.effectCheck.put(name, this.effectCheck.get(name) || holdingResult.get(name));
                 else
@@ -51,10 +50,10 @@ public class RuntimePrecedence extends RuntimeProperty {
             }
 
             if (this.causeCheck.size() == 0) {
-                System.out.println("");
+                System.out.println();
             }
 
-            for(String name: effectCheck.keySet()){
+            for (String name : effectCheck.keySet()) {
                 if (this.effectCheck.get(name)) {
                     if (!this.causeCheck.containsKey(name) || !this.causeCheck.get(name)) {
                         this.isHolding = false;
@@ -65,7 +64,7 @@ public class RuntimePrecedence extends RuntimeProperty {
 
             holdingResult = ((AgentEvent) causeEvent).checkMultipleHold(snapshot);
 
-            for(String name: holdingResult.keySet()){
+            for (String name : holdingResult.keySet()) {
                 if (this.causeCheck.containsKey(name))
                     this.causeCheck.put(name, this.causeCheck.get(name) || holdingResult.get(name));
                 else

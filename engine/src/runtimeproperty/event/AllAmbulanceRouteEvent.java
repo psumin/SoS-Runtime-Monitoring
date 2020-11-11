@@ -37,17 +37,14 @@ public class AllAmbulanceRouteEvent extends SoSEvent {
         if (xPos == xSize - 4)
             return true;
 
-        if (yPos == ySize - 4)
-            return true;
-
-        return false;
+        return yPos == ySize - 4;
     }
 
     public boolean checkHold(Snapshot snapshot) {
         StringTokenizer st = new StringTokenizer(snapshot.getSnapshotString(), " ");
         int numberOfAmbulance = 0;
 
-        for (String target = ""; st.hasMoreTokens();) {
+        for (String target = ""; st.hasMoreTokens(); ) {
             target = st.nextToken();
 
             if (target.equals("CurrentAmb:")) {
