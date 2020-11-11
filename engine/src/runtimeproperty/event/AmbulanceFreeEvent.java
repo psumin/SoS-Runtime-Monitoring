@@ -8,8 +8,7 @@ import java.util.StringTokenizer;
 
 public class AmbulanceFreeEvent extends AgentEvent {
     public AmbulanceFreeEvent() {
-        super();
-        this.name = "Event that ambulance is free";
+        super("Event that ambulance is free");
     }
 
     public HashMap<String, Boolean> checkMultipleHold(Snapshot snapshot) {
