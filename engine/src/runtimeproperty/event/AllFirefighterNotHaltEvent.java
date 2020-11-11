@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 
 public class AllFirefighterNotHaltEvent extends SoSEvent {
     public AllFirefighterNotHaltEvent() {
-        this.name = "Event that all firefighters do actions except halt";
+        super("Event that all firefighters do actions except halt");
     }
 
     public boolean checkHold(Snapshot snapshot) {
