@@ -10,7 +10,7 @@ public class AllAmbulanceRouteEvent extends SoSEvent {
     int ySize;
 
     public AllAmbulanceRouteEvent(int xSize, int ySize) {
-        this.name = "Event that ambulance go out of the route";
+        super("Event that ambulance go out of the route");
         this.xSize = xSize;
         this.ySize = ySize;
     }
