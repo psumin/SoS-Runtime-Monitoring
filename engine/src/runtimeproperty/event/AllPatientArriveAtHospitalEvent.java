@@ -10,7 +10,7 @@ public class AllPatientArriveAtHospitalEvent extends SoSEvent {
     int ySize;
 
     public AllPatientArriveAtHospitalEvent(int xSize, int ySize) {
-        this.name = "Event that at least one patient arrived at hospital";
+        super("Event that at least one patient arrived at hospital");
         this.xSize = xSize;
         this.ySize = ySize;
     }
