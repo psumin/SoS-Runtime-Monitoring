@@ -8,7 +8,8 @@ public abstract class AgentEvent extends Event {
     protected int currentTick;
     protected HashMap<String, Boolean> currentResult;
 
-    public AgentEvent() {
+    public AgentEvent(String name) {
+        super(name);
         this.currentResult = new HashMap<>(0);
         this.currentTick = 0;
     }
