@@ -27,7 +27,7 @@ public class AmbulanceSearch extends AmbulanceAction {
     }
 
     @Override
-    // When timeout occurred, ambulance change the action to "Search"
+    // When timeout occurred, ambulance changes the action to "Search"
     public void onUpdate() {
 
         if (targetBridgehead == null) {
