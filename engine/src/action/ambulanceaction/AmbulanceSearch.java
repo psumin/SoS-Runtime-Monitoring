@@ -27,9 +27,9 @@ public class AmbulanceSearch extends AmbulanceAction {
     }
 
     @Override
-    // When timeout occurred, ambulance change the action to "Search"
+    // When timeout occurred, ambulance changes the action to "Search"
     public void onUpdate() {
-
+        // null indicates no patient in the bridgehead ?
         if (targetBridgehead == null) {
             targetBridgehead = (Bridgehead) ambulance.nearestObject(new ArrayList<>(bridgeheads));
             bridgeheads.remove(targetBridgehead);
