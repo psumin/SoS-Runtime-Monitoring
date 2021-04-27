@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+}
+
+group 'kr.ac.kaist.sesos'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    gradlePluginPortal()
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+}
+sourceSets {
+    main {
+        java {
+            srcDirs = ['engine/src']
+        }
+        resources {
+            srcDirs "engine/resources"
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'lib')
+
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'main'
+        )
+    }
+}
+
+
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'java'

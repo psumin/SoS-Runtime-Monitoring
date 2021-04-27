@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 
 /**
@@ -36,9 +37,24 @@ public class SoSImage {
             image = new SoSImage();
             image.setFilePath(filePath);
             try {
+                //this works for running in intellij
                 image.setImage(ImageIO.read(new File(filePath)));
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+
+                //during jar, images are copied to root.
+                //if you unzip the packaged jar, you can see images are in root folder.
+                //split for example "engine/resources/bridgehead.png" into "bridgehead.png
+                String newFileName = (filePath.split("/"))[2];
+                System.out.println(newFileName);
+
+                try {
+                    image.setImage(ImageIO.read(SoSImage.class.getClassLoader().getResource(newFileName)));
+                } catch (Exception exception) {
+                    if (exception.getClass() != IllegalArgumentException.class) {
+                        exception.printStackTrace();
+                    }
+                }
+
             }
             strToImage.put(filePath, image);
         }
